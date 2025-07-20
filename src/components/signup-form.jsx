@@ -23,6 +23,15 @@ export function SignUpForm({ className, ...props }) {
             <div className="grid gap-6">
               <div className="grid gap-6">
                 <div className="grid gap-3">
+                  <Label htmlFor="email">Full Name</Label>
+                  <Input
+                    id="name"
+                    type="string"
+                    placeholder="Enter Your Full name"
+                    required
+                  />
+                </div>
+                <div className="grid gap-3">
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
