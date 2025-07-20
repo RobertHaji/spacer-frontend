@@ -10,18 +10,27 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function LoginForm({ className, ...props }) {
+export function SignUpForm({ className, ...props }) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Please Login</CardDescription>
+          <CardDescription>Please Sign up</CardDescription>
         </CardHeader>
         <CardContent>
           <form>
             <div className="grid gap-6">
               <div className="grid gap-6">
+                <div className="grid gap-3">
+                  <Label htmlFor="email">Full Name</Label>
+                  <Input
+                    id="name"
+                    type="string"
+                    placeholder="Enter Your Full name"
+                    required
+                  />
+                </div>
                 <div className="grid gap-3">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -44,13 +53,13 @@ export function LoginForm({ className, ...props }) {
                   <Input id="password" type="password" required />
                 </div>
                 <Button type="submit" className="w-full hover:cursor-pointer">
-                  Login
+                  SignUp
                 </Button>
               </div>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Already have an account?{" "}
                 <a href="#" className="underline underline-offset-4">
-                  Sign up
+                  Login
                 </a>
               </div>
             </div>
