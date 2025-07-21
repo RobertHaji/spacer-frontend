@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
       <main className="flex-grow flex flex-col items-center justify-center px-6 py-16 space-y-10">
         <h1 className="text-5xl sm:text-6xl font-extrabold text-center leading-tight">
           Discover & Book Unique <br /> Spaces In Your Area
