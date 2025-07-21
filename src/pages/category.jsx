@@ -1,128 +1,87 @@
-"use client";
-import Image from "next/image";
-import { useState } from "react";
-import clsx from "clsx";
+import { Card } from "@/components/ui/card";
+import Header from "./Header";
+import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   {
-    title: "Photo shoot",
-    image: "/images/photoshoot.jpg",
+    name: "Photo shoot",
+    image:
+      "https://images.unsplash.com/photo-1526178616914-4aa1d07bba66?auto=format&fit=crop&w=800&q=60",
+    slug: "photo-shoot",
   },
   {
-    title: "Weddings",
-    image: "/images/wedding.jpg",
+    name: "Weddings",
+    image:
+      "https://images.unsplash.com/photo-1587293852726-70cdb56c2864?auto=format&fit=crop&w=800&q=60",
+    slug: "weddings",
   },
   {
-    title: "Meetings",
-    image: "/images/meeting.jpg",
+    name: "Meetings",
+    image:
+      "https://images.unsplash.com/photo-1588702547934-02174c7e62b8?auto=format&fit=crop&w=800&q=60",
+    slug: "meetings",
   },
   {
-    title: "Events",
-    image: "/images/events.jpg",
+    name: "Events",
+    image:
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60",
+    slug: "events",
   },
   {
-    title: "Baby shower",
-    image: "/images/babyshower.jpg",
+    name: "Baby shower",
+    image:
+      "https://images.unsplash.com/photo-1584447127166-bf63d3b8f2f2?auto=format&fit=crop&w=800&q=60",
+    slug: "baby-shower",
+  },
+  {
+    name: "Graduation party",
+    image:
+      "https://images.unsplash.com/photo-1604774887511-e29a8b87fa1f?auto=format&fit=crop&w=800&q=60",
+    slug: "graduation-party",
+  },
+  {
+    name: "Birthday",
+    image:
+      "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=60",
+    slug: "birthday",
+  },
+  {
+    name: "Engagement party",
+    image:
+      "https://images.unsplash.com/photo-1559563458-527698bf5295?auto=format&fit=crop&w=800&q=60",
+    slug: "engagement-party",
   },
 ];
 
 export default function CategoryPage() {
-  const [activeIndex, setActiveIndex] = (useState < number) | (null > null);
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cyan-900 to-cyan-600 py-10 px-4">
-      <h1 className="text-white text-3xl font-bold mb-8 text-center">Spacer</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-        {categories.map((cat, index) => (
-          <div
-            key={cat.title}
-            onClick={() => setActiveIndex(index)}
-            onMouseEnter={() => setActiveIndex(index)}
-            onMouseLeave={() => setActiveIndex(null)}
-            className={clsx(
-              "rounded-lg overflow-hidden cursor-pointer transition-all duration-300 shadow-md",
-              activeIndex === index
-                ? "ring-4 ring-white scale-105 shadow-xl"
-                : ""
-            )}
-          >
-            <Image
-              src={cat.image}
-              alt={cat.title}
-              width={200}
-              height={200}
-              className="object-cover w-48 h-48"
-            />
-            <p className="text-white text-center mt-2 font-medium">
-              {cat.title}
-            </p>
-          </div>
-        ))}
-      </div>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
+      <Header />
+      <main className="flex-1 container mx-auto px-4 py-10">
+        <h1 className="text-3xl font-bold mb-6 text-center">Categories</h1>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          {categories.map((cat) => (
+            <Card
+              key={cat.slug}
+              onClick={() => navigate(`/spaces/${cat.slug}`)}
+              className="cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] bg-white text-black overflow-hidden"
+            >
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-full h-40 object-cover"
+              />
+              <div className="text-center font-semibold py-2 text-lg">
+                {cat.name}
+              </div>
+            </Card>
+          ))}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
-}
-"use client"
-import Image from "next/image"
-import { useState } from "react"
-import clsx from "clsx"
-
-const categories = [
-  {
-    title: "Photo shoot",
-    image: "/images/photoshoot.jpg",
-  },
-  {
-    title: "Weddings",
-    image: "/images/wedding.jpg",
-  },
-  {
-    title: "Meetings",
-    image: "/images/meeting.jpg",
-  },
-  {
-    title: "Events",
-    image: "/images/events.jpg",
-  },
-  {
-    title: "Baby shower",
-    image: "/images/babyshower.jpg",
-   },
-   {
-     title: "conference",
-     image: "/images/babyshower.jpg", 
-  },
-]
-
-export default function CategoryPage() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-cyan-900 to-cyan-600 py-10 px-4">
-      <h1 className="text-white text-3xl font-bold mb-8 text-center">Spacer</h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-        {categories.map((cat, index) => (
-          <div
-            key={cat.title}
-            onClick={() => setActiveIndex(index)}
-            onMouseEnter={() => setActiveIndex(index)}
-            onMouseLeave={() => setActiveIndex(null)}
-            className={clsx(
-              "rounded-lg overflow-hidden cursor-pointer transition-all duration-300 shadow-md",
-              activeIndex === index ? "ring-4 ring-white scale-105 shadow-xl" : ""
-            )}
-          >
-            <Image
-              src={cat.image}
-              alt={cat.title}
-              width={200}
-              height={200}
-              className="object-cover w-48 h-48"
-            />
-            <p className="text-white text-center mt-2 font-medium">{cat.title}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
 }

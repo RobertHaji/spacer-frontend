@@ -46,12 +46,8 @@ function SpaceForm() {
     resolver: zodResolver(spaceSchema),
     defaultValues: {
       name: "",
-      owner_name: "",
-      description: "",
-      rent_rate: 0,
       image_url: "",
-      available: true,
-      category_id: 1,
+      user_id: 1,
     },
   });
 
@@ -103,7 +99,7 @@ function SpaceForm() {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel></FormLabel>
                   <FormControl>
                     <Textarea placeholder="Short description" {...field} />
                   </FormControl>
@@ -111,20 +107,7 @@ function SpaceForm() {
                 </FormItem>
               )}
             />
-            {/* Rent Rate */}
-            <FormField
-              control={form.control}
-              name="rent_rate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Rent Rate</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Rent Rate" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            
             {/* Image */}
             <FormField
               control={form.control}
@@ -162,12 +145,12 @@ function SpaceForm() {
             {/* Category */}
             <FormField
               control={form.control}
-              name="category_id"
+              name="user_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category ID</FormLabel>
+                  <FormLabel>User ID</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Category ID" {...field} />
+                    <Input type="number" placeholder="User ID" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
