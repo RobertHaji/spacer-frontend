@@ -5,6 +5,8 @@ import "./index.css";
 import LoginPage from "./pages/login";
 import App from "./App";
 import SignUpPage from "./pages/signup";
+import SpaceForm from "./components/SpaceForm";
+import { SpacesPage } from "./pages/SpacesPage";
 
 const routes = createBrowserRouter([
   {
@@ -19,6 +21,15 @@ const routes = createBrowserRouter([
     path: "signup",
     element: <SignUpPage />,
   },
+  {
+    path: "/SpaceForm",
+    element: <SpaceForm/>
+  },
+  {
+    path: "/SpacesPage",
+    element: <SpacesPage/>
+  }
+
 ]);
 
 createRoot(document.getElementById("root")).render(
