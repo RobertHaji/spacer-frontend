@@ -33,14 +33,7 @@ export default function Footer() {
   const [showCounties, setShowCounties] = useState(false);
 
   return (
-    <footer className="bg-gradient-to-r from-[#004D61] to-[#00A7B5] text-white py-10 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6 text-sm">
-        {/* Logo */}
-        <div className="font-bold text-lg">Spacer</div>
-
-        {/* Company */}
-        <div>
-          <h3 className="font-semibold mb-1">Company</h3>
+   
     <footer className="bg-[#31194D] text-white py-8 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6 text-sm">
         <div className="font-bold text-lg">Spacer</div>
