@@ -4,7 +4,9 @@ import viteLogo from "/vite.svg";
 // import { Button } from "./components/ui/button";
 // import Header from "./components/ui/Header"; 
 // import Footer from "./components/ui/Footer";
-
+import { Button } from "./components/ui/button";
+import Header from "./components/ui/Header"; 
+import Footer from "./components/ui/Footer";
 function App() {
   return (
     <>
@@ -12,6 +14,10 @@ function App() {
       {/* <h1>Welcome to Spacer</h1> */}
       {/* <Button>Submit</Button> */}
       {/* <Footer /> */}
+      <Header />
+      <h1>Welcome to Spacer</h1>
+      <Button>Submit</Button>
+      <Footer />
     </>
   );
 }
