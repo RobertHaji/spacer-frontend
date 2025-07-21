@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "react-router-dom";
 
 import {
   Form,
@@ -111,9 +112,9 @@ export function SignUpForm({ className, ...props }) {
                 </div>
                 <div className="text-center text-sm">
                   Already have an account?{" "}
-                  <a href="#" className="underline underline-offset-4">
+                  <Link to= "/login" href="#" className="underline underline-offset-4">
                     Login
-                  </a>
+                  </Link>
                 </div>
               </div>
             </form>
