@@ -23,7 +23,7 @@ export default function SearchBar() {
       <div className="bg-white flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 p-4 rounded-md">
         
         <div className="flex-1">
-          <label className="block font-semibold text-sm">What are you planning?</label>
+          <label className="block font-semibold text-sm text-black">What are you planning?</label>
           <input
             type="text"
             value={activity}
@@ -34,7 +34,7 @@ export default function SearchBar() {
         </div>
 
         <div className="flex-1">
-          <label className="block font-semibold text-sm">Where?</label>
+          <label className="block font-semibold text-sm text-black">Where?</label>
           <input
             type="text"
             value={location}
@@ -45,7 +45,7 @@ export default function SearchBar() {
         </div>
 
         <div className="flex-1">
-          <label className="block font-semibold text-sm">When?</label>
+          <label className="block font-semibold text-sm text-black">When?</label>
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
