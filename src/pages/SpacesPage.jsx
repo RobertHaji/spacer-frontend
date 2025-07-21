@@ -6,38 +6,53 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import BookingForm from "@/components/booking-form";
 
-const displaySpaces = [
-  {
-    id: 1,
-    name: "Reef Hotel (Mombasa)",
-    description: "Reef Hotel Mombasa offers a conference facility...",
-    rent_rate: 800,
-    location: "Mombasa",
-    image_url:
-      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/121822663.jpg?k=cbaedb5963542fe37a0918426bd6b4566d86287181946d53f8a42e97cc95a13f&o=&hp=1",
-  },
-  {
-    id: 2,
-    name: "Lily (Serena Hotels, Nairobi)",
-    description: "The Lily Serena Hotel Conference Room is where...",
-    rent_rate: 750,
-    location: "Nairobi",
-    image_url:
-      "https://image-tc.galaxy.tf/wijpeg-b2xm03zk5188ubji56g3c5moh/lily-room-board-room.jpg?width=1600&height=1066",
-  },
-];
+// const displaySpaces = [
+//   {
+//     id: 1,
+//     name: "Reef Hotel (Mombasa)",
+//     description: "Reef Hotel Mombasa offers a conference facility...",
+//     rent_rate: 800,
+//     location: "Mombasa",
+//     image_url:
+//       "https://cf.bstatic.com/xdata/images/hotel/max1024x768/121822663.jpg?k=cbaedb5963542fe37a0918426bd6b4566d86287181946d53f8a42e97cc95a13f&o=&hp=1",
+//   },
+//   {
+//     id: 2,
+//     name: "Lily (Serena Hotels, Nairobi)",
+//     description: "The Lily Serena Hotel Conference Room is where...",
+//     rent_rate: 750,
+//     location: "Nairobi",
+//     image_url:
+//       "https://image-tc.galaxy.tf/wijpeg-b2xm03zk5188ubji56g3c5moh/lily-room-board-room.jpg?width=1600&height=1066",
+//   },
+// ];
 
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedSpace, setSelectedSpace] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setSpaces(displaySpaces);
+    fetch("http://localhost:5000/spaces")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch spaces");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setSpaces(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
   const filteredSpaces = spaces.filter((space) =>
-    space.location.toLowerCase().includes(search.toLowerCase())
+    space.location?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -53,7 +68,10 @@ export function SpacesPage() {
             onChange={(e) => setSearch(e.target.value)}
             className="mb-6 text-black bg-white"
           />
-          {filteredSpaces.length === 0 ? (
+
+          {loading ? (
+            <p>Loading...</p>
+          ) : filteredSpaces.length === 0 ? (
             <p className="text-white text-center">
               No spaces found for &quot;{search}&quot;.
             </p>
@@ -64,7 +82,7 @@ export function SpacesPage() {
                   <img
                     src={space.image_url}
                     alt={space.name}
-                    className="w-50 h-50 object-cover rounded"
+                    className="w-48 h-48 object-cover rounded"
                   />
                   <div className="flex-1" text-white>
                     <h2 className="text-xl font-bold text-white">
@@ -109,16 +127,18 @@ export function SpacesPage() {
             ))
           )}
         </div>
-        <div className="w-100">
-          {selectedSpace && (
-            <div className="sticky top-28 bg-white text-black p-4 rounded shadow-lg">
-              <h2 className="text-xl font-bold mb-2">
-                Book {selectedSpace.name}
-              </h2>
+        <aside className="w-full max-w-md hidden md:block">
+          {selectedSpace ? (
+            <div className="bg-white text-black rounded-xl p-6 shadow-md">
+              <h2 className="text-2xl font-semibold mb-4">Book Form</h2>
               <BookingForm space={selectedSpace} />
             </div>
+          ) : (
+            <div className="text-center text-gray-200 mt-20">
+              <p>Select a space to book.</p>
+            </div>
           )}
-        </div>
+        </aside>
       </main>
 
       <Footer />
