@@ -3,16 +3,16 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import LoginPage from "./pages/login";
-import App from "./App";
+// import App from "./App";
 import SignUpPage from "./pages/signup";
-import Home from "./pages/Home"
 import SpaceForm from "./components/SpaceForm";
 import { SpacesPage } from "./pages/SpacesPage";
+import HomePage from "./pages/Home";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <HomePage/>,
   },
   {
     path: "/login",
