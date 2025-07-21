@@ -40,7 +40,7 @@ const spaceSchema = z.object({
     }),
 });
 
-function SpaceForm() {
+function Cartegoryform() {
   //  UseForm with zod
   const form = useForm({
     resolver: zodResolver(spaceSchema),
@@ -55,7 +55,7 @@ function SpaceForm() {
     console.log("Submited values:", values);
 
     setTimeout(() => {
-      toast.success("Space created succesfully");
+      toast.success("category created succesfully");
       form.reset();
     }, 500);
   };
@@ -80,34 +80,6 @@ function SpaceForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="owner_name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Owner Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Owner Name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Description */}
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel></FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Short description" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
             {/* Image */}
             <FormField
               control={form.control}
@@ -125,24 +97,7 @@ function SpaceForm() {
                 </FormItem>
               )}
             />
-            {/* Availability */}
-            <FormField
-              control={form.control}
-              name="available"
-              render={({ field }) => (
-                <FormItem className="flex items-center gap-2">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormLabel className="!mt-0">Available</FormLabel>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Category */}
+            {/* user */}
             <FormField
               control={form.control}
               name="user_id"
@@ -166,4 +121,4 @@ function SpaceForm() {
   );
 }
 
-export default SpaceForm;
+export default Cartegoryform;

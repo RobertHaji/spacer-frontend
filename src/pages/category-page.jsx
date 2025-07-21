@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card";
-import Header from "./Header";
+/*import { Card } from "@/components/ui/card";
+//import Header from "./Header";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 
@@ -7,51 +7,45 @@ const categories = [
   {
     name: "Photo shoot",
     image:
-      "https://images.unsplash.com/photo-1526178616914-4aa1d07bba66?auto=format&fit=crop&w=800&q=60",
+      "https://media.istockphoto.com/id/628907788/photo/couple-photoshoot.jpg?s=612x612&w=0&k=20&c=8y0L2Td4lhzl-d_JbPfDwrJJKVlYHDiAM3EBJEtAuO4=",
     slug: "photo-shoot",
   },
   {
     name: "Weddings",
     image:
-      "https://images.unsplash.com/photo-1587293852726-70cdb56c2864?auto=format&fit=crop&w=800&q=60",
+      "https://afrikta.com/wp-content/uploads/2024/09/Best-Budget-friendly-Wedding-Venues-in-Kenya.jpg",
     slug: "weddings",
   },
   {
     name: "Meetings",
-    image:
-      "https://images.unsplash.com/photo-1588702547934-02174c7e62b8?auto=format&fit=crop&w=800&q=60",
+    image: "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fbe3326cb-8d44-4140-8c3b-9e8327cd7282%2Fimages%2Fb280d5c66652417b9790284393edd581_large!_!fad642b3cabe2148c1be1d55f8ece857.jpg&w=3840&q=30"
     slug: "meetings",
   },
   {
     name: "Events",
     image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60",
+      "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fd7a54a1a-b754-45d3-8ab2-c721f0140af7%2Fimages%2F49760995c833453c917d3f1fac77c5af_large!_!f2895887ca17ee536b5f0a40b2e645a5.jpg&w=3840&q=75",
     slug: "events",
   },
   {
     name: "Baby shower",
     image:
-      "https://images.unsplash.com/photo-1584447127166-bf63d3b8f2f2?auto=format&fit=crop&w=800&q=60",
+      "https://birthdaywala.in/wp-content/uploads/2024/08/Baby-Shower1.webp",
     slug: "baby-shower",
   },
   {
     name: "Graduation party",
     image:
-      "https://images.unsplash.com/photo-1604774887511-e29a8b87fa1f?auto=format&fit=crop&w=800&q=60",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiLwASgBcdfy9QUWDcjYpLGcPA-H1smM1PR-6FqlxfXkpxve7HohBE7c7QEvFLkMMTMfQ&usqp=CAU",
     slug: "graduation-party",
   },
   {
     name: "Birthday",
     image:
-      "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=60",
+      "https://elegantlivingeveryday.com/wp-content/uploads/2023/10/How-to-Plan-an-Adult-Birthday-Party-Featured-Image.jpg",
     slug: "birthday",
   },
-  {
-    name: "Engagement party",
-    image:
-      "https://images.unsplash.com/photo-1559563458-527698bf5295?auto=format&fit=crop&w=800&q=60",
-    slug: "engagement-party",
-  },
+  
 ];
 
 export default function CategoryPage() {
@@ -85,3 +79,4 @@ export default function CategoryPage() {
     </div>
   );
 }
+*/
