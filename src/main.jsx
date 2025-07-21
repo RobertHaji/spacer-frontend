@@ -5,14 +5,14 @@ import "./index.css";
 import LoginPage from "./pages/login";
 // import App from "./App";
 import SignUpPage from "./pages/signup";
- 
+import CategoryPage from "./pages/category";
 
 import BookingForm from "./components/booking-form";
 
 import SpaceForm from "./components/SpaceForm";
 import { SpacesPage } from "./pages/SpacesPage";
 import HomePage from "./pages/Home";
-import CategoryPage from "./pages/category-page";
+import CategoryPage from "./pages/category";
 
 const routes = createBrowserRouter([
   {
