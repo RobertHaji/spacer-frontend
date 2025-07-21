@@ -5,13 +5,14 @@ import "./index.css";
 import LoginPage from "./pages/login";
 import App from "./App";
 import SignUpPage from "./pages/signup";
+import Home from "./pages/Home"
 import SpaceForm from "./components/SpaceForm";
 import { SpacesPage } from "./pages/SpacesPage";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />,
   },
   {
     path: "/login",
@@ -21,6 +22,7 @@ const routes = createBrowserRouter([
     path: "signup",
     element: <SignUpPage />,
   },
+  
   {
     path: "/SpaceForm",
     element: <SpaceForm/>
