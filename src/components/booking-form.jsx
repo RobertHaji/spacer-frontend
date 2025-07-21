@@ -16,17 +16,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 
 
-const bookingSchema = z.object({  
+const bookingSchema = z.object({
   spaceName: z.string().min(1, "Space name is required"),
-  numberOfGuests: z.number().min(1, "Number of guests must be at least 1"),
+  numberOfGuests: z.coerce
+    .number()
+    .min(1, "Number of guests must be at least 1"),
   dateOfBooking: z.date().min(new Date(), {
     message: "Booking date must be in the future",
   }),
-  numberOfHours: z.number().min(1, "Number of hours must be at least 1").max(24, "Number of hours cannot exceed 24")
+  numberOfHours: z.coerce
+    .number()
+    .min(1, "Number of hours must be at least 1")
+    .max(24, "Cannot exceed 24"),
 });
 
 function BookingForm() {
-  //  UseForm with zod
+  const accessToken = localStorage.getItem("token");
   const form = useForm({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -37,21 +42,54 @@ function BookingForm() {
     },
   });
 
-  const onSubmit = (values) => {
-    console.log("Submited values:", values);
 
-    setTimeout(() => {
-      toast.success("Booking succesfully");
-      form.reset();
-    }, 500);
+  const onTheSubmit = async (values) => {
+      console.log("Submited values:", values);
+
+    const formattedDate = new Date(values.dateOfBooking)
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+
+    const payload = {
+      space_name: values.spaceName,
+      number_of_guests: values.numberOfGuests,
+      date_of_booking: formattedDate,
+      number_of_hours: values.numberOfHours,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Booking successful!");
+        console.log("Created booking:", data);
+        form.reset(); // ✅ Reset after success
+      } else {
+        toast.error(data.error || "Booking failed.");
+      }
+    } catch (err) {
+      console.error("Booking error:", err);
+      toast.error("Something went wrong while booking.");
+    }
   };
+
 
   return (
     <Card className="max-w-md mx-auto mt-10 p-6">
       <CardContent>
         <h2 className="text-xl font-bold mb-4">Add a New Space</h2>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onTheSubmit)} className="space-y-4">
             {/* Space Name */}
             <FormField
               control={form.control}
@@ -74,7 +112,12 @@ function BookingForm() {
                 <FormItem>
                   <FormLabel>Number of Guests</FormLabel>
                   <FormControl>
-                    <Input type= "number" placeholder="Number of guests" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="Number of guests"
+                      min="1"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,15 +126,15 @@ function BookingForm() {
             {/* Date of booking */}
             <FormField
               control={form.control}
-              name="DateOfBooking"
+              name="dateOfBooking"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Date of Booking</FormLabel>
                   <FormControl>
                     <Input
                       type="date"
-                      placeholder="Booking Date"
-                      {...field}
+                      value={field.value.toISOString().slice(0, 10)}
+                      onChange={(e) => field.onChange(new Date(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -101,12 +144,17 @@ function BookingForm() {
             {/* Number of Hours */}
             <FormField
               control={form.control}
-              name="NumberOfHours"
+              name="numberOfHours"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Number of hours you want to book for</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Hours booked" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="Hours booked"
+                      min="1"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
