@@ -88,7 +88,16 @@ export function SignUpForm({ className, ...props }) {
                     name="password_hash"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <div className="flex items-center">
+                          <FormLabel>Password</FormLabel>
+
+                          <a
+                            href="#"
+                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                          >
+                            Forgot your password?
+                          </a>
+                        </div>
                         <FormControl>
                           <Input type="password" {...field} />
                         </FormControl>
