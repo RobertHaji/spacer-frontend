@@ -5,6 +5,7 @@ import "./index.css";
 import LoginPage from "./pages/login";
 import App from "./App";
 import SignUpPage from "./pages/signup";
+import BookingForm from "./components/booking-form";
 
 const routes = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const routes = createBrowserRouter([
   {
     path: "signup",
     element: <SignUpPage />,
+  },
+  {
+    path: "/booking-form",
+    element: <BookingForm />,
   },
 ]);
 
