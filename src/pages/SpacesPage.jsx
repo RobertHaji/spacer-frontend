@@ -44,8 +44,8 @@ export function SpacesPage() {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
       <Header />
 
-      <main className="flex flex-1 px-6 gap-6">
-        <div className="w-2/3">
+      <main className="flex flex-1 px-6 gap-5">
+        <div className="w-1/3">
           <h1 className="text-3xl font-bold mb-4">Explore Available Spaces</h1>
           <Input
             placeholder="Search by location"
@@ -109,9 +109,9 @@ export function SpacesPage() {
             ))
           )}
         </div>
-        <div className="w-1/3">
+        <div className="w-100">
           {selectedSpace && (
-            <div className="sticky top-24 bg-white text-black p-4 rounded shadow-lg">
+            <div className="sticky top-28 bg-white text-black p-4 rounded shadow-lg">
               <h2 className="text-xl font-bold mb-2">
                 Book {selectedSpace.name}
               </h2>
