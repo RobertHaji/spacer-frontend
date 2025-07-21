@@ -33,8 +33,15 @@ export default function Footer() {
   const [showCounties, setShowCounties] = useState(false);
 
   return (
-   
-    <footer className="bg-[#31194D] text-white py-8 px-6">
+    // <footer className="bg-gradient-to-r from-[#004D61] to-[#00A7B5] text-white py-10 px-6">
+    //   <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6 text-sm">
+    //     {/* Logo */}
+    //     <div className="font-bold text-lg">Spacer</div>
+
+    //     {/* Company */}
+    //     <div>
+    //       <h3 className="font-semibold mb-1">Company</h3>
+    <footer className="bg-gradient-to-r from-[#004D61] to-[#00A7B5] text-white py-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-6 text-sm">
         <div className="font-bold text-lg">Spacer</div>
 
@@ -80,8 +87,8 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Social Icons */}
-        <div className="flex flex-wrap gap-4 justify-start md:justify-end items-center">
+        Social Icons
+        {/* <div className="flex flex-wrap gap-4 justify-start md:justify-end items-center">
           <a href="https://github.com/RobertHaji/spacer-frontend" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition"><Github /></a>
           <a href="https://www.instagram.com/event.spaces/?igsh=MXc5NnR2OHdoc3kx#" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition"><Instagram /></a>
           <a href="https://www.facebook.com/groups/160560687631591/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition"><Facebook /></a>
@@ -89,7 +96,7 @@ export default function Footer() {
           <a href="https://x.com/EventSpacesSA?t=uSdcWB2fIhz8F6KkcDAqNA&s=08" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition"><Twitter /></a>
           <a href="https://www.linkedin.com/company/rialto-events/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition"><Linkedin /></a>
           <a href="https://www.tiktok.com/search?lang=en&q=event%20spaces%20kenya&t=1753094257792" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition"><TikTokIcon /></a>
-        </div>
+        </div> */}
       </div>
 
       {/* Bottom Bar
@@ -113,6 +120,7 @@ export default function Footer() {
           <a href="https://youtu.be/_F5OfKbmQLo" target="_blank" rel="noopener noreferrer"><Youtube /></a>
           <a href="https://x.com/EventSpacesSA?t=uSdcWB2fIhz8F6KkcDAqNA&s=08" target="_blank" rel="noopener noreferrer"><Twitter /></a>
           <a href="https://www.linkedin.com/company/rialto-events/" target="_blank" rel="noopener noreferrer"><Linkedin /></a>
+          <a href="https://www.tiktok.com/search?lang=en&q=event%20spaces%20kenya&t=1753094257792" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition"><TikTokIcon /></a>
         </div>
       </div>
 
