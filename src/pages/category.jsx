@@ -61,14 +61,14 @@ export default function CategoryPage() {
             <Card
               key={cat.slug}
               onClick={() => navigate(`/spaces/${cat.slug}`)}
-              className="cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] bg-white text-black overflow-hidden"
+              className="cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] bg-transparent text-white overflow-hidden rounded-xl border border-white/20"
             >
               <img
                 src={cat.image}
                 alt={cat.name}
-                className="w-full h-40 object-cover"
+                className="w-full h-24 object-cover rounded-t-xl"
               />
-              <div className="text-center font-semibold py-2 text-lg">
+              <div className="text-center text-sm font-medium py-2">
                 {cat.name}
               </div>
             </Card>
