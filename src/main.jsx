@@ -5,6 +5,7 @@ import "./index.css";
 import LoginPage from "./pages/login";
 // import App from "./App";
 import SignUpPage from "./pages/signup";
+
 import CategoryPage from "./pages/category";
 
 import BookingForm from "./components/booking-form";
@@ -13,12 +14,15 @@ import SpaceForm from "./components/SpaceForm";
 import { SpacesPage } from "./pages/SpacesPage";
 import HomePage from "./pages/Home";
 import BookingsPage from "./pages/BookingPage";
+import { Toaster } from "react-hot-toast";
+
+import 
 
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage/>,
+    element: <HomePage />,
   },
   {
     path: "/login",
@@ -34,29 +38,27 @@ const routes = createBrowserRouter([
     element: <BookingForm />,
   },
 
-  
   {
     path: "/SpaceForm",
-    element: <SpaceForm/>
+    element: <SpaceForm />,
   },
   {
     path: "/SpacesPage",
-    element: <SpacesPage/>
+    element: <SpacesPage />,
   },
   {
-
     path: "/BookingPage",
-    element: <BookingsPage />
+    element: <BookingsPage />,
   },
   {
     path: "/category",
-    element: <CategoryPage/>
-  }
-
+    element: <CategoryPage />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <Toaster position="top-right" />
     <RouterProvider router={routes} />
   </StrictMode>
 );
