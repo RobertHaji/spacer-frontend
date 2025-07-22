@@ -57,9 +57,9 @@ export function SpacesPage() {
   }, [location.state]);
 
   const filteredSpaces = spaces.filter((space) =>
-    (space.location || "").toLowerCase().includes(search.toLowerCase())
-  );
-
+    space.location&&
+    space.location.toLowerCase().includes(search.toLowerCase())
+);
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
       <Header />

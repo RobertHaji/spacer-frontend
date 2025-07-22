@@ -32,6 +32,8 @@ const spaceSchema = z.object({
     }),
   image_url: z.string().url("Image URL must be a valid URL"),
   available: z.boolean(),
+  // Additional field (lcation validation)
+  location: z.string().min(2, "Location is required"),
   category_id: z
     .union([z.string(), z.number()])
     .transform((val) => Number(val))
@@ -52,6 +54,7 @@ function SpaceForm() {
       rent_rate: 0,
       image_url: "",
       available: true,
+      location: "",
       category_id: 1,
     },
   });
@@ -186,6 +189,20 @@ function SpaceForm() {
                     />
                   </FormControl>
                   <FormLabel className="!mt-0">Available</FormLabel>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* SpaceField for location */}
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter location" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
