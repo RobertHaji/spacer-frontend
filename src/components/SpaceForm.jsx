@@ -55,14 +55,29 @@ function SpaceForm() {
     },
   });
 
-  const onSubmit = (values) => {
-    console.log("Submited values:", values);
+  const onSubmit = async(values) => {
+    try {
+    const response = await fetch("http://localhost:5000/spaces", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
-    setTimeout(() => {
-      toast.success("Space created succesfully");
-      form.reset();
-    }, 500);
-  };
+    if (!response.ok) {
+      throw new Error("Failed to create space");
+    }
+
+    const data = await response.json();
+    toast.success("Space created successfully");
+    console.log("Created space:", data);
+    form.reset();
+  } catch (error) {
+    console.error("Error submitting space:", error);
+    toast.error("Failed to create space");
+  }
+};
 
   return (
     <Card className="max-w-md mx-auto mt-10 p-6">
