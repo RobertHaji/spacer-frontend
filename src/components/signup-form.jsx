@@ -5,7 +5,8 @@ import { Loader2Icon } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import {
   Form,
@@ -43,6 +44,8 @@ export function SignUpForm({ className, ...props }) {
     resolver: zodResolver(schema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (values) => {
     console.log(values);
 
@@ -59,7 +62,27 @@ export function SignUpForm({ className, ...props }) {
 
     await fetch("http://localhost:5000/signup", requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        if (result.user) {
+          // display success message
+          toast.success(result.message);
+          // reseting the form
+          form.reset();
+
+          localStorage.setItem("session", result.access_token);
+
+          navigate(
+            result.user.role === "admin" ? "/BookingPage" : "/SpacesPage"
+          );
+        } else {
+          const message =
+            typeof result.message === "object"
+              ? Object.values(result.message)[0]
+              : result.message;
+
+          toast.error(message);
+        }
+      })
       .catch((error) => console.log("error", error));
   };
 
