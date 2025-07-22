@@ -66,10 +66,11 @@ export function LoginForm({ className, ...props }) {
           // reseting the form
           form.reset();
 
+          //store user session
           localStorage.setItem("session", result.access_token);
-
+          // redirects
           navigate(
-            result.user.role === "admin" ? "/BookingPage" : "/SpacesPage"
+            result.user.role === "admin" ? "/booking-form" : "/SpaceForm"
           );
         } else {
           const message =
