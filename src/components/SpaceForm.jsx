@@ -56,7 +56,7 @@ function SpaceForm() {
   });
     
     // Checks if the user is an admin
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("session");
 const userRole = localStorage.getItem("role");
 
 if (!token || userRole !== "admin") {

@@ -70,7 +70,7 @@ export function LoginForm({ className, ...props }) {
           localStorage.setItem("session", result.access_token);
           // redirects
           navigate(
-            result.user.role === "admin" ? "/BookingPage" : "/SpacesPage"
+            result.user.role === "admin" ? "/HomePage" : "/SpacesPage"
           );
         } else {
           const message =
