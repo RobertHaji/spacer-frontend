@@ -87,7 +87,8 @@ function SpaceForm() {
       toast.success("Space created successfully");
       console.log("Created space:", data);
       form.reset();
-      navigate("/SpacesPage");
+      // After succesful post navigate the spaces page
+      navigate("/SpacesPage", {state: {refresh:true}});
     } catch (error) {
       console.error("Error submitting space:", error);
       toast.error("Failed to create space");
