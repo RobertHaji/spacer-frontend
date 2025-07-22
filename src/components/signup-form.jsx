@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Loader2Icon } from "lucide-react";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -42,8 +43,24 @@ export function SignUpForm({ className, ...props }) {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     console.log(values);
+
+    const raw = JSON.stringify(values);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: raw,
+    };
+
+    await fetch("http://localhost:5000/signup", requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   return (
@@ -106,13 +123,27 @@ export function SignUpForm({ className, ...props }) {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full hover:cursor-pointer">
-                    SignUp
+                  <Button
+                    disable={form.formState.isSubmitting}
+                    type="submit"
+                    className="w-full hover:cursor-pointer"
+                  >
+                    {form.formState.isSubmitting ? (
+                      <>
+                        <Loader2Icon /> signup....
+                      </>
+                    ) : (
+                      "SignUp"
+                    )}
                   </Button>
                 </div>
                 <div className="text-center text-sm">
                   Already have an account?{" "}
-                  <Link to= "/login" href="#" className="underline underline-offset-4">
+                  <Link
+                    to="/login"
+                    href="#"
+                    className="underline underline-offset-4"
+                  >
                     Login
                   </Link>
                 </div>
