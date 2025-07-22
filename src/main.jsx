@@ -16,9 +16,6 @@ import HomePage from "./pages/Home";
 import BookingsPage from "./pages/BookingPage";
 import { Toaster } from "react-hot-toast";
 
-import 
-
-
 const routes = createBrowserRouter([
   {
     path: "/",
