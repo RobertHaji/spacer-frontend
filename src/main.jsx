@@ -5,6 +5,7 @@ import "./index.css";
 import LoginPage from "./pages/login";
 // import App from "./App";
 import SignUpPage from "./pages/signup";
+import CategoryPage from "./pages/category";
 
 import BookingForm from "./components/booking-form";
 
@@ -40,6 +41,10 @@ const routes = createBrowserRouter([
   {
     path: "/SpacesPage",
     element: <SpacesPage/>
+  },
+  {
+    path: "/category",
+    element: <CategoryPage/>
   }
 
 ]);
