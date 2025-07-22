@@ -85,88 +85,105 @@ function BookingForm() {
 
 
   return (
-    <Card className="max-w-md mx-auto mt-10 p-6">
-      <CardContent>
-        <h2 className="text-xl font-bold mb-4">Add a New Space</h2>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onTheSubmit)} className="space-y-4">
-            {/* Space Name */}
-            <FormField
-              control={form.control}
-              name="spaceName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Space name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Space Name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Number of Guests */}
-            <FormField
-              control={form.control}
-              name="numberOfGuests"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Number of Guests</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Number of guests"
-                      min="1"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Date of booking */}
-            <FormField
-              control={form.control}
-              name="dateOfBooking"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date of Booking</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="date"
-                      value={field.value.toISOString().slice(0, 10)}
-                      onChange={(e) => field.onChange(new Date(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Number of Hours */}
-            <FormField
-              control={form.control}
-              name="numberOfHours"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Number of hours you want to book for</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Hours booked"
-                      min="1"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full">
-              Submit
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+    <div
+      className="flex items-center justify-center min-h-screen"
+      style={{ background: "linear-gradient(to bottom, #0F555C, #20B4C2)" }}
+    >
+      <Card
+        className="max-w-md mx-auto mt-10 p-6 text-white rounded-lg shadow-lg"
+        style={{ background: "linear-gradient(to bottom, #20B4C2, #0F555C)" }}
+      >
+        <CardContent>
+          <h2 className="text-xl font-bold mb-4">Add a New Space</h2>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onTheSubmit)}
+              className="space-y-4"
+            >
+              {/* Space Name */}
+              <FormField
+                control={form.control}
+                name="spaceName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Space name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Space Name"
+                        {...field}
+                        className="bg-transparent text-white placeholder-white border-white focus:border-white focus:ring-white"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Number of Guests */}
+              <FormField
+                control={form.control}
+                name="numberOfGuests"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Number of Guests</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Number of guests"
+                        min="1"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Date of booking */}
+              <FormField
+                control={form.control}
+                name="dateOfBooking"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Date of Booking</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="date"
+                        value={field.value.toISOString().slice(0, 10)}
+                        onChange={(e) =>
+                          field.onChange(new Date(e.target.value))
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* Number of Hours */}
+              <FormField
+                control={form.control}
+                name="numberOfHours"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Number of hours you want to book for</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Hours booked"
+                        min="1"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full">
+                Confirm
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
