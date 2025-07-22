@@ -1,5 +1,4 @@
 import { Card } from "@/components/ui/card";
-//import Header from "./Header";
 import Footer from "@/components/ui/Footer";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/ui/Header"; 
@@ -19,34 +18,34 @@ const categories = [
   },
   {
     name: "Meetings",
-    image: "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fbe3326cb-8d44-4140-8c3b-9e8327cd7282%2Fimages%2Fb280d5c66652417b9790284393edd581_large!_!fad642b3cabe2148c1be1d55f8ece857.jpg&w=3840&q=30"
+    image:
+      "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fbe3326cb-8d44-4140-8c3b-9e8327cd7282%2Fimages%2Fb280d5c66652417b9790284393edd581_large!_!fad642b3cabe2148c1be1d55f8ece857.jpg&w=3840&q=30",
     //slug: "meetings",
   },
   {
     name: "Events",
     image:
-      "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fd7a54a1a-b754-45d3-8ab2-c721f0140af7%2Fimages%2F49760995c833453c917d3f1fac77c5af_large!_!f2895887ca17ee536b5f0a40b2e645a5.jpg&w=3840&q=75",
+      "https://www.oyorooms.com/blog/wp-content/uploads/2018/02/type-of-event.jpg",
     //slug: "events",
   },
   {
     name: "Baby shower",
     image:
-      "https://birthdaywala.in/wp-content/uploads/2024/08/Baby-Shower1.webp",
-   // slug: "baby-shower",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4GGzUbOksPoT65XkMEGrCw3_FPy0uF2_YwbzrEvZxWG_GoqKzhe_BVaZ_ZLSwyt5fPkE&usqp=CAU",
+    // slug: "baby-shower",
   },
   {
     name: "Graduation party",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiLwASgBcdfy9QUWDcjYpLGcPA-H1smM1PR-6FqlxfXkpxve7HohBE7c7QEvFLkMMTMfQ&usqp=CAU",
-   // slug: "graduation-party",
+      "https://t3.ftcdn.net/jpg/11/38/78/46/360_F_1138784636_PAJFSpLX3DFoB7kT9hnmfmmhYuTSUPED.jpg",
+    // slug: "graduation-party",
   },
   {
     name: "Birthday",
     image:
       "https://elegantlivingeveryday.com/wp-content/uploads/2023/10/How-to-Plan-an-Adult-Birthday-Party-Featured-Image.jpg",
-   // slug: "birthday",
+    // slug: "birthday",
   },
-  
 ];
 
 export default function CategoryPage() {
