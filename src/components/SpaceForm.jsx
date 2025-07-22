@@ -11,11 +11,11 @@ import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 // Validation schema using Zod
 const spaceSchema = z.object({
@@ -42,6 +42,7 @@ const spaceSchema = z.object({
 
 function SpaceForm() {
   //  UseForm with zod
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(spaceSchema),
     defaultValues: {
@@ -54,44 +55,45 @@ function SpaceForm() {
       category_id: 1,
     },
   });
-    
-    // Checks if the user is an admin
-const token = localStorage.getItem("session");
-const userRole = localStorage.getItem("role");
 
-if (!token || userRole !== "admin") {
-  return (
-    <p className="text-white text-center mt-10">
-      You are not authorized to add a space.
-    </p>
-  );
-}
+  // Checks if the user is an admin
+  const token = localStorage.getItem("session");
+  const userRole = localStorage.getItem("role");
 
-
-  const onSubmit = async(values) => {
-      try {
-    const response = await fetch("http://localhost:5000/spaces", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(values),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to create space");
-    }
-
-    const data = await response.json();
-    toast.success("Space created successfully");
-    console.log("Created space:", data);
-    form.reset();
-  } catch (error) {
-    console.error("Error submitting space:", error);
-    toast.error("Failed to create space");
+  if (!token || userRole !== "admin") {
+    return (
+      <p className="text-white text-center mt-10">
+        You are not authorized to add a space.
+      </p>
+    );
   }
-};
+
+  const onSubmit = async (values) => {
+    try {
+      const response = await fetch("http://localhost:5000/spaces", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create space");
+      }
+
+      const data = await response.json();
+      toast.success("Space created successfully");
+      console.log("Created space:", data);
+      form.reset();
+      // After succesful post navigate the spaces page
+      navigate("/SpacesPage", {state: {refresh:true}});
+    } catch (error) {
+      console.error("Error submitting space:", error);
+      toast.error("Failed to create space");
+    }
+  };
 
   return (
     <Card className="max-w-md mx-auto mt-10 p-6">
