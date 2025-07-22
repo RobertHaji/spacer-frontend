@@ -12,7 +12,7 @@ import BookingForm from "./components/booking-form";
 import SpaceForm from "./components/SpaceForm";
 import { SpacesPage } from "./pages/SpacesPage";
 import HomePage from "./pages/Home";
-import CategoryPage from "./pages/category";
+
 
 const routes = createBrowserRouter([
   {
@@ -43,7 +43,7 @@ const routes = createBrowserRouter([
     element: <SpacesPage/>
   },
   {
-    path: "/categories",
+    path: "/category",
     element: <CategoryPage/>
   }
 

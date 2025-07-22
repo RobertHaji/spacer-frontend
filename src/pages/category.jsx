@@ -1,7 +1,8 @@
 import { Card } from "@/components/ui/card";
 //import Header from "./Header";
-import Footer from "./Footer";
+import Footer from "@/components/ui/Footer";
 import { useNavigate } from "react-router-dom";
+import Header from "@/components/ui/Header"; 
 
 const categories = [
   {
@@ -19,31 +20,31 @@ const categories = [
   {
     name: "Meetings",
     image: "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fbe3326cb-8d44-4140-8c3b-9e8327cd7282%2Fimages%2Fb280d5c66652417b9790284393edd581_large!_!fad642b3cabe2148c1be1d55f8ece857.jpg&w=3840&q=30"
-    slug: "meetings",
+    //slug: "meetings",
   },
   {
     name: "Events",
     image:
       "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fd7a54a1a-b754-45d3-8ab2-c721f0140af7%2Fimages%2F49760995c833453c917d3f1fac77c5af_large!_!f2895887ca17ee536b5f0a40b2e645a5.jpg&w=3840&q=75",
-    slug: "events",
+    //slug: "events",
   },
   {
     name: "Baby shower",
     image:
       "https://birthdaywala.in/wp-content/uploads/2024/08/Baby-Shower1.webp",
-    slug: "baby-shower",
+   // slug: "baby-shower",
   },
   {
     name: "Graduation party",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiLwASgBcdfy9QUWDcjYpLGcPA-H1smM1PR-6FqlxfXkpxve7HohBE7c7QEvFLkMMTMfQ&usqp=CAU",
-    slug: "graduation-party",
+   // slug: "graduation-party",
   },
   {
     name: "Birthday",
     image:
       "https://elegantlivingeveryday.com/wp-content/uploads/2023/10/How-to-Plan-an-Adult-Birthday-Party-Featured-Image.jpg",
-    slug: "birthday",
+   // slug: "birthday",
   },
   
 ];
