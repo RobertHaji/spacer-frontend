@@ -5,6 +5,7 @@ import "./index.css";
 import LoginPage from "./pages/login";
 // import App from "./App";
 import SignUpPage from "./pages/signup";
+
 import CategoryPage from "./pages/category";
 
 import BookingForm from "./components/booking-form";
@@ -14,6 +15,9 @@ import { SpacesPage } from "./pages/SpacesPage";
 import HomePage from "./pages/Home";
 import BookingsPage from "./pages/BookingPage";
 import { Toaster } from "react-hot-toast";
+
+import 
+
 
 const routes = createBrowserRouter([
   {
