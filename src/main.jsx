@@ -46,8 +46,9 @@ const routes = createBrowserRouter([
   {
 
     path: "/BookingPage",
-    element: <BookingsPage/>
-
+    element: <BookingsPage />
+  },
+  {
     path: "/category",
     element: <CategoryPage/>
   }
