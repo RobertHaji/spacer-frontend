@@ -14,8 +14,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
-
+// Booking form schema
 const bookingSchema = z.object({
   spaceName: z.string().min(1, "Space name is required"),
   numberOfGuests: z.coerce
@@ -30,22 +31,31 @@ const bookingSchema = z.object({
     .max(24, "Cannot exceed 24"),
 });
 
-function BookingForm() {
+function BookingForm({ space }) {
   const accessToken = localStorage.getItem("token");
+
   const form = useForm({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
-      spaceName: "",
+      spaceName: space?.name || "",
       numberOfGuests: 1,
       dateOfBooking: new Date(),
       numberOfHours: 1,
     },
   });
 
+  useEffect(() => {
+    if (space) {
+      form.reset({
+        spaceName: space.name,
+        numberOfGuests: 1,
+        dateOfBooking: new Date(),
+        numberOfHours: 1,
+      });
+    }
+  }, [space]);
 
   const onTheSubmit = async (values) => {
-      console.log("Submited values:", values);
-
     const formattedDate = new Date(values.dateOfBooking)
       .toISOString()
       .slice(0, 19)
@@ -73,7 +83,7 @@ function BookingForm() {
       if (response.ok) {
         toast.success("Booking successful!");
         console.log("Created booking:", data);
-        form.reset(); // ✅ Reset after success
+        form.reset();
       } else {
         toast.error(data.error || "Booking failed.");
       }
@@ -83,24 +93,22 @@ function BookingForm() {
     }
   };
 
-
   return (
     <div
-      className="flex items-center justify-center min-h-screen"
+      className="min-h-screen flex items-center justify-center px-4 sm:px-6"
       style={{ background: "linear-gradient(to bottom, #0F555C, #20B4C2)" }}
     >
       <Card
-        className="max-w-md mx-auto mt-10 p-6 text-white rounded-lg shadow-lg"
+        className="w-full max-w-lg mx-auto p-8 text-white rounded-lg shadow-lg flex flex-col justify-center min-h-[80vh]"
         style={{ background: "linear-gradient(to bottom, #20B4C2, #0F555C)" }}
       >
-        <CardContent>
-          <h2 className="text-xl font-bold mb-4">Add a New Space</h2>
+        <CardContent className="flex flex-col justify-center space-y-6">
+          <h2 className="text-2xl font-bold text-center">Book This Space</h2>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onTheSubmit)}
-              className="space-y-4"
+              className="space-y-6"
             >
-              {/* Space Name */}
               <FormField
                 control={form.control}
                 name="spaceName"
@@ -109,16 +117,15 @@ function BookingForm() {
                     <FormLabel>Space name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Space Name"
+                        readOnly
+                        className="w-full bg-transparent text-white placeholder-white border-white"
                         {...field}
-                        className="bg-transparent text-white placeholder-white border-white focus:border-white focus:ring-white"
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {/* Number of Guests */}
               <FormField
                 control={form.control}
                 name="numberOfGuests"
@@ -128,8 +135,8 @@ function BookingForm() {
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="Number of guests"
                         min="1"
+                        className="w-full bg-transparent text-white placeholder-white border-white"
                         {...field}
                       />
                     </FormControl>
@@ -137,7 +144,6 @@ function BookingForm() {
                   </FormItem>
                 )}
               />
-              {/* Date of booking */}
               <FormField
                 control={form.control}
                 name="dateOfBooking"
@@ -151,24 +157,25 @@ function BookingForm() {
                         onChange={(e) =>
                           field.onChange(new Date(e.target.value))
                         }
+                        className="w-full bg-transparent text-white placeholder-white border-white"
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              {/* Number of Hours */}
               <FormField
                 control={form.control}
                 name="numberOfHours"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number of hours you want to book for</FormLabel>
+                    <FormLabel>Number of Hours</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="Hours booked"
                         min="1"
+                        max="24"
+                        className="w-full bg-transparent text-white placeholder-white border-white"
                         {...field}
                       />
                     </FormControl>
@@ -176,9 +183,21 @@ function BookingForm() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Confirm
-              </Button>
+              <div className="space-y-4">
+                <Button
+                  type="submit"
+                  className="w-full bg-transparent border-2 border-green-600 text-white hover:bg-green-600/100 transition duration-300"
+                >
+                  Confirm Booking
+                </Button>
+                <Button
+                  type="button"
+                  className="w-full bg-transparent border-2 border-red-600 text-white hover:bg-red-700/100 transition duration-300"
+                  onClick={() => form.reset()}
+                >
+                  Cancel
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>
