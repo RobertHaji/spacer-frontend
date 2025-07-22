@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Loader2Icon } from "lucide-react";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -39,8 +40,24 @@ export function LoginForm({ className, ...props }) {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     console.log(values);
+
+    const raw = JSON.stringify(values);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: raw,
+    };
+
+    await fetch("http://localhost:5000/signin", requestOptions)
+      .then((response) => response.json())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   return (
@@ -62,7 +79,7 @@ export function LoginForm({ className, ...props }) {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input type = "email" {...field} />
+                          <Input type="email" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -90,8 +107,18 @@ export function LoginForm({ className, ...props }) {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full hover:cursor-pointer">
-                    Login
+                  <Button
+                    disabled={form.formState.isSubmitting}
+                    type="submit"
+                    className="w-full hover:cursor-pointer"
+                  >
+                    {form.formState.isSubmitting ? (
+                      <>
+                        <Loader2Icon /> login.....
+                      </>
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
                 </div>
                 <div className="text-center text-sm">
