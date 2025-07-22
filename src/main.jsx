@@ -11,7 +11,7 @@ import BookingForm from "./components/booking-form";
 import SpaceForm from "./components/SpaceForm";
 import { SpacesPage } from "./pages/SpacesPage";
 import HomePage from "./pages/Home";
-import { BookingsPage } from "./components/Bookingshistory";
+import BookingsPage from "./pages/BookingPage";
 
 
 const routes = createBrowserRouter([
@@ -43,7 +43,7 @@ const routes = createBrowserRouter([
     element: <SpacesPage/>
   },
   {
-    path: "/BookingsPage",
+    path: "/BookingPage",
     element: <BookingsPage/>
   }
 

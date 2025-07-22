@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "./ui/button";
 import toast from "react-hot-toast";
 
-export function BookingsPage() {
+function BookingsHistory() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("token");
@@ -105,3 +105,4 @@ export function BookingsPage() {
     </div>
   );
 }
+export default BookingsHistory;
