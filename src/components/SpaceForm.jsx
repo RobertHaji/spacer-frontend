@@ -54,13 +54,27 @@ function SpaceForm() {
       category_id: 1,
     },
   });
+    
+    // Checks if the user is an admin
+const token = localStorage.getItem("token");
+const userRole = localStorage.getItem("role");
+
+if (!token || userRole !== "admin") {
+  return (
+    <p className="text-white text-center mt-10">
+      You are not authorized to add a space.
+    </p>
+  );
+}
+
 
   const onSubmit = async(values) => {
-    try {
+      try {
     const response = await fetch("http://localhost:5000/spaces", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     });
