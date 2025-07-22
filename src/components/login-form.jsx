@@ -16,7 +16,6 @@ import {
 
 import { Input } from "@/components/ui/input";
 
-
 import {
   Card,
   CardContent,
@@ -24,11 +23,9 @@ import {
   CardTitle,
   CardDescription,
 } from "./ui/card";
+import { Link } from "react-router-dom";
 
 const schema = z.object({
-  name: z
-    .string({ required_error: "name is required" })
-    .nonempty({ message: "Full name is required" }),
   email: z
     .string({ required_error: "Email address is required" })
     .email({ message: "Enter a valid email address" }),
@@ -65,7 +62,7 @@ export function LoginForm({ className, ...props }) {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input type = "email" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -76,9 +73,18 @@ export function LoginForm({ className, ...props }) {
                     name="password_hash"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Password</FormLabel>
+                        <div className="flex items-center">
+                          <FormLabel>Password</FormLabel>
+
+                          <a
+                            href="#"
+                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                          >
+                            Forgot your password?
+                          </a>
+                        </div>
                         <FormControl>
-                          <Input {...field} />
+                          <Input type="password" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -90,9 +96,13 @@ export function LoginForm({ className, ...props }) {
                 </div>
                 <div className="text-center text-sm">
                   Don&apos;t have an account?{" "}
-                  <a href="#" className="underline underline-offset-4">
+                  <Link
+                    to="/signup"
+                    href="#"
+                    className="underline underline-offset-4"
+                  >
                     Sign up
-                  </a>
+                  </Link>
                 </div>
               </div>
             </form>
