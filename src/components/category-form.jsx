@@ -50,14 +50,38 @@ function Cartegoryform() {
       user_id: 1,
     },
   });
+  // confirms role of the user 
+  const token = localStorage.getItem("session");
+  const userRole = localStorage.getItem("role");
 
-  const onSubmit = (values) => {
-    console.log("Submited values:", values);
+  if (!token || userRole !== "admin") {
+    return (
+      <p className="text-white text-center mt-10">
+        You are not authorized to add a space.
+      </p>
+    );
+  }
+  const onSubmit = async (values) => {
+    try {
+      const response = await fetch("http://localhost:5000/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
-    setTimeout(() => {
-      toast.success("category created succesfully");
+      if (!response.ok) {
+        throw new Error("Failed to create category");
+      }
+
+      const data = await response.json();
+      toast.success("Category created successfully");
       form.reset();
-    }, 500);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (

@@ -1,81 +1,46 @@
 import { Card } from "@/components/ui/card";
 import Footer from "@/components/ui/Footer";
-import { useNavigate } from "react-router-dom";
 import Header from "@/components/ui/Header"; 
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-const categories = [
-  {
-    name: "Photo shoot",
-    image:
-      "https://media.istockphoto.com/id/628907788/photo/couple-photoshoot.jpg?s=612x612&w=0&k=20&c=8y0L2Td4lhzl-d_JbPfDwrJJKVlYHDiAM3EBJEtAuO4=",
-    slug: "photo-shoot",
-  },
-  {
-    name: "Weddings",
-    image:
-      "https://afrikta.com/wp-content/uploads/2024/09/Best-Budget-friendly-Wedding-Venues-in-Kenya.jpg",
-    slug: "weddings",
-  },
-  {
-    name: "Meetings",
-    image:
-      "https://www.cvent.com/venues/_next/image?url=https%3A%2F%2Fimages.cvent.com%2Fcsn%2Fbe3326cb-8d44-4140-8c3b-9e8327cd7282%2Fimages%2Fb280d5c66652417b9790284393edd581_large!_!fad642b3cabe2148c1be1d55f8ece857.jpg&w=3840&q=30",
-    slug: "meetings",
-  },
-  {
-    name: "Events",
-    image:
-      "https://www.oyorooms.com/blog/wp-content/uploads/2018/02/type-of-event.jpg",
-    slug: "events",
-  },
-  {
-    name: "Baby shower",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4GGzUbOksPoT65XkMEGrCw3_FPy0uF2_YwbzrEvZxWG_GoqKzhe_BVaZ_ZLSwyt5fPkE&usqp=CAU",
-    slug: "baby-shower",
-  },
-  {
-    name: "Graduation party",
-    image:
-      "https://t3.ftcdn.net/jpg/11/38/78/46/360_F_1138784636_PAJFSpLX3DFoB7kT9hnmfmmhYuTSUPED.jpg",
-    slug: "graduation-party",
-  },
-  {
-    name: "Birthday",
-    image:
-      "https://elegantlivingeveryday.com/wp-content/uploads/2023/10/How-to-Plan-an-Adult-Birthday-Party-Featured-Image.jpg",
-    slug: "birthday",
-  },
-];
+function CategoryPage() {
+  const [categories, setCategories] = useState([]);
 
-export default function CategoryPage() {
-  const navigate = useNavigate();
+  useEffect(() => {
+    fetch("http://localhost:5000/category") // fetches data from backend
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch((err) => console.error("Error fetching categories:", err));
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
-      <Header />
-      <main className="flex-1 container mx-auto px-4 py-10">
-        <h1 className="text-3xl font-bold mb-6 text-center">Categories</h1>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-          {categories.map((cat) => (
-            <Card
-              key={cat.slug}
-              onClick={() => navigate(`/spaces/${cat.slug}`)}
-              className="cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] bg-transparent text-white overflow-hidden rounded-xl border border-white/20"
-            >
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="w-full h-40 object-cover rounded-t-xl"
-              />
-              <div className="text-center text-sm font-medium py-2">
-                {cat.name}
-              </div>
-            </Card>
-          ))}
-        </div>
-      </main>
-      <Footer />
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white p-6">
+      <h1 className="text-3xl font-bold mb-6">Categories</h1>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        {categories.map((cat) => (
+          <Link to={`/spaces/${cat.id}`} key={cat.id}>
+            <div className="bg-white bg-opacity-10 p-4 rounded-lg hover:bg-opacity-20 transition">
+              <img src={cat.image} alt={cat.name} className="w-full h-32 object-cover rounded" />
+              <p className="mt-2 text-center text-white font-medium">{cat.name}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
+
+
+export default CategoryPage;
+
+
+
+
+
+
+
+
+
+
