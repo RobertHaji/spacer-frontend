@@ -130,7 +130,22 @@ export function SpacesPage() {
         <aside className="w-full max-w-md hidden md:flex items-center justify-center">
           {selectedSpace ? (
             <div className="w-full cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] border border-white/20 rounded-xl">
+              <button
+                onClick={() => setSelectedSpace(null)}
+                className="absolute top-3 right-3 cursor-pointer text-red-500 hover:text-red-700 text-xl font-bold focus:outline-none"
+              >
+                X
+              </button>
               <BookingForm space={selectedSpace} />
+              {/* <div className="flex justify-center">
+                <Button
+                  variant="outline"
+                  className="text-red-500 border-red-500 hover:bg-red-100 hover:text-red-700 w-auto px-4"
+                  onClick={() => setSelectedSpace(null)}
+                >
+                  Cancel Booking
+                </Button>
+              </div> */}
             </div>
           ) : (
             <div className="text-center text-gray-200">
