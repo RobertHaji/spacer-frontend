@@ -7,7 +7,7 @@ function BookingsHistory() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("token");
-  const userId = localStorage.getItem("user_id");
+  const userId = localStorage.getItem("userid");
 
   
   useEffect(() => {
