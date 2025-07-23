@@ -33,7 +33,7 @@ const bookingSchema = z.object({
 });
 
 function BookingForm({ space }) {
-  const accessToken = localStorage.getItem("token");
+  const accessToken = localStorage.getItem("session");
   const [showForm, setShowForm] = useState(true);
   const navigate = useNavigate();
   const form = useForm({
