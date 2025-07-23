@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, UtensilsIcon } from "lucide-react";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -24,7 +24,10 @@ import {
   CardTitle,
   CardDescription,
 } from "./ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
+// import { BASE_URL } from "@/utils";
 
 const schema = z.object({
   email: z
@@ -36,13 +39,13 @@ const schema = z.object({
 });
 
 export function LoginForm({ className, ...props }) {
+  const navigate = useNavigate();
+
   const form = useForm({
     resolver: zodResolver(schema),
   });
 
   const onSubmit = async (values) => {
-    console.log(values);
-
     const raw = JSON.stringify(values);
 
     const requestOptions = {
@@ -56,7 +59,29 @@ export function LoginForm({ className, ...props }) {
 
     await fetch("http://localhost:5000/signin", requestOptions)
       .then((response) => response.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        if (result.user) {
+          // display success message
+          toast.success(result.message);
+          // reseting the form
+          form.reset();
+
+          //store user session
+          localStorage.setItem("session", result.access_token);
+          localStorage.setItem("role", result.user.role); 
+          // redirects
+          navigate(
+            result.user.role === "admin" ? "/SpacesPage" : "/BookingPage"
+          );
+        } else {
+          const message =
+            typeof result.message === "object"
+              ? Object.values(result.message)[0]
+              : result.message;
+
+          toast.error(message);
+        }
+      })
       .catch((error) => console.log("error", error));
   };
 
@@ -79,7 +104,7 @@ export function LoginForm({ className, ...props }) {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input type="email" {...field} />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
