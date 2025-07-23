@@ -8,33 +8,14 @@ import BookingForm from "@/components/booking-form";
 import { useLocation } from "react-router-dom";
 
 
-// const displaySpaces = [
-//   {
-//     id: 1,
-//     name: "Reef Hotel (Mombasa)",
-//     description: "Reef Hotel Mombasa offers a conference facility...",
-//     rent_rate: 800,
-//     location: "Mombasa",
-//     image_url:
-//       "https://cf.bstatic.com/xdata/images/hotel/max1024x768/121822663.jpg?k=cbaedb5963542fe37a0918426bd6b4566d86287181946d53f8a42e97cc95a13f&o=&hp=1",
-//   },
-//   {
-//     id: 2,
-//     name: "Lily (Serena Hotels, Nairobi)",
-//     description: "The Lily Serena Hotel Conference Room is where...",
-//     rent_rate: 750,
-//     location: "Nairobi",
-//     image_url:
-//       "https://image-tc.galaxy.tf/wijpeg-b2xm03zk5188ubji56g3c5moh/lily-room-board-room.jpg?width=1600&height=1066",
-//   },
-// ];
-
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [loading, setLoading] = useState(true);
-  const location = useLocation()
+  const location = useLocation();
+
+  const categoryFilter = location.state?.category || "";
 
   useEffect(() => {
     fetch("http://localhost:5000/spaces")
@@ -56,10 +37,22 @@ export function SpacesPage() {
       });
   }, [location.state]);
 
-  const filteredSpaces = spaces.filter((space) =>
-    space.location&&
-    space.location.toLowerCase().includes(search.toLowerCase())
-);
+  const filteredSpaces = spaces.filter((space) => {
+    const locationMatch = space.location
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+    const categoryMatch = categoryFilter
+      ? (space.category_name || "").toLowerCase() === categoryFilter.toLowerCase()
+      : true;
+
+    return locationMatch && categoryMatch;
+  });
+
+  // console.log("Category filter:", categoryFilter);
+  // console.log("Filtered spaces:", filteredSpaces);
+
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
       <Header />
