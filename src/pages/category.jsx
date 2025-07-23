@@ -16,29 +16,31 @@ function CategoryPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white p-6">
+    <>
       <Header />
-      <main className="flex flex-1 px-6 gap-5">
-        <h1 className="text-3xl font-bold mb-6">Categories</h1>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {categories.map((cat) => (
-            <Link to={`/spaces/${cat.id}`} key={cat.id}>
-              <div className="bg-white bg-opacity-10 p-4 rounded-lg hover:bg-opacity-20 transition">
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  className="w-full h-32 object-cover rounded"
-                />
-                <p className="mt-2 text-center text-white font-medium">
-                  {cat.name}
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </main>
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white p-6">
+        <main className="flex flex-1 px-6 gap-5">
+          <h1 className="text-3xl font-bold mb-6">Categories</h1>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {categories.map((cat) => (
+              <Link to={`/spaces/${cat.id}`} key={cat.id}>
+                <div className="cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] bg-transparent text-white overflow-hidden rounded-xl border border-white/20">
+                  <img
+                    src={cat.image_url}
+                    alt={cat.name}
+                    className="w-full h-32 object-cover rounded"
+                  />
+                  <p className="mt-2 text-center text-white font-medium">
+                    {cat.name}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </main>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 
