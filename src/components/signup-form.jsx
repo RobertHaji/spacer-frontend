@@ -70,6 +70,7 @@ export function SignUpForm({ className, ...props }) {
           form.reset();
 
           localStorage.setItem("session", result.access_token);
+          localStorage.setItem("userid", result.user.id)
 
           navigate(
             result.user.role === "admin" ? "/BookingPage" : "/SpacesPage"
