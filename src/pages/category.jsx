@@ -66,7 +66,7 @@ export default function CategoryPage() {
               <img
                 src={cat.image}
                 alt={cat.name}
-                className="w-full h-24 object-cover rounded-t-xl"
+                className="w-full h-40 object-cover rounded-t-xl"
               />
               <div className="text-center text-sm font-medium py-2">
                 {cat.name}
