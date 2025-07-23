@@ -14,6 +14,7 @@ import SpaceForm from "./components/SpaceForm";
 import { SpacesPage } from "./pages/SpacesPage";
 import HomePage from "./pages/Home";
 import BookingsPage from "./pages/BookingPage";
+import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
 
 const routes = createBrowserRouter([
@@ -51,6 +52,10 @@ const routes = createBrowserRouter([
     path: "/category",
     element: <CategoryPage />,
   },
+  {
+    path: "/AdminPage",
+    element: <AdminPage/>
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(
