@@ -16,6 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // Validation schema using Zod
 const spaceSchema = z.object({
@@ -38,13 +39,14 @@ const spaceSchema = z.object({
     .union([z.string(), z.number()])
     .transform((val) => Number(val))
     .refine((val) => val > 0, {
-      message: "Category ID must be a positive number",
+      message: "Please select a valid category",
     }),
 });
 
 function SpaceForm() {
   //  UseForm with zod
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
   const form = useForm({
     resolver: zodResolver(spaceSchema),
     defaultValues: {
@@ -55,7 +57,7 @@ function SpaceForm() {
       image_url: "",
       available: true,
       location: "",
-      category_id: 1,
+      category_id: 0,
     },
   });
 
@@ -70,6 +72,22 @@ function SpaceForm() {
       </p>
     );
   }
+  // Fetch categories from the backend
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/categories");
+        if (!response.ok) throw new Error("Failed to fetch categories");
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        toast.error("Failed to load categories");
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const onSubmit = async (values) => {
     try {
@@ -91,7 +109,7 @@ function SpaceForm() {
       console.log("Created space:", data);
       form.reset();
       // After succesful post navigate the spaces page
-      navigate("/SpacesPage", {state: {refresh:true}});
+      navigate("/SpacesPage", { state: { refresh: true } });
     } catch (error) {
       console.error("Error submitting space:", error);
       toast.error("Failed to create space");
@@ -118,6 +136,7 @@ function SpaceForm() {
                 </FormItem>
               )}
             />
+            {/* Owner_name */}
             <FormField
               control={form.control}
               name="owner_name"
@@ -193,7 +212,7 @@ function SpaceForm() {
                 </FormItem>
               )}
             />
-            {/* SpaceField for location */}
+            {/* Location */}
             <FormField
               control={form.control}
               name="location"
@@ -216,6 +235,30 @@ function SpaceForm() {
                   <FormLabel>Category ID</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder="Category ID" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Category Dropdown */}
+            <FormField
+              control={form.control}
+              name="category_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      className="w-full border rounded px-3 py-2"
+                    >
+                      <option value={0}>Select category</option>
+                      {categories.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
