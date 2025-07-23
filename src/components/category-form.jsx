@@ -44,10 +44,6 @@ function CartegoryForm() {
   const token = localStorage.getItem("session");
   const userRole = localStorage.getItem("role");
 
-  // Checks if the user is an admin
-  const token = localStorage.getItem("session");
-  const userRole = localStorage.getItem("role");
-
   if (!token || userRole !== "admin") {
     return (
       <p className="text-white text-center mt-10">
