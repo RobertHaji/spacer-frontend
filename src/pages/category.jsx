@@ -70,6 +70,7 @@ function CategoryPage() {
                           e.preventDefault();
                           handleDelete(cat.id);
                         }}
+                      
                         className="px-3 py-1 rounded bg-rose-500 hover:bg-rose-600 text-white text-sm shadow transition-all"
                       >
                         Delete
