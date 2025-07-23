@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import BookingForm from "@/components/booking-form";
+import { useLocation } from "react-router-dom";
+
 
 // const displaySpaces = [
 //   {
@@ -32,6 +34,7 @@ export function SpacesPage() {
   const [search, setSearch] = useState("");
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation()
 
   useEffect(() => {
     fetch("http://localhost:5000/spaces")
@@ -42,6 +45,8 @@ export function SpacesPage() {
         return res.json();
       })
       .then((data) => {
+        // Checks if the spaces are being fetched
+        console.log("Fetched spaces:", data);
         setSpaces(data);
         setLoading(false);
       })
@@ -49,12 +54,12 @@ export function SpacesPage() {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [location.state]);
 
   const filteredSpaces = spaces.filter((space) =>
-    space.location?.toLowerCase().includes(search.toLowerCase())
-  );
-
+    space.location&&
+    space.location.toLowerCase().includes(search.toLowerCase())
+);
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
       <Header />
@@ -80,11 +85,11 @@ export function SpacesPage() {
               <Card key={space.id} className="mb-6 bg-cyan-800">
                 <CardContent className="flex gap-4 p-4">
                   <img
-                    src={space.image_url}
+                    src={space.image_url || "https://via.placeholder.com/150"}
                     alt={space.name}
                     className="w-48 h-48 object-cover rounded"
                   />
-                  <div className="flex-1" text-white>
+                  <div className="flex-1 text-white">
                     <h2 className="text-xl font-bold text-white">
                       {space.name}
                     </h2>
@@ -96,7 +101,7 @@ export function SpacesPage() {
                       Rent: {space.rent_rate} ksh/h
                     </p>
                     <p className="text-sm semi-bold text-white">
-                      Location: {space.location}
+                      Location: {space.location || "Not specified"}
                     </p>
 
                     <div className="flex gap-2 mt-3">

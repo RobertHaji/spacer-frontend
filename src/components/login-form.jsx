@@ -24,7 +24,7 @@ import {
   CardTitle,
   CardDescription,
 } from "./ui/card";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 // import { BASE_URL } from "@/utils";
@@ -68,9 +68,10 @@ export function LoginForm({ className, ...props }) {
 
           //store user session
           localStorage.setItem("session", result.access_token);
+          localStorage.setItem("role", result.user.role); 
           // redirects
           navigate(
-            result.user.role === "admin" ? "/booking-form" : "/SpaceForm"
+            result.user.role === "admin" ? "/SpacesPage" : "/BookingPage"
           );
         } else {
           const message =
