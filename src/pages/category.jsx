@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import Footer from "@/components/ui/Footer";
-import Header from "@/components/ui/Header"; 
+import Header from "@/components/ui/Header";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ function CategoryPage() {
           <h1 className="text-3xl font-bold mb-6">Categories</h1>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {categories.map((cat) => (
-              <Link to={`/spaces/${cat.id}`} key={cat.id}>
+              <Link to="/SpacesPage/" state={{ category: cat.name }} key={cat.id}>
                 <div className="cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] bg-transparent text-white overflow-hidden rounded-xl border border-white/20">
                   <img
                     src={cat.image_url}
@@ -44,15 +44,4 @@ function CategoryPage() {
   );
 }
 
-
 export default CategoryPage;
-
-
-
-
-
-
-
-
-
-

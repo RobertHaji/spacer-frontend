@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SpaceForm from "../components/SpaceForm";
 import CartegoryForm from "@/components/category-form";
 import AdminUser from "../components/AdminUsers";
@@ -6,9 +6,44 @@ import DashboardStats from "@/components/ui/DashboardStats";
 
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
+import toast from "react-hot-toast";
+
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("dashboard");
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const session = localStorage.getItem("session");
+    const role = localStorage.getItem("role");
+
+    if (!session || role !== "admin") {
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  const handleSignOut = () => {
+    setIsSigningOut(true);
+    try {
+      // clear the user local storage first
+      localStorage.removeItem("session");
+      localStorage.removeItem("role");
+      localStorage.removeItem("userid");
+
+      // give a success message
+      toast.success("Signed out successfully");
+
+      // redirect admin to our landing page
+      navigate("/");
+    } catch (error) {
+      // console.error("Sign-out failed:", error);
+      toast.error("Failed to sign out. Please try again.");
+
+      setIsSigningOut(false);
+    }
+  };
 
   return (
     <>
@@ -64,6 +99,16 @@ export default function AdminPage() {
                 🚻 List of Users
               </button>
             </nav>
+            <button
+              onClick={handleSignOut}
+              disabled={isSigningOut}
+              className={`text-left px-3 py-2 rounded-md hover:bg-[#c1121f] ${
+                isSigningOut ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              aria-label="Sign out of the admin page"
+            >
+              🚪 {isSigningOut ? "Signing Out..." : "Sign Out"}
+            </button>
           </aside>
 
           {/* Main Content */}
