@@ -18,7 +18,7 @@ function BookingsHistory() {
 
     fetch(`http://localhost:5000/users/${userId}/bookings`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((res) => {
@@ -80,6 +80,7 @@ function BookingsHistory() {
                 </p>
                 <p>Guests: {booking.number_of_guests}</p>
                 <p>Hours: {booking.number_of_hours}</p>
+                <p>Amount paid: {booking.total_amount}</p>
 
                 <div className="flex justify-end pt-4">
                   <Button
