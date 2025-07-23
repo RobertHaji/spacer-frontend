@@ -80,7 +80,7 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-1">Support</h3>
         <div>
-          <h3 className="font-semibold">Support</h3>
+          
           <ul className="space-y-1">
             <li><a href="#">Help</a></li>
             <li><a href="#">Privacy and terms</a></li>
