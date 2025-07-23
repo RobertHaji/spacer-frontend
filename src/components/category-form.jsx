@@ -40,7 +40,7 @@ const spaceSchema = z.object({
     }),
 });
 
-function Cartegoryform() {
+function CartegoryForm() {
   //  UseForm with zod
   const form = useForm({
     resolver: zodResolver(spaceSchema),
@@ -121,4 +121,4 @@ function Cartegoryform() {
   );
 }
 
-export default Cartegoryform;
+export default CartegoryForm;
