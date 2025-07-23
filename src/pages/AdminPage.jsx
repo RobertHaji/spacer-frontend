@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SpaceForm from "../components/SpaceForm";
+import AdminUser from "../components/AdminUsers"; // Make sure this component exists
 
 export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -30,6 +31,14 @@ export default function AdminPage() {
               }`}
             >
               📝 SpaceForm
+            </button>
+            <button
+              onClick={() => setActiveSection("users")}
+              className={`text-left px-3 py-2 rounded-md ${
+                activeSection === "users" ? "bg-[#4b5563] font-bold" : "hover:bg-[#4b5563]"
+              }`}
+            >
+              🚻 Users
             </button>
           </nav>
         </aside>
@@ -67,7 +76,7 @@ export default function AdminPage() {
                 </ul>
               </div>
 
-              {/* Graph Placeholder */}
+              {/* Chart Placeholder */}
               <div className="bg-white p-6 rounded-xl shadow-md">
                 <h2 className="text-lg font-semibold text-gray-800 mb-4">Bookings Overview</h2>
                 <div className="h-48 bg-gray-200 rounded-md flex items-center justify-center text-gray-500">
@@ -78,6 +87,7 @@ export default function AdminPage() {
           )}
 
           {activeSection === "spaceform" && <SpaceForm />}
+          {activeSection === "users" && <AdminUser />}
         </main>
       </div>
     </div>
