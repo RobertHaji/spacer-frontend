@@ -8,11 +8,48 @@ import Footer from "@/components/ui/Footer";
 import toast from "react-hot-toast";
 
 import { useNavigate } from "react-router-dom";
+import { User } from "lucide-react";
 
 export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [isSigningOut, setIsSigningOut] = useState(false);
+  const [adminName, setAdminName] = useState("Admin");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAdminName = async () => {
+      const userid = localStorage.getItem("userid");
+      const session = localStorage.getItem("session");
+
+      if (userid && session) {
+        try {
+          const response = await fetch(
+            `http://localhost:5000/users/${userid}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session}`,
+              },
+            }
+          );
+          const result = await response.json();
+          if (result.name) {
+            setAdminName(result.name);
+          } else {
+            setAdminName("Admin");
+          }
+        } catch (error) {
+          console.error("Failed to fetch admin name:", error);
+          setAdminName("Admin");
+        }
+      } else {
+        navigate("/login");
+      }
+    };
+
+    fetchAdminName();
+  }, [navigate]);
 
   useEffect(() => {
     const session = localStorage.getItem("session");
@@ -116,7 +153,7 @@ export default function AdminPage() {
               <div className="space-y-6">
                 {/* Greeting */}
                 <h1 className="text-2xl font-bold text-gray-800">
-                  Welcome back, Admin 👋
+                  Welcome back Admin, {adminName}
                 </h1>
 
                 {/* Dashboard Cards */}
