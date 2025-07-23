@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import BookingForm from "@/components/booking-form";
 import { useLocation } from "react-router-dom";
 
-
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
   const [search, setSearch] = useState("");
@@ -43,7 +42,8 @@ export function SpacesPage() {
       .includes(search.toLowerCase());
 
     const categoryMatch = categoryFilter
-      ? (space.category_name || "").toLowerCase() === categoryFilter.toLowerCase()
+      ? (space.category_name || "").toLowerCase() ===
+        categoryFilter.toLowerCase()
       : true;
 
     return locationMatch && categoryMatch;
@@ -51,7 +51,6 @@ export function SpacesPage() {
 
   // console.log("Category filter:", categoryFilter);
   // console.log("Filtered spaces:", filteredSpaces);
-
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
@@ -75,7 +74,10 @@ export function SpacesPage() {
             </p>
           ) : (
             filteredSpaces.map((space) => (
-              <Card key={space.id} className="mb-6 bg-cyan-800">
+              <Card
+                key={space.id}
+                className="mb-6 bg-cyan-800 cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] border border-white/20 rounded-xl"
+              >
                 <CardContent className="flex gap-4 p-4">
                   <img
                     src={space.image_url || "https://via.placeholder.com/150"}
@@ -125,14 +127,13 @@ export function SpacesPage() {
             ))
           )}
         </div>
-        <aside className="w-full max-w-md hidden md:block">
+        <aside className="w-full max-w-md hidden md:flex items-center justify-center">
           {selectedSpace ? (
-            <div className="bg-white text-black rounded-xl p-6 shadow-md">
-              <h2 className="text-2xl font-semibold mb-4">Book Form</h2>
+            <div className="w-full cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] border border-white/20 rounded-xl">
               <BookingForm space={selectedSpace} />
             </div>
           ) : (
-            <div className="text-center text-gray-200 mt-20">
+            <div className="text-center text-gray-200">
               <p>Select a space to book.</p>
             </div>
           )}
