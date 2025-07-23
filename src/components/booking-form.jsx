@@ -14,7 +14,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Booking form schema
 const bookingSchema = z.object({
@@ -33,7 +34,8 @@ const bookingSchema = z.object({
 
 function BookingForm({ space }) {
   const accessToken = localStorage.getItem("token");
-
+  const [showForm, setShowForm] = useState(true);
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -54,6 +56,14 @@ function BookingForm({ space }) {
       });
     }
   }, [space]);
+
+  const onCancel = () => {
+    setShowForm(false);
+    form.reset(); 
+    toast.error("Booking cancelled");
+  };
+
+  if (!showForm) return null; 
 
   const onTheSubmit = async (values) => {
     const formattedDate = new Date(values.dateOfBooking)
@@ -84,6 +94,8 @@ function BookingForm({ space }) {
         toast.success("Booking successful!");
         console.log("Created booking:", data);
         form.reset();
+        navigate("/payment", { state: { booking: data } });
+
       } else {
         toast.error(data.error || "Booking failed.");
       }
@@ -117,7 +129,7 @@ function BookingForm({ space }) {
                     <FormLabel>Space name</FormLabel>
                     <FormControl>
                       <Input
-                        readOnly
+                        // readOnly
                         className="w-full bg-transparent text-white placeholder-white border-white"
                         {...field}
                       />
@@ -193,7 +205,7 @@ function BookingForm({ space }) {
                 <Button
                   type="button"
                   className="w-full bg-transparent border-2 border-red-600 text-white hover:bg-red-700/100 transition duration-300"
-                  onClick={() => form.reset()}
+                  onClick={onCancel}
                 >
                   Cancel
                 </Button>

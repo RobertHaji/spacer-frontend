@@ -16,6 +16,7 @@ import HomePage from "./pages/Home";
 import BookingsPage from "./pages/BookingPage";
 import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
+import PaymentForm from "./pages/paymentFormPage";
 
 const routes = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const routes = createBrowserRouter([
   {
     path: "/category",
     element: <CategoryPage />,
+  },
+  {
+    path: "/payment/:bookingId",
+    element: <PaymentForm />
   },
   {
     path: "/AdminPage",
