@@ -7,7 +7,6 @@ import LoginPage from "./pages/login";
 import SignUpPage from "./pages/signup";
 
 import CategoryPage from "./pages/category";
-import Cartegoryform from "./components/category-form";
 import BookingForm from "./components/booking-form";
 import CartegoryForm from "./components/category-form";
 import SpaceForm from "./components/SpaceForm";
@@ -17,7 +16,7 @@ import BookingsPage from "./pages/BookingPage";
 import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
 import PaymentForm from "./pages/paymentFormPage";
-
+import EditCategoryForm from "./components/EditCategoryForm";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -38,15 +37,15 @@ const routes = createBrowserRouter([
   },
 
   {
-    path: "/SpaceForm",
+    path: "/spaceForm",
     element: <SpaceForm />,
   },
   {
-    path: "/SpacesPage",
+    path: "/spacesPage",
     element: <SpacesPage />,
   },
   {
-    path: "/BookingPage",
+    path: "/bookingPage",
     element: <BookingsPage />,
   },
   {
@@ -55,16 +54,20 @@ const routes = createBrowserRouter([
   },
   {
     path: "/payment/:bookingId",
-    element: <PaymentForm />
+    element: <PaymentForm />,
   },
   {
-    path: "/AdminPage",
-    element: <AdminPage/>
+    path: "/adminPage",
+    element: <AdminPage />,
   },
   {
     path: "/category-form",
-    element:<CartegoryForm/>
-  }
+    element: <CartegoryForm />,
+  },
+  {
+    path: "/category/edit/:id",
+    element: <EditCategoryForm />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
