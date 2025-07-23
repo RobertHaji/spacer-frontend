@@ -7,7 +7,7 @@ import LoginPage from "./pages/login";
 import SignUpPage from "./pages/signup";
 
 import CategoryPage from "./pages/category";
-
+import Cartegoryform from "./components/category-form";
 import BookingForm from "./components/booking-form";
 import CartegoryForm from "./components/category-form";
 import SpaceForm from "./components/SpaceForm";

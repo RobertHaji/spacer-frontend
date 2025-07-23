@@ -40,6 +40,9 @@ function CartegoryForm() {
       user_id: 1,
     },
   });
+  // confirms role of the user 
+  const token = localStorage.getItem("session");
+  const userRole = localStorage.getItem("role");
 
   // Checks if the user is an admin
   const token = localStorage.getItem("session");
@@ -52,7 +55,6 @@ function CartegoryForm() {
       </p>
     );
   }
-
   const onSubmit = async (values) => {
     try {
       const response = await fetch("http://localhost:5000/categories", {
