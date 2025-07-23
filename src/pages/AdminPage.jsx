@@ -2,6 +2,7 @@ import { useState } from "react";
 import SpaceForm from "../components/SpaceForm";
 import CartegoryForm from "@/components/category-form";
 import AdminUser from "../components/AdminUsers";
+import DashboardStats from "@/components/ui/DashboardStats";
 
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
@@ -75,24 +76,8 @@ export default function AdminPage() {
                 </h1>
 
                 {/* Dashboard Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h2 className="text-gray-500 text-sm font-medium">
-                      Total Spaces
-                    </h2>
-                    <p className="text-3xl font-bold text-indigo-600">12</p>
-                  </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h2 className="text-gray-500 text-sm font-medium">Users</h2>
-                    <p className="text-3xl font-bold text-green-600">56</p>
-                  </div>
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <h2 className="text-gray-500 text-sm font-medium">
-                      Bookings
-                    </h2>
-                    <p className="text-3xl font-bold text-red-600">89</p>
-                  </div>
-                </div>
+                <DashboardStats />
+                              
 
                 {/* Recent Activity */}
                 <div className="bg-white p-6 rounded-xl shadow-md">
