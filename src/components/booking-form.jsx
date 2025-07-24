@@ -107,11 +107,11 @@ function BookingForm({ space }) {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 sm:px-6"
+      className="w-full px-4 sm:px-6"
       style={{ background: "linear-gradient(to bottom, #0F555C, #20B4C2)" }}
     >
       <Card
-        className="w-full max-w-lg mx-auto p-8 text-white rounded-lg shadow-lg flex flex-col justify-center min-h-[80vh]"
+        className="w-full max-w-lg mx-auto p-8 text-white rounded-lg shadow-lg flex flex-col justify-center min-h-[20vh]"
         style={{ background: "linear-gradient(to bottom, #20B4C2, #0F555C)" }}
       >
         <CardContent className="flex flex-col justify-center space-y-6">

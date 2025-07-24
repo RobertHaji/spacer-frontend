@@ -4,9 +4,9 @@ export default function AdminUsers() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/users", {
+    fetch("http://localhost:5000/users", {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // your JWT token
+        Authorization: `Bearer ${localStorage.getItem("session")}`,
       },
     })
       .then((res) => res.json())
@@ -32,7 +32,7 @@ export default function AdminUsers() {
               <td className="py-2 px-4 border-b">{u.id}</td>
               <td className="py-2 px-4 border-b">{u.name}</td>
               <td className="py-2 px-4 border-b">{u.email}</td>
-              <td className="py-2 px-4 border-b">{u.is_admin ? "Admin" : "User"}</td>
+              <td className="py-2 px-4 border-b">{u.role}</td>
             </tr>
           ))}
         </tbody>
