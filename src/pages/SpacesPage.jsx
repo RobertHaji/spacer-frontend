@@ -104,9 +104,7 @@ const handleDelete = async (id) => {
           {loading ? (
             <p>Loading...</p>
           ) : filteredSpaces.length === 0 ? (
-            <p className="text-white text-center">
-              No spaces found for &quot;{search}&quot;.
-            </p>
+            <p className="text-white text-center">No spaces found.</p>
           ) : (
             filteredSpaces.map((space) => (
               <Card
@@ -119,24 +117,26 @@ const handleDelete = async (id) => {
                     alt={space.name}
                     className="w-48 h-48 object-cover rounded"
                   />
-                  <div className="flex-1 text-white">
-                    <h2 className="text-xl font-bold text-white">
+                  <div className={"flex-1 text-white"}>
+                    <h2 className={"text-xl font-bold text-white"}>
                       {space.name}
                     </h2>
-                    <p className="mt-2 font-semibold text-white">Description</p>
+                    <p className={"mt-2 font-semibold text-white"}>
+                      Description
+                    </p>
                     <p className="text-sm my-2 line-clamp-3 text-white">
                       {space.description}
                     </p>
                     <p className="text-sm text-white">
                       Rent: {space.rent_rate} ksh/h
                     </p>
-                    <p className="text-sm semi-bold text-white">
+                    <p className={"text-sm semi-bold text-white"}>
                       Location: {space.location || "Not specified"}
                     </p>
 
                     <div className="flex gap-2 mt-3">
                       <Button
-                        className="bg-purple-600 hover:bg-purple-700"
+                        className={"bg-purple-600 hover:bg-purple-700"}
                         onClick={() => setSelectedSpace(space)}
                       >
                         Book now
@@ -159,15 +159,17 @@ const handleDelete = async (id) => {
                     {userRole === "admin" && (
                       <div className="flex gap-2 mt-3">
                         <Button
-                          variant="outline"
-                          size="sm"
+                          className={
+                            "bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 text-sm rounded"
+                          }
                           onClick={() => handleEdit(space)}
                         >
                           Edit
                         </Button>
                         <Button
-                          variant="destructive"
-                          size="sm"
+                          className={
+                            "bg-red-500 hover:bg-red-600 text-white px-5 py-1 text-sm rounded"
+                          }
                           onClick={() => handleDelete(space.id)}
                         >
                           Delete
