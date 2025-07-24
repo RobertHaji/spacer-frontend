@@ -54,7 +54,7 @@ function CartegoryForm() {
   }
   const onSubmit = async (values) => {
     try {
-      const response = await fetch("http://localhost:5001/categories", {
+      const response = await fetch("http://localhost:5000/categories", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

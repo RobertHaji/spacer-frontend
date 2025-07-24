@@ -10,7 +10,7 @@ function CategoryPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5001/categories") // fetches data from backend
+    fetch("http://localhost:5000/categories") // fetches data from backend
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Error fetching categories:", err));
