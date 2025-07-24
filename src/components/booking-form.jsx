@@ -96,8 +96,12 @@ function BookingForm({ space }) {
         form.reset();
         navigate("/payment", { state: { booking: data } });
 
-      } else {
-        toast.error(data.error || "Booking failed.");
+      } else if (!accessToken){
+        toast.error(data.error || "User must login to book");
+        navigate("/login")
+      }
+      else {
+        toast.error(data.error || "Booking failed")
       }
     } catch (err) {
       console.error("Booking error:", err);
