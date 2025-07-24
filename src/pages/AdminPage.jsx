@@ -4,7 +4,8 @@ import CartegoryForm from "@/components/category-form";
 import AdminUser from "../components/AdminUsers";
 import DashboardStats from "@/components/ui/DashboardStats";
 
-import Header from "@/components/ui/Header";
+// import Header from "@/components/ui/Header";
+import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
 import toast from "react-hot-toast";
 
@@ -84,7 +85,7 @@ export default function AdminPage() {
 
   return (
     <>
-      <Header />
+      <AdminHeader />
       <div className="min-h-screen flex flex-col">
         {/* Top Navigation */}
         <header className="bg-[#1f2937] text-white p-4 text-xl font-semibold shadow-md">
@@ -159,7 +160,6 @@ export default function AdminPage() {
 
                 {/* Dashboard Cards */}
                 <DashboardStats />
-                              
 
                 {/* Recent Activity */}
                 <div className="bg-white p-6 rounded-xl shadow-md">
