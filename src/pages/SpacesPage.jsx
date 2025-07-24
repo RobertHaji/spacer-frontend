@@ -17,7 +17,9 @@ export function SpacesPage() {
   const navigate = useNavigate();
 
 const userRole = "admin";
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("session");
+// Debugs to check whether the token is stored
+  console.log("TOKEN BEFORE DELETE:", token);
 
 
   const categoryFilter = location.state?.category || "";

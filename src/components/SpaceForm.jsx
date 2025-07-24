@@ -97,7 +97,7 @@ function SpaceForm() {
     const url = editingSpace
       ? `http://localhost:5000/spaces/${editingSpace.id}`
       : "http://localhost:5000/spaces";
-    const method = editingSpace ? "PUT" : "POST";
+    const method = editingSpace ? "PATCH" : "POST";
 
     try {
       const response = await fetch(url, {
