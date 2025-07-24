@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 // Validation schema using Zod
 const spaceSchema = z.object({
@@ -47,9 +48,11 @@ function SpaceForm() {
   //  UseForm with zod
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const location = useLocation();
+  const editingSpace = location.state?.space || null;
   const form = useForm({
     resolver: zodResolver(spaceSchema),
-    defaultValues: {
+    defaultValues: editingSpace || {
       name: "",
       owner_name: "",
       description: "",
@@ -90,9 +93,15 @@ function SpaceForm() {
   }, []);
 
   const onSubmit = async (values) => {
+
+    const url = editingSpace
+      ? `http://localhost:5000/spaces/${editingSpace.id}`
+      : "http://localhost:5000/spaces";
+    const method = editingSpace ? "PATCH" : "POST";
+
     try {
-      const response = await fetch("http://localhost:5000/spaces", {
-        method: "POST",
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -105,8 +114,8 @@ function SpaceForm() {
       }
 
       const data = await response.json();
-      toast.success("Space created successfully");
-      console.log("Created space:", data);
+      toast.success(editingSpace ? "Space updated successfully" : "Space created successfully");
+      console.log(editingSpace? "updated space" :"Created space:", data);
       form.reset();
       // After succesful post navigate the spaces page
       navigate("/SpacesPage", { state: { refresh: true } });
@@ -119,7 +128,9 @@ function SpaceForm() {
   return (
     <Card className="max-w-md mx-auto mt-10 p-6">
       <CardContent>
-        <h2 className="text-xl font-bold mb-4">Add a New Space</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {editingSpace ? "Edit Space" : "Add a New Space"}
+        </h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {/* Name */}
@@ -265,7 +276,7 @@ function SpaceForm() {
               )}
             />
             <Button type="submit" className="w-full">
-              Submit
+              {editingSpace ? "update" : "Submit"}
             </Button>
           </form>
         </Form>

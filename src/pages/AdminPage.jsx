@@ -6,6 +6,7 @@ import SpaceForm from "../components/SpaceForm";
 import CartegoryForm from "@/components/category-form";
 import AdminUser from "../components/AdminUsers";
 import DashboardStats from "@/components/ui/DashboardStats";
+import { SpacesPage } from "./SpacesPage";
 
 import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
@@ -132,6 +133,14 @@ export default function AdminPage() {
                     : "hover:bg-[#4b5563]"
                 }`}
               >
+                <button
+                  onClick={() => setActiveSection("spaces")}
+                  className={`text-left px-3 py-2 rounded-md ${
+                    activeSection === "spaces"
+                      ? "bg-[#4b5563] font-bold"
+                      : "hover:bg-[#4b5563]"
+                  }`}
+                ></button>
                 🚻 List of Users
               </button>
             </nav>
@@ -183,6 +192,7 @@ export default function AdminPage() {
             {activeSection === "spaceform" && <SpaceForm />}
             {activeSection === "categoryform" && <CartegoryForm />}
             {activeSection === "users" && <AdminUser />}
+            {activeSection === "spaces" && <SpacesPage isAdmin={true} />}
           </main>
         </div>
       </div>
