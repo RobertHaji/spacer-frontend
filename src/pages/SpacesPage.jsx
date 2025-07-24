@@ -9,6 +9,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import AdminHeader from "@/components/adminsHeader";
 
+// Shadcn Ui dialog
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
   const [search, setSearch] = useState("");
@@ -131,13 +143,42 @@ export function SpacesPage() {
                       Location: {space.location || "Not specified"}
                     </p>
 
-                    <div className="flex gap-2 mt-3">
-                      <Button
-                        className={"bg-purple-600 hover:bg-purple-700"}
-                        onClick={() => setSelectedSpace(space)}
-                      >
-                        Book now
-                      </Button>
+                    <div className="flex gap-2 mt-3 flex-wrap">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button className="bg-purple-600 hover:bg-purple-700">
+                            Book now
+                          </Button>
+                        </DialogTrigger>
+
+                        <DialogContent
+                          onInteractOutside={(event) => event.preventDefault()}
+                          className="sm:max-w-[500px] bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white border border-white/20 shadow-xl rounded-2xl p-6 [&>button.absolute]:hidden"
+                        >
+                          <DialogClose asChild>
+                            <button className="absolute top-4 right-4 p-2 rounded-md bg-white/20 hover:bg-white/30 text-white transition-colors"></button>
+                          </DialogClose>
+                          <DialogHeader className={"text-center"}>
+                            <DialogDescription className="text-white/100 font-medium text-md">
+                              Fill in the form to reserve{" "}
+                              <strong>{space.name}</strong>.
+                            </DialogDescription>
+                          </DialogHeader>
+
+                          <BookingForm space={space} />
+
+                          <DialogFooter className="flex justify-center">
+                            <DialogClose asChild>
+                              <Button
+                                variant="outline"
+                                className="text-red-400 border-red-400 hover:bg-red-100 hover:text-red-700"
+                              >
+                                Cancel
+                              </Button>
+                            </DialogClose>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                       <Button
                         variant="secondary"
                         className="text-green-700"
