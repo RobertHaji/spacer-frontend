@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import BookingForm from "@/components/booking-form";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
@@ -13,6 +13,11 @@ export function SpacesPage() {
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
+
+const userRole = "admin";
+const token = localStorage.getItem("token");
+
 
   const categoryFilter = location.state?.category || "";
 
@@ -36,11 +41,11 @@ export function SpacesPage() {
       });
   }, [location.state]);
 
+
   const filteredSpaces = spaces.filter((space) => {
     const locationMatch = space.location
       ?.toLowerCase()
       .includes(search.toLowerCase());
-
     const categoryMatch = categoryFilter
       ? (space.category_name || "").toLowerCase() ===
         categoryFilter.toLowerCase()
@@ -52,10 +57,37 @@ export function SpacesPage() {
   // console.log("Category filter:", categoryFilter);
   // console.log("Filtered spaces:", filteredSpaces);
 
+const handleEdit = (space) => {
+  navigate("/SpaceForm", { state: { space } });
+};
+
+const handleDelete = async (id) => {
+  const confirmed = window.confirm(
+    "Are you sure you want to delete this space?"
+  );
+  if (!confirmed) return;
+
+  try {
+    const response = await fetch(`http://localhost:5000/spaces/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Delete failed");
+    toast.success("Space deleted");
+    setSpaces((prev) => prev.filter((space) => space.id !== id));
+  } catch (error) {
+    toast.error("Failed to delete space");
+  }
+};
+
+
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
       <Header />
-
       <main className="flex flex-1 px-6 gap-5">
         <div className="w-1/3">
           <h1 className="text-3xl font-bold mb-4">Explore Available Spaces</h1>
@@ -121,6 +153,24 @@ export function SpacesPage() {
                         View on map
                       </Button>
                     </div>
+                    {userRole === "admin" && (
+                      <div className="flex gap-2 mt-3">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEdit(space)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDelete(space.id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
