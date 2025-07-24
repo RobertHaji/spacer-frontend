@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import BookingForm from "@/components/booking-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast"
+import { toast } from "react-hot-toast";
+import AdminHeader from "@/components/adminsHeader";
 
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
@@ -16,11 +17,10 @@ export function SpacesPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-const userRole = localStorage.getItem("role");
-const token = localStorage.getItem("session");
-// Debugs to check whether the token is stored
+  const userRole = localStorage.getItem("role");
+  const token = localStorage.getItem("session");
+  // Debugs to check whether the token is stored
   console.log("TOKEN BEFORE DELETE:", token);
-
 
   const categoryFilter = location.state?.category || "";
 
@@ -44,7 +44,6 @@ const token = localStorage.getItem("session");
       });
   }, [location.state]);
 
-
   const filteredSpaces = spaces.filter((space) => {
     const locationMatch = space.location
       ?.toLowerCase()
@@ -60,37 +59,35 @@ const token = localStorage.getItem("session");
   // console.log("Category filter:", categoryFilter);
   // console.log("Filtered spaces:", filteredSpaces);
 
-const handleEdit = (space) => {
-  navigate("/SpaceForm", { state: { space } });
-};
+  const handleEdit = (space) => {
+    navigate("/SpaceForm", { state: { space } });
+  };
 
-const handleDelete = async (id) => {
-  const confirmed = window.confirm(
-    "Are you sure you want to delete this space?"
-  );
-  if (!confirmed) return;
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this space?"
+    );
+    if (!confirmed) return;
 
-  try {
-    const response = await fetch(`http://localhost:5000/spaces/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("session")}`,
-      },
-    });
+    try {
+      const response = await fetch(`http://localhost:5000/spaces/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("session")}`,
+        },
+      });
 
-    if (!response.ok) throw new Error("Delete failed");
-    toast.success("Space deleted");
-    setSpaces((prev) => prev.filter((space) => space.id !== id));
-  } catch (error) {
-    toast.error("Failed to delete space");
-  }
-};
-
-
+      if (!response.ok) throw new Error("Delete failed");
+      toast.success("Space deleted");
+      setSpaces((prev) => prev.filter((space) => space.id !== id));
+    } catch (error) {
+      toast.error("Failed to delete space");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
-      <Header />
+      <AdminHeader />
       <main className="flex flex-1 px-6 gap-5">
         <div className="w-1/3">
           <h1 className="text-3xl font-bold mb-4">Explore Available Spaces</h1>
