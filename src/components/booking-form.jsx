@@ -129,7 +129,7 @@ function BookingForm({ space }) {
                     <FormLabel>Space name</FormLabel>
                     <FormControl>
                       <Input
-                        // readOnly
+                        readOnly
                         className="w-full bg-transparent text-white placeholder-white border-white"
                         {...field}
                       />
