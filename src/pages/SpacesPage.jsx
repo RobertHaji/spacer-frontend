@@ -151,7 +151,10 @@ export function SpacesPage() {
                           </Button>
                         </DialogTrigger>
 
-                        <DialogContent className="sm:max-w-[500px] bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white border border-white/20 shadow-xl rounded-2xl p-6 [&>button.absolute]:hidden">
+                        <DialogContent
+                          onInteractOutside={(event) => event.preventDefault()}
+                          className="sm:max-w-[500px] bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white border border-white/20 shadow-xl rounded-2xl p-6 [&>button.absolute]:hidden"
+                        >
                           <DialogClose asChild>
                             <button className="absolute top-4 right-4 p-2 rounded-md bg-white/20 hover:bg-white/30 text-white transition-colors"></button>
                           </DialogClose>
