@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import BookingForm from "@/components/booking-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast"
 
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
