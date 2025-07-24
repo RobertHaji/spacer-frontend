@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 import SpaceForm from "../components/SpaceForm";
 import CartegoryForm from "@/components/category-form";
 import AdminUser from "../components/AdminUsers";
 import DashboardStats from "@/components/ui/DashboardStats";
 
-// import Header from "@/components/ui/Header";
 import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
-import toast from "react-hot-toast";
-
-import { useNavigate } from "react-router-dom";
-import { User } from "lucide-react";
 
 export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -149,19 +147,15 @@ export default function AdminPage() {
             </button>
           </aside>
 
-          {/* Main Content */}
           <main className="flex-1 p-6 bg-gray-100">
             {activeSection === "dashboard" && (
               <div className="space-y-6">
-                {/* Greeting */}
                 <h1 className="text-2xl font-bold text-gray-800">
                   Welcome back Admin, {adminName}
                 </h1>
 
-                {/* Dashboard Cards */}
                 <DashboardStats />
 
-                {/* Recent Activity */}
                 <div className="bg-white p-6 rounded-xl shadow-md">
                   <h2 className="text-lg font-semibold text-gray-800 mb-4">
                     Recent Activity
@@ -175,7 +169,6 @@ export default function AdminPage() {
                   </ul>
                 </div>
 
-                {/* Chart Placeholder */}
                 <div className="bg-white p-6 rounded-xl shadow-md">
                   <h2 className="text-lg font-semibold text-gray-800 mb-4">
                     Bookings Overview
