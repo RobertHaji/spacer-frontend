@@ -16,7 +16,7 @@ export function SpacesPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-const userRole = "admin";
+const userRole = localStorage.getItem("role");
 const token = localStorage.getItem("session");
 // Debugs to check whether the token is stored
   console.log("TOKEN BEFORE DELETE:", token);
@@ -74,7 +74,7 @@ const handleDelete = async (id) => {
     const response = await fetch(`http://localhost:5000/spaces/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("session")}`,
       },
     });
 
