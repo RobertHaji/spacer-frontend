@@ -2,19 +2,22 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
+import { useState } from "react";
+import BookingForm from "@/components/booking-form";
 
 export default function SpaceDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-  const space = location.state?.space;
+    const space = location.state?.space;
+    const [showForm, setShowForm] = useState(false);
 
   if (!space) {
     return <p className="text-white p-6">No space selected.</p>;
   }
 
   return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
-          <AdminHeader/>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
+      <AdminHeader />
       <div className="px-6 py-4 max-w-6xl mx-auto">
         <button
           onClick={() => navigate(-1)}
@@ -61,10 +64,20 @@ export default function SpaceDetails() {
           </p>
         </div>
 
-        <div className="flex gap-3 flex-wrap">
-          <Button className="bg-purple-600 hover:bg-purple-700">
-            Book Now
-          </Button>
+        <div className="flex gap-3 flex-wrap items-start">
+          <div>
+            {!showForm && (
+              <Button
+                className="bg-purple-600 hover:bg-purple-700"
+                onClick={() => setShowForm(true)}
+              >
+                Book now
+              </Button>
+            )}
+            {showForm && (
+              <BookingForm space={space} onClose={() => setShowForm(false)} />
+            )}
+          </div>
           <Button
             variant="secondary"
             onClick={() =>
