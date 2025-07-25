@@ -28,6 +28,7 @@ export function SpacesPage() {
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
+  const [showForm, setShowForm] = useState(false);
 
   const userRole = localStorage.getItem("role");
   const token = localStorage.getItem("session");
@@ -144,41 +145,24 @@ export function SpacesPage() {
                     </p>
 
                     <div className="flex gap-2 mt-3 flex-wrap">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button className="bg-purple-600 hover:bg-purple-700">
+                      <div>
+                        {!showForm && (
+                          <Button
+                            className="bg-purple-600 hover:bg-purple-700"
+                            onClick={() => setShowForm(true)}
+                          >
                             Book now
                           </Button>
-                        </DialogTrigger>
+                        )}
 
-                        <DialogContent
-                          onInteractOutside={(event) => event.preventDefault()}
-                          className="sm:max-w-[500px] bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white border border-white/20 shadow-xl rounded-2xl p-6 [&>button.absolute]:hidden"
-                        >
-                          <DialogClose asChild>
-                            <button className="absolute top-4 right-4 p-2 rounded-md bg-white/20 hover:bg-white/30 text-white transition-colors"></button>
-                          </DialogClose>
-                          <DialogHeader className={"text-center"}>
-                            <DialogDescription className="text-white/100 font-medium text-md">
-                              Fill in the form to reserve{" "}
-                              <strong>{space.name}</strong>.
-                            </DialogDescription>
-                          </DialogHeader>
+                        {showForm && (
+                          <BookingForm
+                            space={space}
+                            onClose={() => setShowForm(false)}
+                          />
+                        )}
+                      </div>
 
-                          <BookingForm space={space} />
-
-                          <DialogFooter className="flex justify-center">
-                            <DialogClose asChild>
-                              <Button
-                                variant="outline"
-                                className="text-red-400 border-red-400 hover:bg-red-100 hover:text-red-700"
-                              >
-                                Cancel
-                              </Button>
-                            </DialogClose>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
                       <Button
                         variant="secondary"
                         className="text-green-700"
@@ -220,34 +204,7 @@ export function SpacesPage() {
             ))
           )}
         </div>
-        <aside className="w-full max-w-md hidden md:flex items-center justify-center">
-          {selectedSpace ? (
-            <div className="w-full cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] border border-white/20 rounded-xl">
-              <button
-                onClick={() => setSelectedSpace(null)}
-                className="absolute top-3 right-3 cursor-pointer text-red-500 hover:text-red-700 text-xl font-bold focus:outline-none"
-              >
-                X
-              </button>
-              <BookingForm space={selectedSpace} />
-              {/* <div className="flex justify-center">
-                <Button
-                  variant="outline"
-                  className="text-red-500 border-red-500 hover:bg-red-100 hover:text-red-700 w-auto px-4"
-                  onClick={() => setSelectedSpace(null)}
-                >
-                  Cancel Booking
-                </Button>
-              </div> */}
-            </div>
-          ) : (
-            <div className="text-center text-gray-200">
-              <p>Select a space to book.</p>
-            </div>
-          )}
-        </aside>
       </main>
-
       <Footer />
     </div>
   );
