@@ -114,7 +114,7 @@ function ProfileModal({ isOpen, onClose }) {
               ? Object.values(result.message)[0]
               : result.message;
           toast.error(message || "Failed to update profile", {
-            duration: 4000,
+            duration: 3000,
             position: "top-center",
           });
         }
@@ -122,7 +122,7 @@ function ProfileModal({ isOpen, onClose }) {
       .catch((error) => {
         console.log("error", error);
         toast.error("Failed to update profile", {
-          duration: 4000,
+          duration: 3000,
           position: "top-center",
         });
       });
