@@ -17,6 +17,7 @@ import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
 import PaymentForm from "./pages/paymentFormPage";
 import EditCategoryForm from "./components/EditCategoryForm";
+import SpaceDetails from "./pages/SpaceDetails";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -67,6 +68,10 @@ const routes = createBrowserRouter([
   {
     path: "/category/edit/:id",
     element: <EditCategoryForm />,
+  },
+  {
+    path: "/SpaceDetails",
+    element: <SpaceDetails />,
   },
 ]);
 
