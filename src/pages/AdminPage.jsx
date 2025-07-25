@@ -7,7 +7,7 @@ import CartegoryForm from "@/components/category-form";
 import AdminUser from "../components/AdminUsers";
 import DashboardStats from "@/components/ui/DashboardStats";
 import { SpacesPage } from "./SpacesPage";
-
+import ImageForm from "@/components/ImageForm"; 
 import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
 
@@ -94,66 +94,85 @@ export default function AdminPage() {
         <div className="flex flex-1">
           {/* Sidebar */}
           <aside className="w-64 bg-[#374151] text-white p-4 space-y-4">
-            <nav className="flex flex-col space-y-4 text-sm">
-              <button
-                onClick={() => setActiveSection("dashboard")}
-                className={`text-left px-3 py-2 rounded-md ${
-                  activeSection === "dashboard"
-                    ? "bg-[#4b5563] font-bold"
-                    : "hover:bg-[#4b5563]"
-                }`}
-              >
-                🏠 Dashboard
-              </button>
-              <button
-                onClick={() => setActiveSection("spaceform")}
-                className={`text-left px-3 py-2 rounded-md ${
-                  activeSection === "spaceform"
-                    ? "bg-[#4b5563] font-bold"
-                    : "hover:bg-[#4b5563]"
-                }`}
-              >
-                📝 SpaceForm
-              </button>
-              <button
-                onClick={() => setActiveSection("categoryform")}
-                className={`text-left px-3 py-2 rounded-md ${
-                  activeSection === "categoryform"
-                    ? "bg-[#4b5563] font-bold"
-                    : "hover:bg-[#4b5563]"
-                }`}
-              >
-                📝 CategoryForm
-              </button>
-              <button
-                onClick={() => setActiveSection("users")}
-                className={`text-left px-3 py-2 rounded-md ${
-                  activeSection === "users"
-                    ? "bg-[#4b5563] font-bold"
-                    : "hover:bg-[#4b5563]"
-                }`}
-              >
-                <button
-                  onClick={() => setActiveSection("spaces")}
-                  className={`text-left px-3 py-2 rounded-md ${
-                    activeSection === "spaces"
-                      ? "bg-[#4b5563] font-bold"
-                      : "hover:bg-[#4b5563]"
-                  }`}
-                ></button>
-                🚻 List of Users
-              </button>
-            </nav>
-            <button
-              onClick={handleSignOut}
-              disabled={isSigningOut}
-              className={`text-left px-3 py-2 rounded-md hover:bg-[#c1121f] ${
-                isSigningOut ? "opacity-50 cursor-not-allowed" : ""
-              }`}
-              aria-label="Sign out of the admin page"
-            >
-              🚪 {isSigningOut ? "Signing Out..." : "Sign Out"}
-            </button>
+           <nav className="flex flex-col space-y-4 text-sm">
+  <button
+    onClick={() => setActiveSection("dashboard")}
+    className={`text-left px-3 py-2 rounded-md ${
+      activeSection === "dashboard"
+        ? "bg-[#4b5563] font-bold"
+        : "hover:bg-[#4b5563]"
+    }`}
+  >
+    🏠 Dashboard
+  </button>
+
+  <button
+    onClick={() => setActiveSection("spaceform")}
+    className={`text-left px-3 py-2 rounded-md ${
+      activeSection === "spaceform"
+        ? "bg-[#4b5563] font-bold"
+        : "hover:bg-[#4b5563]"
+    }`}
+  >
+    📝 SpaceForm
+  </button>
+
+  <button
+    onClick={() => setActiveSection("categoryform")}
+    className={`text-left px-3 py-2 rounded-md ${
+      activeSection === "categoryform"
+        ? "bg-[#4b5563] font-bold"
+        : "hover:bg-[#4b5563]"
+    }`}
+  >
+    📝 CategoryForm
+  </button>
+
+  <button
+    onClick={() => setActiveSection("users")}
+    className={`text-left px-3 py-2 rounded-md ${
+      activeSection === "users"
+        ? "bg-[#4b5563] font-bold"
+        : "hover:bg-[#4b5563]"
+    }`}
+  >
+    🚻 List of Users
+  </button>
+
+  <button
+    onClick={() => setActiveSection("spaces")}
+    className={`text-left px-3 py-2 rounded-md ${
+      activeSection === "spaces"
+        ? "bg-[#4b5563] font-bold"
+        : "hover:bg-[#4b5563]"
+    }`}
+  >
+    🗂️ All Spaces
+  </button>
+
+  <button
+    onClick={() => setActiveSection("imageform")}
+    className={`text-left px-3 py-2 rounded-md ${
+      activeSection === "imageform"
+        ? "bg-[#4b5563] font-bold"
+        : "hover:bg-[#4b5563]"
+    }`}
+  >
+    🖼️ Image Form
+  </button>
+
+  <button
+    onClick={handleSignOut}
+    disabled={isSigningOut}
+    className={`text-left px-3 py-2 rounded-md hover:bg-[#c1121f] ${
+      isSigningOut ? "opacity-50 cursor-not-allowed" : ""
+    }`}
+    aria-label="Sign out of the admin page"
+  >
+    🚪 {isSigningOut ? "Signing Out..." : "Sign Out"}
+  </button>
+</nav>
+
           </aside>
 
           <main className="flex-1 p-6 bg-gray-100">
@@ -193,6 +212,7 @@ export default function AdminPage() {
             {activeSection === "categoryform" && <CartegoryForm />}
             {activeSection === "users" && <AdminUser />}
             {activeSection === "spaces" && <SpacesPage isAdmin={true} />}
+            {activeSection === "imageform" && <ImageForm />}
           </main>
         </div>
       </div>
