@@ -57,14 +57,14 @@ function CategoryForm() {
 
   const onSubmit = async (values) => {
     const url = editingCategory
-      ? `http://localhost:5000/categories/${editingCategory.id}`
+      ? `http://localhost:5000/categories/${editingCategory.id}`    
       : "http://localhost:5000/categories";
     const method = editingCategory ? "PATCH" : "POST";
 
     try {
       const response = await fetch(url, {
         method,
-        headers: {
+        headers: {                                 
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
