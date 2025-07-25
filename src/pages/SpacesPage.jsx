@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import AdminHeader from "@/components/adminsHeader";
 
-// Shadcn Ui dialog
+// Shadcn/Ui dialog
 import {
   Dialog,
   DialogTrigger,
