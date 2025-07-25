@@ -18,7 +18,7 @@ function CategoryPage() {
 
   const handleDelete = (id) => {
      if (confirm("Are you sure you want to delete this category?")) {
-       fetch(`http://localhost:5001/categories/${id}`, {                    // deletes category by id
+       fetch(`http://localhost:5000/categories/${id}`, {                    // deletes category by id
          method: "DELETE",
        })
          .then((res) => {
