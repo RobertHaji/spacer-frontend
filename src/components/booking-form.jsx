@@ -32,7 +32,7 @@ const bookingSchema = z.object({
     .max(24, "Cannot exceed 24"),
 });
 
-function BookingForm({ space }) {
+function BookingForm({ space ,onClose}) {
   const accessToken = localStorage.getItem("session");
   const [showForm, setShowForm] = useState(true);
   const navigate = useNavigate();
@@ -56,12 +56,6 @@ function BookingForm({ space }) {
       });
     }
   }, [space]);
-
-  const onCancel = () => {
-    setShowForm(false);
-    form.reset(); 
-    toast.error("Booking cancelled");
-  };
 
   if (!showForm) return null; 
 
@@ -110,10 +104,6 @@ function BookingForm({ space }) {
   };
 
   return (
-    <div
-      className="w-full px-4 sm:px-6"
-      style={{ background: "linear-gradient(to bottom, #0F555C, #20B4C2)" }}
-    >
       <Card
         className="w-full max-w-lg mx-auto p-8 text-white rounded-lg shadow-lg flex flex-col justify-center min-h-[20vh]"
         style={{ background: "linear-gradient(to bottom, #20B4C2, #0F555C)" }}
@@ -209,7 +199,7 @@ function BookingForm({ space }) {
                 <Button
                   type="button"
                   className="w-full bg-transparent border-2 border-red-600 text-white hover:bg-red-700/100 transition duration-300"
-                  onClick={onCancel}
+                  onClick={onClose}
                 >
                   Cancel
                 </Button>
@@ -217,8 +207,7 @@ function BookingForm({ space }) {
             </form>
           </Form>
         </CardContent>
-      </Card>
-    </div>
+    </Card>
   );
 }
 
