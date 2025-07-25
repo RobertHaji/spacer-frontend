@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card } from "./ui/card";
 import { Link } from "react-router-dom";
 
 function RecentBookings() {
   const [recentBookings, setRecentBookings] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ fixed
+  const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("session");
   const userId = localStorage.getItem("userid");
 
