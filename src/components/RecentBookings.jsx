@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card } from "./ui/card";
 import { Link } from "react-router-dom";
 
 function RecentBookings() {
   const [recentBookings, setRecentBookings] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ fixed
+  const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("session");
   const userId = localStorage.getItem("userid");
 
@@ -24,7 +23,7 @@ function RecentBookings() {
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.sort(
-          (a, b) => new Date(b.date_of_booking) - new Date(a.date_of_booking)
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
         const recent = sorted.slice(0, 2);
         setRecentBookings(recent);
