@@ -44,7 +44,7 @@ function CategoryForm() {
   if (!token || userRole !== "admin") {
     return (
       <p className="text-white text-center mt-10">
-        You are not authorized to manage categories.
+        You are not authorized to manage categories.git 
       </p>
     );
   }

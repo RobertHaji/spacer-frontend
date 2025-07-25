@@ -16,6 +16,7 @@ import BookingsPage from "./pages/BookingPage";
 import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
 import PaymentForm from "./pages/paymentFormPage";
+import SpaceDetails from "./pages/SpaceDetails";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -62,6 +63,10 @@ const routes = createBrowserRouter([
   {
     path: "/category-form",
     element: <CartegoryForm />,
+  },
+  {
+    path: "/SpaceDetails",
+    element: <SpaceDetails />,
   },
 ]);
 

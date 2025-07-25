@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function ImageForm({ onSubmit }) {
+export default function ImageForm({ onSubmit, spaces = [] }) {
   const [imageUrl, setImageUrl] = useState("");
   const [spaceId, setSpaceId] = useState("");
 
@@ -27,17 +27,34 @@ export default function ImageForm({ onSubmit }) {
     >
       <h2 className="text-2xl font-semibold text-center text-teal-700">Add Image via URL</h2>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Space ID</label>
-        <input
-          type="text"
-          value={spaceId}
-          onChange={(e) => setSpaceId(e.target.value)}
-          placeholder="Enter space ID"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-        />
+      {/* Space ID Field and Dropdown */}
+      <div className="flex flex-col gap-2">
+        <label className="block text-sm font-medium text-gray-700">Space ID</label>
+        <div className="flex gap-2 items-center">
+          <input
+            type="text"
+            value={spaceId}
+            onChange={(e) => setSpaceId(e.target.value)}
+            placeholder="Enter space ID"
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
+
+          <select
+            onChange={(e) => setSpaceId(e.target.value)}
+            value={spaceId}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          >
+            <option value="">Select Space</option>
+            {spaces.map((space) => (
+              <option key={space.id} value={space.id}>
+                {space.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
+      {/* Image URL Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
         <input
@@ -49,6 +66,7 @@ export default function ImageForm({ onSubmit }) {
         />
       </div>
 
+      {/* Image Preview */}
       {imageUrl && (
         <div className="mt-4 space-y-2">
           <img
@@ -62,6 +80,7 @@ export default function ImageForm({ onSubmit }) {
         </div>
       )}
 
+      {/* Submit Button */}
       <button
         type="submit"
         className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md transition"
