@@ -38,7 +38,6 @@ function CartegoryForm() {
     defaultValues: {
       name: "",
       image_url: "",
-      user_id: 1,
     },
   });
   // confirms role of the user 
@@ -111,20 +110,6 @@ function CartegoryForm() {
                       placeholder="https://example.com/image.jpg"
                       {...field}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* user */}
-            <FormField
-              control={form.control}
-              name="user_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User ID</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="User ID" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
