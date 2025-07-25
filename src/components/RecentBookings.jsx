@@ -23,7 +23,7 @@ function RecentBookings() {
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.sort(
-          (a, b) => new Date(b.date_of_booking) - new Date(a.date_of_booking)
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
         const recent = sorted.slice(0, 2);
         setRecentBookings(recent);
