@@ -119,6 +119,7 @@ export function SpacesPage() {
             filteredSpaces.map((space) => (
               <Card
                 key={space.id}
+                onClick={() => navigate("/SpaceDetails", { state: { space } })}
                 className="mb-6 bg-cyan-800 cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] border border-white/20 rounded-xl"
               >
                 <CardContent className="flex gap-4 p-4">
