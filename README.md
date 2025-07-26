@@ -1,6 +1,6 @@
 # ✨ Spacer App ✨ – Frontend Overview
 
-Welcome to Spacer app, an app used for managing and browsing unique spaces. It allows admins to configure categories and spaces, and users to browse, book, and simulate payments in a seamless web experience.
+Welcome to **Spacer app**, an app used for managing and browsing unique spaces. It allows admins to configure categories and spaces, and users to browse, book, and simulate payments in a seamless web experience.
 
 ---
 
