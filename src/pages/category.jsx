@@ -67,7 +67,7 @@ function CategoryPage() {
                   <img
                     src={cat.image_url}
                     alt={cat.name}
-                    className="w-full h-32 object-cover rounded"
+                    className="w-full h-42 object-cover rounded"
                   />
                   <p className="mt-2 text-center text-white font-medium">
                     {cat.name}
