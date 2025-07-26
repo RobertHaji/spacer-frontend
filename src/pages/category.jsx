@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import Footer from "@/components/ui/Footer";
-import Header from "@/components/ui/Header";
+import AdminHeader from "@/components/adminsHeader";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ function CategoryPage() {
 
   const handleDelete = (id) => {
      if (confirm("Are you sure you want to delete this category?")) {
-       fetch(`http://localhost:5001/categories/${id}`, {                    // deletes category by id
+       fetch(`http://localhost:5000/categories/${id}`, {                    // deletes category by id
          method: "DELETE",
        })
          .then((res) => {
@@ -37,7 +37,7 @@ function CategoryPage() {
 
   return (
     <>
-      <Header />
+      <AdminHeader/>
       <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white p-6">
         <main className="flex flex-1 px-6 gap-5">
           <h1 className="text-3xl font-bold mb-6 text-center">Categories</h1>
