@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const activityCategories = [
   "Wedding", "Meeting", "Workshop", "Conference", "Party",
- "Training", "Birthday", "Other"
+  "Training", "Birthday", "Other"
 ];
 
 const counties = [
@@ -21,22 +21,45 @@ export default function SearchBar() {
   const [activity, setActivity] = useState("");
   const [location, setLocation] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
-  const navigate = useNavigate(); // ✅ use inside component
+  const navigate = useNavigate();
 
-  const handleSearch = () => {
-    // Navigate with state
-    navigate("/results", {
-      state: {
+  const handleSearch = async () => {
+    if (!activity || !location || !selectedDate) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    try {
+      const params = new URLSearchParams({
         activity,
         location,
-        date: selectedDate?.toISOString(),
-      },
-    });
+        date: selectedDate.toISOString(),
+      });
 
-    // Optionally reset
-    setActivity("");
-    setLocation("");
-    setSelectedDate(null);
+      const res = await fetch(`http://localhost:5000/api/venues?${params.toString()}`);
+      if (!res.ok) {
+        throw new Error(`Server responded with ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log("Returning spaces:", data);
+
+      navigate("/results", {
+        state: {
+          results: data,
+          activity,
+          location,
+          date: selectedDate.toISOString(),
+        },
+      });
+
+      setActivity("");
+      setLocation("");
+      setSelectedDate(null);
+    } catch (error) {
+      // console.error("Search error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -78,7 +101,7 @@ export default function SearchBar() {
             onChange={(date) => setSelectedDate(date)}
             showTimeSelect
             dateFormat="Pp"
-            placeholderText="Enter date and time"
+            placeholderText="Select date & time"
             className="w-full text-sm text-gray-600 placeholder-gray-400 focus:outline-none border-b border-gray-300 py-1"
           />
         </div>
