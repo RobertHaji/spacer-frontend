@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BookingForm from "@/components/booking-form";
 import { toast } from "react-hot-toast";
 
@@ -12,6 +12,22 @@ export default function SpaceDetails() {
   const space = location.state?.space;
   const [showForm, setShowForm] = useState(false);
   const userRole = localStorage.getItem("role");
+  // State to hold extra images for the spaces
+  const [extraImages, setExtraImages] = useState([]);
+
+
+  // Fetch images from the database
+  useEffect(() => {
+    if (!space?.id) return;
+
+    fetch(`http://localhost:5000/spaces/${space.id}/images`)
+      .then((res) => res.json())
+      .then((data) => {
+        setExtraImages(data.images || []);
+      })
+      .catch((err) => console.error("Error fetching images:", err));
+  }, [space]);
+
 
   if (!space) {
     return <p className="text-white p-6">No space selected.</p>;
@@ -37,7 +53,7 @@ export default function SpaceDetails() {
 
       if (!response.ok) throw new Error("Delete failed");
       toast.success("Space deleted");
-      navigate("/Spaces");
+      navigate("/SpacesPage");
     } catch (error) {
       toast.error("Failed to delete space");
     }
@@ -58,21 +74,16 @@ export default function SpaceDetails() {
 
         {/* Image Gallery */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <img
-            src={space.image_url || "https://via.placeholder.com/400"}
-            className="w-full h-64 object-cover rounded-lg"
-            alt="Main"
-          />
-          <img
-            src={space.extra_image_1 || space.image_url}
-            className="w-full h-64 object-cover rounded-lg"
-            alt="Extra 1"
-          />
-          <img
-            src={space.extra_image_2 || space.image_url}
-            className="w-full h-64 object-cover rounded-lg"
-            alt="Extra 2"
-          />
+          {[space.image_url, ...extraImages.map((img) => img.url)]
+            .filter(Boolean)
+            .map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                className="w-full h-64 object-cover rounded-lg"
+                alt={`Space Image ${idx + 1}`}
+              />
+            ))}
         </div>
 
         {/* Description */}
