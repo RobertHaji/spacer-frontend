@@ -40,7 +40,7 @@ function RecentBookings() {
   );
   const recent = sorted.slice(0, 2);
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0F555C] to-[#20B4C2] text-white px-6 py-10">
+    <div className=" bg-gradient-to-b from-[#0F555C] to-[#20B4C2] text-white px-6 py-10">
       <h2 className="text-2xl font-bold mb-6 text-center drop-shadow-lg">
         Recent Bookings
       </h2>
@@ -69,7 +69,7 @@ function RecentBookings() {
 
               <div className="mt-3 text-right">
                 <Link
-                  to="/Booking"
+                  to="/bookingPage"
                   className="text-sm text-white border border-white px-3 py-1 rounded hover:bg-white hover:text-[#0F555C] transition"
                 >
                   View Full History
