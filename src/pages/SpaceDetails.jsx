@@ -4,16 +4,44 @@ import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
 import { useState } from "react";
 import BookingForm from "@/components/booking-form";
+import { toast } from "react-hot-toast";
 
 export default function SpaceDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-    const space = location.state?.space;
-    const [showForm, setShowForm] = useState(false);
+  const space = location.state?.space;
+  const [showForm, setShowForm] = useState(false);
+  const userRole = localStorage.getItem("role");
 
   if (!space) {
     return <p className="text-white p-6">No space selected.</p>;
   }
+
+  const handleEdit = () => {
+    navigate("/SpaceForm", { state: { space } });
+  };
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this space?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/spaces/${space.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("session")}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Delete failed");
+      toast.success("Space deleted");
+      navigate("/Spaces");
+    } catch (error) {
+      toast.error("Failed to delete space");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
@@ -101,6 +129,22 @@ export default function SpaceDetails() {
             View on Map
           </Button>
         </div>
+        {userRole === "admin" && (
+          <div className="flex gap-2 mt-4">
+            <Button
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 text-sm rounded"
+              onClick={handleEdit}
+            >
+              Edit
+            </Button>
+            <Button
+              className="bg-red-500 hover:bg-red-600 text-white px-5 py-1 text-sm rounded"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
