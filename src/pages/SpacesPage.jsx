@@ -9,18 +9,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import AdminHeader from "@/components/adminsHeader";
 
-// Shadcn/Ui dialog
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
-
 export function SpacesPage() {
   const [spaces, setSpaces] = useState([]);
   const [search, setSearch] = useState("");
@@ -183,26 +171,6 @@ export function SpacesPage() {
                         View on map
                       </Button>
                     </div>
-                    {userRole === "admin" && (
-                      <div className="flex gap-2 mt-3">
-                        <Button
-                          className={
-                            "bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 text-sm rounded"
-                          }
-                          onClick={() => handleEdit(space)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          className={
-                            "bg-red-500 hover:bg-red-600 text-white px-5 py-1 text-sm rounded"
-                          }
-                          onClick={() => handleDelete(space.id)}
-                        >
-                          Delete
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 </CardContent>
               </Card>
