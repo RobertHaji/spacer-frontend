@@ -83,31 +83,7 @@ function CategoryForm() {
       );
     }
   };
-
-  const onDelete = async () => {                     
-    if (!editingCategory) return;
-    if (!window.confirm("Are you sure you want to delete this category?"))
-      return;
-
-    try {
-      const res = await fetch(
-        `http://localhost:5000/categories/${editingCategory.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (!res.ok) throw new Error("Delete failed");
-      toast.success("Category deleted");
-      navigate("/category", { state: { refresh: true } });
-    } catch (err) {
-      console.error("Delete error:", err);
-      toast.error("Failed to delete category");
-    }
-  };
-
+  
   return (
     
     <Card className="max-w-md mx-auto mt-10 p-6">
