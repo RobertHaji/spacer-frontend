@@ -36,7 +36,7 @@ function CategoryForm() {
   const token = localStorage.getItem("session");
   const userRole = localStorage.getItem("role");
 
-  if (!token || userRole !== "admin") {
+  if (!token || userRole !== "admin") {            // filters only to be seen by admin
     return (
       <p className="text-white text-center mt-10">
         You are not authorized to manage categories.git 
@@ -84,7 +84,7 @@ function CategoryForm() {
     }
   };
 
-  const onDelete = async () => {
+  const onDelete = async () => {                     
     if (!editingCategory) return;
     if (!window.confirm("Are you sure you want to delete this category?"))
       return;
@@ -109,6 +109,7 @@ function CategoryForm() {
   };
 
   return (
+    
     <Card className="max-w-md mx-auto mt-10 p-6">
       <CardContent>
         <h2 className="text-xl font-bold mb-4">
@@ -144,22 +145,14 @@ function CategoryForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
-              {editingCategory ? "Update" : "Submit"}
-            </Button>
-            {editingCategory && (
-              <Button
-                variant="destructive"
-                onClick={onDelete}
-                className="w-full mt-2"
-              >
-                Delete Category
+            <Button type="submit" className="w-full bg-black hover:bg-gray-900">
+                {editingCategory ? "Update" : "Submit"}
               </Button>
-            )}
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    
   );
 }
 

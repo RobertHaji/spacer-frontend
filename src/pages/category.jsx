@@ -47,7 +47,6 @@ function CategoryPage() {
                 key={cat.id}
                 className="cursor-pointer transition-all transform hover:scale-105 hover:shadow-[0_0_12px_rgba(255,255,255,0.3)] bg-transparent text-white overflow-hidden rounded-xl border border-white/20"
               >
-                {/* Category image and name link to SpacesPage */}
                 <Link
                   to="/SpacesPage/"
                   state={{ category: cat.name }}
