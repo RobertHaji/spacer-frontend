@@ -45,7 +45,8 @@ function BookingForm({ space ,onClose}) {
       numberOfHours: 1,
     },
   });
-
+  const [availableSpaces, setAvailableSpaces] = useState([]);
+  const [available, setAvailable] = useState(false);
   useEffect(() => {
     if (space) {
       form.reset({
@@ -89,19 +90,18 @@ function BookingForm({ space ,onClose}) {
         console.log("Created booking:", data);
         form.reset();
         navigate("/payment", { state: { booking: data } });
-
-      } else if (!accessToken){
+      } else if (!accessToken) {
         toast.error(data.error || "User must login to book");
-        navigate("/login")
-      }
-      else {
-        toast.error(data.error || "Booking failed")
+        navigate("/login");
+      } else {
+        toast.error(data.error || "Booking failed");
       }
     } catch (err) {
       console.error("Booking error:", err);
       toast.error("Something went wrong while booking.");
     }
   };
+
 
   return (
       <Card
