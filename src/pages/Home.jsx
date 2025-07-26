@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import SearchBar from "@/components/SearchBar";
+import AdminHeader from "@/components/adminsHeader";
 
 const backgroundImages = [
 
@@ -25,7 +26,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
+      <AdminHeader />
       <div className="relative min-h-screen text-white">
         {/* Background Carousel */}
         <div className="absolute inset-0 z-0 transition-opacity duration-1000">

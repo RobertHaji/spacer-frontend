@@ -5,6 +5,7 @@ import { Button } from "./button";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./dialog";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function ProfileModal({ isOpen, onClose }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -12,17 +13,17 @@ function ProfileModal({ isOpen, onClose }) {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  
+
   const token = localStorage.getItem("session");
   const userId = localStorage.getItem("userid");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isOpen || !token || !userId) {
       if (isOpen && (!token || !userId)) {
-        toast.error("Not authenticated. Please log in.", {
-          duration: 4000,
-          position: "top-center",
-        });
+        navigate("/login");
+        onClose();
       }
       return;
     }
@@ -65,10 +66,8 @@ function ProfileModal({ isOpen, onClose }) {
 
   const handleUpdate = () => {
     if (!token || !userId) {
-      toast.error("Not authenticated. Please log in.", {
-        duration: 4000,
-        position: "top-center",
-      });
+      navigate("/login");
+      onClose();
       return;
     }
 
