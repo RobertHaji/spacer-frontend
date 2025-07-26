@@ -26,7 +26,7 @@ export default function HomePage() {
 
   return (
     <>
-      <AdminHeader />
+      <Header />
       <div className="relative min-h-screen text-white">
         {/* Background Carousel */}
         <div className="absolute inset-0 z-0 transition-opacity duration-1000">

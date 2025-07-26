@@ -1,11 +1,30 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { User } from "lucide-react";
-// import Profile from "./ui/Profile";
+import { Link, useNavigate } from "react-router-dom";
+import { User, LogOut } from "lucide-react";
 import ProfileModal from "./ui/Profile";
+import toast from "react-hot-toast";
 
 export default function AdminHeader() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const isAuthenticated =
+    !!localStorage.getItem("session") && !!localStorage.getItem("userid");
+
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    localStorage.removeItem("session");
+    localStorage.removeItem("userid");
+
+    // Show success toast
+    toast.success("Signed out successfully", {
+      duration: 2000,
+      position: "top-center",
+    });
+
+    // Redirect to login page
+    navigate("/");
+  };
 
   return (
     <>
@@ -33,12 +52,23 @@ export default function AdminHeader() {
             ))}
           </nav>
 
-          <button
-            onClick={() => setIsProfileOpen(true)}
-            className="ml-2 hover:scale-110 transition-transform duration-300"
-          >
-            <User className="w-6 h-6 text-white hover:text-yellow-300 transition-colors duration-300" />
-          </button>
+          <div>
+            <button
+              onClick={() => setIsProfileOpen(true)}
+              className="ml-2 hover:scale-110 transition-transform duration-300"
+            >
+              <User className="w-6 h-6 text-white hover:text-yellow-300 transition-colors duration-300" />
+            </button>
+            {isAuthenticated && (
+              <button
+                onClick={handleSignOut}
+                className="hover:scale-110 transition-transform duration-300"
+                title="Sign Out"
+              >
+                <LogOut className="w-6 h-6 text-white hover:text-yellow-300 transition-colors duration-300" />
+              </button>
+            )}
+          </div>
         </div>
       </header>
       <ProfileModal
