@@ -45,7 +45,8 @@ function BookingForm({ space ,onClose}) {
       numberOfHours: 1,
     },
   });
-
+  const [availableSpaces, setAvailableSpaces] = useState([]);
+  const [available, setAvailable] = useState(false);
   useEffect(() => {
     if (space) {
       form.reset({
@@ -59,6 +60,49 @@ function BookingForm({ space ,onClose}) {
 
   if (!showForm) return null; 
 
+  // const onTheSubmit = async (values) => {
+  //   const formattedDate = new Date(values.dateOfBooking)
+  //     .toISOString()
+  //     .slice(0, 19)
+  //     .replace("T", " ");
+
+  //   const payload = {
+  //     space_name: values.spaceName,
+  //     number_of_guests: values.numberOfGuests,
+  //     date_of_booking: formattedDate,
+  //     number_of_hours: values.numberOfHours,
+  //   };
+
+  //   try {
+  //     const response = await fetch("http://localhost:5000/bookings", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //       body: JSON.stringify(payload),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       toast.success("Booking successful!");
+  //       console.log("Created booking:", data);
+  //       form.reset();
+  //       navigate("/payment", { state: { booking: data } });
+
+  //     } else if (!accessToken){
+  //       toast.error(data.error || "User must login to book");
+  //       navigate("/login")
+  //     }
+  //     else {
+  //       toast.error(data.error || "Booking failed")
+  //     }
+  //   } catch (err) {
+  //     console.error("Booking error:", err);
+  //     toast.error("Something went wrong while booking.");
+  //   }
+  // };
   const onTheSubmit = async (values) => {
     const formattedDate = new Date(values.dateOfBooking)
       .toISOString()
@@ -89,19 +133,18 @@ function BookingForm({ space ,onClose}) {
         console.log("Created booking:", data);
         form.reset();
         navigate("/payment", { state: { booking: data } });
-
-      } else if (!accessToken){
+      } else if (!accessToken) {
         toast.error(data.error || "User must login to book");
-        navigate("/login")
-      }
-      else {
-        toast.error(data.error || "Booking failed")
+        navigate("/login");
+      } else {
+        toast.error(data.error || "Booking failed");
       }
     } catch (err) {
       console.error("Booking error:", err);
       toast.error("Something went wrong while booking.");
     }
   };
+
 
   return (
       <Card
