@@ -10,29 +10,41 @@ function CategoryPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/categories")
+    fetch("http://localhost:5000/categories")  // fetches data from backend
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Error fetching categories:", err));
   }, []);
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this category?")) {
-      fetch(`http://localhost:5000/categories/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => {
-          if (res.ok) {
-            setCategories(categories.filter((cat) => cat.id !== id));
-            alert("Category deleted");
-          }
-        })
-        .catch((err) => console.error("Error deleting category:", err));
-    }
-  };
+ const handleDelete = (id) => {
+   const token = localStorage.getItem("session");
+
+   if (!token) {
+     alert("Unauthorized. Please log in as admin.");
+     return;
+   }
+
+   if (window.confirm("Are you sure you want to delete this category?")) {
+     fetch(`http://localhost:5000/categories/${id}`, {                                    // deletes category by id
+       method: "DELETE",
+       headers: {
+         Authorization: `Bearer ${token}`,
+       },
+     })
+       .then((res) => {
+         if (res.ok) {
+           setCategories(categories.filter((cat) => cat.id !== id));              // filters out the deleted category from the db
+           alert("Category deleted");
+         } else {
+           alert("Failed to delete category. Check your permissions.");
+         }
+       })
+       .catch((err) => console.error("Error deleting category:", err));
+   }
+ };
 
   const handleEdit = (category) => {
-    navigate("/category-form", { state: { category } });
+    navigate("/category-form", { state: { category } });                  
   };
 
   return (
@@ -62,7 +74,6 @@ function CategoryPage() {
                   </p>
                 </Link>
 
-                {/* Only show buttons for admins */}
                 {localStorage.getItem("role") === "admin" && (
                   <div className="flex justify-center gap-2 mt-2 mb-3">
                     <button
