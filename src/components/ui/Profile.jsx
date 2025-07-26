@@ -6,7 +6,7 @@ import { Button } from "./button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./dialog";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import RecentBookings from "../RecentBookings";
 function ProfileModal({ isOpen, onClose }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -220,6 +220,10 @@ function ProfileModal({ isOpen, onClose }) {
                   <span className="font-medium">Signed Up: </span>
                   {signupDate}
                 </p>
+                <div className="border rounded-md p-4 bg-gray-50 max-h-64 overflow-y-auto ">
+                  <RecentBookings />
+                </div>
+
                 <div className="flex space-x-2 pt-2">
                   <Button
                     onClick={() => {

@@ -17,6 +17,7 @@ import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
 import PaymentForm from "./pages/paymentFormPage";
 import SpaceDetails from "./pages/SpaceDetails";
+import ImageForm from "./components/ImageForm";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +69,10 @@ const routes = createBrowserRouter([
     path: "/SpaceDetails",
     element: <SpaceDetails />,
   },
+  {
+    path: "/ImageForm",
+    element: <ImageForm/>
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(

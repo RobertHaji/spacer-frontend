@@ -2,18 +2,62 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BookingForm from "@/components/booking-form";
+import { toast } from "react-hot-toast";
 
 export default function SpaceDetails() {
   const location = useLocation();
   const navigate = useNavigate();
-    const space = location.state?.space;
-    const [showForm, setShowForm] = useState(false);
+  const space = location.state?.space;
+  const [showForm, setShowForm] = useState(false);
+  const userRole = localStorage.getItem("role");
+  // State to hold extra images for the spaces
+  const [extraImages, setExtraImages] = useState([]);
+
+
+  // Fetch images from the database
+  useEffect(() => {
+    if (!space?.id) return;
+
+    fetch(`http://localhost:5000/spaces/${space.id}/images`)
+      .then((res) => res.json())
+      .then((data) => {
+        setExtraImages(data.images || []);
+      })
+      .catch((err) => console.error("Error fetching images:", err));
+  }, [space]);
+
 
   if (!space) {
     return <p className="text-white p-6">No space selected.</p>;
   }
+
+  const handleEdit = () => {
+    navigate("/SpaceForm", { state: { space } });
+  };
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this space?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/spaces/${space.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("session")}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Delete failed");
+      toast.success("Space deleted");
+      navigate("/SpacesPage");
+    } catch (error) {
+      toast.error("Failed to delete space");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
@@ -30,21 +74,16 @@ export default function SpaceDetails() {
 
         {/* Image Gallery */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <img
-            src={space.image_url || "https://via.placeholder.com/400"}
-            className="w-full h-64 object-cover rounded-lg"
-            alt="Main"
-          />
-          <img
-            src={space.extra_image_1 || space.image_url}
-            className="w-full h-64 object-cover rounded-lg"
-            alt="Extra 1"
-          />
-          <img
-            src={space.extra_image_2 || space.image_url}
-            className="w-full h-64 object-cover rounded-lg"
-            alt="Extra 2"
-          />
+          {[space.image_url, ...extraImages.map((img) => img.url)]
+            .filter(Boolean)
+            .map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                className="w-full h-64 object-cover rounded-lg"
+                alt={`Space Image ${idx + 1}`}
+              />
+            ))}
         </div>
 
         {/* Description */}
@@ -101,6 +140,22 @@ export default function SpaceDetails() {
             View on Map
           </Button>
         </div>
+        {userRole === "admin" && (
+          <div className="flex gap-2 mt-4">
+            <Button
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 text-sm rounded"
+              onClick={handleEdit}
+            >
+              Edit
+            </Button>
+            <Button
+              className="bg-red-500 hover:bg-red-600 text-white px-5 py-1 text-sm rounded"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          </div>
+        )}
       </div>
       <Footer />
     </div>
