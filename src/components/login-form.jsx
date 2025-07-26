@@ -68,12 +68,10 @@ export function LoginForm({ className, ...props }) {
 
           //store user session
           localStorage.setItem("session", result.access_token);
-          localStorage.setItem("role", result.user.role); 
-          localStorage.setItem("userid", result.user.id); 
+          localStorage.setItem("role", result.user.role);
+          localStorage.setItem("userid", result.user.id);
           // redirects
-          navigate(
-            result.user.role === "admin" ? "/AdminPage" : "/"
-          );
+          navigate(result.user.role === "admin" ? "/AdminPage" : "/spacesPage");
         } else {
           const message =
             typeof result.message === "object"
