@@ -74,10 +74,19 @@ export default function SpaceDetails() {
                 Book now
               </Button>
             )}
+
             {showForm && (
-              <BookingForm space={space} onClose={() => setShowForm(false)} />
+              <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-white/30 z-50">
+                <div className="bg-gradient-to-b from-[#0F555C] to-[#20B4C2] p-6 rounded-lg shadow-lg max-w-md w-full">
+                  <BookingForm
+                    space={space}
+                    onClose={() => setShowForm(false)}
+                  />
+                </div>
+              </div>
             )}
           </div>
+
           <Button
             variant="secondary"
             onClick={() =>
