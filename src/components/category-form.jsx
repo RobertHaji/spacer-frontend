@@ -20,13 +20,8 @@ import { useEffect } from "react";
 const categorySchema = z.object({
   name: z.string().min(2, "Category name is required"),
   image_url: z.string().url("Image URL must be a valid URL"),
-  user_id: z
-    .union([z.string(), z.number()])
-    .transform((val) => Number(val))
-    .refine((val) => val > 0, {
-      message: "User ID must be a positive number",
-    }),
 });
+
 
 function CategoryForm() {
   const navigate = useNavigate();
