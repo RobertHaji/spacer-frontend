@@ -89,15 +89,32 @@ export default function SpaceDetails() {
 
           {/* Extra Images */}
           <div className="grid grid-cols-2 gap-4">
-            {visibleImages.map((img, index) => (
-              <div key={index} className="overflow-hidden rounded-xl shadow-sm">
-                <img
-                  src={img.url}
-                  alt={`Gallery ${index + 1}`}
-                  className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </div>
-            ))}
+            {extraImages
+              .slice(0, showAllImages ? extraImages.length : 3)
+              .map((img, index, arr) => {
+                const isLastImage = showAllImages && index === arr.length - 1;
+
+                return isLastImage ? (
+                  <button
+                    key="show-less"
+                    onClick={() => setShowAllImages(false)}
+                    className="w-full h-48 flex items-center justify-center bg-black/50 text-white text-lg font-bold rounded-xl hover:bg-black/70 transition"
+                  >
+                    Show Less
+                  </button>
+                ) : (
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-xl shadow-sm"
+                  >
+                    <img
+                      src={img.url}
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                  </div>
+                );
+              })}
 
             {!showAllImages && extraImages.length > 3 && (
               <button
