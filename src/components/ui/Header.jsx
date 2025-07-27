@@ -8,7 +8,7 @@ export default function Header() {
         to="/"
         className="text-xl font-bold hover:text-yellow-300 transition duration-300"
       >
-        Spacer
+        SPACER
       </Link>
 
       <div className="flex items-center space-x-6">
