@@ -20,7 +20,7 @@ export default function SpaceDetails() {
   useEffect(() => {
     if (!space?.id) return;
 
-    fetch(`http://localhost:5000/spaces/${space.id}/images`)
+    fetch(`http://localhost:5000/api/spaces/${space.id}/images`)
       .then((res) => res.json())
       .then((data) => {
         setExtraImages(data.images || []);
@@ -73,17 +73,30 @@ export default function SpaceDetails() {
         <h1 className="text-3xl font-bold mb-6">{space.name}</h1>
 
         {/* Image Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {[space.image_url, ...extraImages.map((img) => img.url)]
-            .filter(Boolean)
-            .map((img, idx) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 items-start">
+          {/* Main Image */}
+          {space.image_url && (
+            <div className="lg:col-span-2">
               <img
-                key={idx}
-                src={img}
-                className="w-full h-64 object-cover rounded-lg"
-                alt={`Space Image ${idx + 1}`}
+                src={space.image_url}
+                alt="Main Space"
+                className="w-full h-[400px] object-cover rounded-2xl shadow-md"
               />
+            </div>
+          )}
+
+          {/* Extra Images */}
+          <div className="grid grid-cols-2 gap-4">
+            {extraImages.slice(0, 4).map((img, index) => (
+              <div key={index} className="overflow-hidden rounded-xl shadow-sm">
+                <img
+                  src={img.url}
+                  alt={`Gallery ${index + 1}`}
+                  className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                />
+              </div>
             ))}
+          </div>
         </div>
 
         {/* Description */}
