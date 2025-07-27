@@ -20,7 +20,7 @@ export default function SpaceDetails() {
   useEffect(() => {
     if (!space?.id) return;
 
-    fetch(`http://localhost:5000/spaces/${space.id}/images`)
+    fetch(`http://localhost:5000/api/spaces/${space.id}/images`)
       .then((res) => res.json())
       .then((data) => {
         setExtraImages(data.images || []);
@@ -73,14 +73,14 @@ export default function SpaceDetails() {
         <h1 className="text-3xl font-bold mb-6">{space.name}</h1>
 
         {/* Image Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
           {[space.image_url, ...extraImages.map((img) => img.url)]
             .filter(Boolean)
             .map((img, idx) => (
               <img
                 key={idx}
                 src={img}
-                className="w-full h-64 object-cover rounded-lg"
+                className="w-full h-64 object-cover transition-transform duration-300 transform group-hover:scale-105"
                 alt={`Space Image ${idx + 1}`}
               />
             ))}
