@@ -16,7 +16,7 @@ const faqs = [
   {
     question: "How do I list my space?",
     answer:
-      "Sign in as a space owner and go to your dashboard. Click on 'Add New Listing' and fill in the required details including photos, availability, and pricing.",
+      "Email us- support@spacerapp.com",
   },
   {
     question: "Is payment secure?",
