@@ -70,7 +70,7 @@ export function LoginForm({ className, ...props }) {
           localStorage.setItem("session", result.access_token);
           localStorage.setItem("role", result.user.role);
           localStorage.setItem("userid", result.user.id);
-          // redirects
+          // redirect
           navigate(result.user.role === "admin" ? "/AdminPage" : "/spacesPage");
         } else {
           const message =
