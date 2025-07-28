@@ -17,10 +17,12 @@ import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
 import PaymentForm from "./pages/paymentFormPage";
 import SpaceDetails from "./pages/SpaceDetails";
+import AboutUs from "./pages/AboutUs";
 
 import ResultPage from "./pages/ResultPage";
 
 import ImageForm from "./components/ImageForm";
+import ContactUs from "./pages/ContactUs";
 
 const routes = createBrowserRouter([
   {
@@ -80,6 +82,14 @@ const routes = createBrowserRouter([
   {
     path: "/ImageForm",
     element: <ImageForm/>
+  },
+  {
+    path: "/AboutUs",
+    element: <AboutUs />
+  },
+   {
+    path: "/ContactUs",
+    element: <ContactUs />
   }
 ]);
 

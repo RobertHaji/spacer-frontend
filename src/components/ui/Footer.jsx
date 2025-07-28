@@ -2,6 +2,7 @@ import {
   Github, Instagram, Facebook, Youtube, Twitter, Linkedin, ChevronDown
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Custom TikTok SVG Icon
 const TikTokIcon = () => (
@@ -48,8 +49,8 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold">Company</h3>
           <ul className="space-y-1">
-            <li><a href="#">Contact us</a></li>
-            <li><a href="#">About</a></li>
+            <li><Link to="/ContactUs">Contact Us</Link></li>
+            <li><Link to="/AboutUs">About</Link></li>
           </ul>
         </div>
 
