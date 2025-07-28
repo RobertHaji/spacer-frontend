@@ -10,12 +10,10 @@ export default function SpaceDetails() {
   const location = useLocation();
   const navigate = useNavigate();
   const space = location.state?.space;
-   const [extraImages, setExtraImages, showForm] = useState([]);
+  const [extraImages, setExtraImages] = useState([]);
   const [showAllImages, setShowAllImages] = useState(false);
-  const visibleImages = showAllImages ? extraImages : extraImages.slice(0, 3);
+  const [showForm, setShowForm] = useState(false);
   const userRole = localStorage.getItem("role");
-  // State to hold extra images for the spaces
-  // const [extraImages, setExtraImages] = useState([]);
 
 
   // Fetch images from the database
