@@ -18,7 +18,7 @@ import { Toaster } from "react-hot-toast";
 import PaymentForm from "./pages/paymentFormPage";
 import SpaceDetails from "./pages/SpaceDetails";
 import AboutUs from "./pages/AboutUs";
-
+import Help from "./pages/Help";
 import ResultPage from "./pages/ResultPage";
 
 import ImageForm from "./components/ImageForm";
@@ -90,7 +90,12 @@ const routes = createBrowserRouter([
    {
     path: "/ContactUs",
     element: <ContactUs />
+  },
+   {
+    path: "/Help",
+    element: <Help />
   }
+   
 ]);
 
 createRoot(document.getElementById("root")).render(

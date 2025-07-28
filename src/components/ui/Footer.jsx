@@ -83,7 +83,7 @@ export default function Footer() {
         <div>
           
           <ul className="space-y-1">
-            <li><a href="#">Help</a></li>
+            <li><Link to="/Help">Help</Link></li>
             <li><a href="#">Privacy and terms</a></li>
           </ul>
         </div>
