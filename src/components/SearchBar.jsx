@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const activityCategories = [
   "Wedding", "Meeting", "Workshop", "Conference", "Party",
-  "Training", "Birthday", "Other"
+  "Training", "Birthday", "BabyShower", "Other"
 ];
 
 const counties = [
@@ -36,7 +36,7 @@ export default function SearchBar() {
         date: selectedDate.toISOString(),
       });
 
-      const res = await fetch(`http://localhost:5000/api/venues?${params.toString()}`);
+      const res = await fetch(`http://localhost:5000/spaces?${params.toString()}`);
       if (!res.ok) {
         throw new Error(`Server responded with ${res.status}`);
       }

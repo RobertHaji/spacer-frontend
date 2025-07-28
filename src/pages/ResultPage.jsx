@@ -1,69 +1,60 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function ResultsPage() {
-  const { state } = useLocation();
-  const navigate = useNavigate();
-
-  const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const { activity, location: county, date } = state || {};
+  const { search } = useLocation();
+  const [spaces, setSpaces] = useState([]);
 
   useEffect(() => {
-    if (!activity || !county || !date) {
-      navigate("/");
-      return;
-    }
+    const params = new URLSearchParams(search);
+    const activity = params.get("activity");
+    const location = params.get("location");
 
-    const fetchResults = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/venues", {
-          params: {
-            activity,
-            location: county,
-            date,
-          },
-        });
-        setResults(res.data);
-      } catch (err) {
-        console.error("Search failed:", err);
-        alert("Failed to load results. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchResults();
-  }, [activity, county, date, navigate]);
+    axios.get("http://localhost:5000/spaces", {
+      params: { activity, location }
+    })
+    .then((res) => {
+      setSpaces(res.data);
+    })
+    .catch((err) => {
+      console.error("Error fetching search results:", err);
+    });
+  }, [search]);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">
-        Results for <span className="text-teal-600">{activity}</span> in{" "}
-        <span className="text-teal-600">{county}</span> on{" "}
-        <span className="text-teal-600">{new Date(date).toLocaleString()}</span>
-      </h2>
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-8">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        <Link
+          to="/"
+          className="inline-block mb-6 text-blue-600 hover:underline text-sm"
+        >
+          ← Back to Search
+        </Link>
 
-      {loading ? (
-        <p className="text-gray-600">Loading search results...</p>
-      ) : results.length > 0 ? (
-        <ul className="space-y-4">
-          {results.map((spaces) => (
-            <li
-              key={venue.id}
-              className="p-4 border border-gray-200 rounded shadow bg-white hover:shadow-md transition"
-            >
-              <h3 className="text-xl font-bold text-gray-800">{venue.name}</h3>
-              <p className="text-gray-700">{venue.description}</p>
-              <p className="text-sm text-gray-500 mt-1">{spaces.address}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-gray-600">No spaces found for your search.</p>
-      )}
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+          Search Results
+        </h2>
+
+        {spaces.length > 0 ? (
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {spaces.map(space => (
+              <li
+                key={space.id}
+                className="border border-gray-200 p-4 rounded-lg bg-white hover:shadow-md transition"
+              >
+                <h3 className="text-xl font-semibold text-gray-700">{space.name}</h3>
+                <p className="text-gray-500">Activity: {space.activity}</p>
+                <p className="text-gray-500">Location: {space.location}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="text-center text-gray-600 text-lg">
+            No matching spaces found.
+          </div>
+        )}
+      </div>
     </div>
   );
 }
