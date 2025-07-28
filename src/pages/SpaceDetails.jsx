@@ -10,10 +10,12 @@ export default function SpaceDetails() {
   const location = useLocation();
   const navigate = useNavigate();
   const space = location.state?.space;
-  const [showForm, setShowForm] = useState(false);
+   const [extraImages, setExtraImages, showForm] = useState([]);
+  const [showAllImages, setShowAllImages] = useState(false);
+  const visibleImages = showAllImages ? extraImages : extraImages.slice(0, 3);
   const userRole = localStorage.getItem("role");
   // State to hold extra images for the spaces
-  const [extraImages, setExtraImages] = useState([]);
+  // const [extraImages, setExtraImages] = useState([]);
 
 
   // Fetch images from the database
@@ -87,15 +89,41 @@ export default function SpaceDetails() {
 
           {/* Extra Images */}
           <div className="grid grid-cols-2 gap-4">
-            {extraImages.slice(0, 4).map((img, index) => (
-              <div key={index} className="overflow-hidden rounded-xl shadow-sm">
-                <img
-                  src={img.url}
-                  alt={`Gallery ${index + 1}`}
-                  className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </div>
-            ))}
+            {extraImages
+              .slice(0, showAllImages ? extraImages.length : 3)
+              .map((img, index, arr) => {
+                const isLastImage = showAllImages && index === arr.length - 1;
+
+                return isLastImage ? (
+                  <button
+                    key="show-less"
+                    onClick={() => setShowAllImages(false)}
+                    className="w-full h-48 flex items-center justify-center bg-black/50 text-white text-lg font-bold rounded-xl hover:bg-black/70 transition"
+                  >
+                    Show Less
+                  </button>
+                ) : (
+                  <div
+                    key={index}
+                    className="overflow-hidden rounded-xl shadow-sm"
+                  >
+                    <img
+                      src={img.url}
+                      alt={`Gallery ${index + 1}`}
+                      className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                    />
+                  </div>
+                );
+              })}
+
+            {!showAllImages && extraImages.length > 3 && (
+              <button
+                onClick={() => setShowAllImages(true)}
+                className="w-full h-48 flex items-center justify-center bg-black/50 text-white text-xl font-bold rounded-xl hover:bg-black/70 transition"
+              >
+                +{extraImages.length - 3} More
+              </button>
+            )}
           </div>
         </div>
 
