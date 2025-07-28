@@ -16,13 +16,11 @@ export default function AdminHeader() {
     localStorage.removeItem("session");
     localStorage.removeItem("userid");
 
-    // Show success toast
     toast.success("Signed out successfully", {
       duration: 2000,
       position: "top-center",
     });
 
-    // Redirect to login page
     navigate("/");
   };
 
