@@ -20,7 +20,7 @@ import SpaceDetails from "./pages/SpaceDetails";
 import AboutUs from "./pages/AboutUs";
 import Help from "./pages/Help";
 import ResultPage from "./pages/ResultPage";
-
+import Privacy from "./pages/Privacy";
 import ImageForm from "./components/ImageForm";
 import ContactUs from "./pages/ContactUs";
 
@@ -94,6 +94,9 @@ const routes = createBrowserRouter([
    {
     path: "/Help",
     element: <Help />
+  },{
+    path: "/Privacy",
+    element: <Privacy />
   }
    
 ]);
