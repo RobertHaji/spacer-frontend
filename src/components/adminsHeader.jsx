@@ -29,9 +29,9 @@ export default function AdminHeader() {
       <header className="bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white flex items-center justify-between p-4">
         <Link
           to="/spacesPage"
-          className="text-xl font-bold hover:text-yellow-300 transition duration-300"
+          className="text-3xl font-bold hover:text-yellow-300 transition duration-300"
         >
-          Spacer
+          SPACER
         </Link>
 
         <div className="flex items-center space-x-6">
