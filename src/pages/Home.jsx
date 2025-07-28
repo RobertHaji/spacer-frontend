@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import SearchBar from "@/components/SearchBar";
-import AdminHeader from "@/components/adminsHeader";
 import { Link } from "react-router-dom";
 
 const backgroundImages = [
-  "https://www.gomazevo.com/hubfs/mazevo%20event%20room%20layout.jpg",
-  "https://media.superiorseating.com/Magento_Live_Site/amasty/blog/guide-of-banquet-styling-seating-arrangments.jpg",
-  "https://thumbs.dreamstime.com/b/view-grand-wedding-banquet-setup-hotel-69136925.jpg",
-  "https://www.gonsin.com/uploads/image/20241106/GONSIN_Audio_and_Visual_System_Design_for_Banquet_Halls_04.png",
-  "https://www.dgicommunications.com/wp-content/uploads/2020/01/MicrosoftTeams-image-3.jpg",
+  "https://images.unsplash.com/photo-1603425013520-e0b30e6e37dc?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1573167507387-6b4b98cb7c13?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1505944357431-27579db47558?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1697539093652-c7716caeceb1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1556968298-26c39ade6eda?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
 export default function HomePage() {
@@ -35,7 +34,7 @@ export default function HomePage() {
               key={index}
               src={src}
               alt={`Slide ${index + 1}`}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+              className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 filter contrast-100 brightness-100 ${
                 index === currentImage ? "opacity-100" : "opacity-0"
               }`}
             />
