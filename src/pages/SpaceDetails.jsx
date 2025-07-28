@@ -5,6 +5,7 @@ import Footer from "@/components/ui/Footer";
 import { useState, useEffect } from "react";
 import BookingForm from "@/components/booking-form";
 import { toast } from "react-hot-toast";
+import { Trash2 } from "lucide-react";
 
 export default function SpaceDetails() {
   const location = useLocation();
@@ -59,6 +60,34 @@ export default function SpaceDetails() {
     }
   };
 
+  // Delete the added image
+
+  const handleDeleteImage = async (imageId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this image?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("session");
+      const res = await fetch(`http://localhost:5000/api/images/${imageId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to delete");
+
+      setExtraImages((prev) => prev.filter((img) => img.id !== imageId));
+      toast.success("Image deleted successfully");
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      toast.error("Could not delete image");
+    }
+  };
+
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0f535c] to-[#20afc2] text-white">
       <AdminHeader />
@@ -102,14 +131,23 @@ export default function SpaceDetails() {
                   </button>
                 ) : (
                   <div
-                    key={index}
-                    className="overflow-hidden rounded-xl shadow-sm"
+                    key={img.id}
+                    className="relative overflow-hidden rounded-xl shadow-sm"
                   >
                     <img
                       src={img.url}
                       alt={`Gallery ${index + 1}`}
                       className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                    />
+                      />
+                      {/* Restricts deleting add images to admins only */}
+                    {userRole === "admin" && (
+                      <button
+                        onClick={() => handleDeleteImage(img.id)}
+                        className="absolute top-2 right-2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    )}
                   </div>
                 );
               })}
@@ -179,6 +217,7 @@ export default function SpaceDetails() {
             View on Map
           </Button>
         </div>
+        {/* Restricts delete of spaces to admins */}
         {userRole === "admin" && (
           <div className="flex gap-2 mt-4">
             <Button
