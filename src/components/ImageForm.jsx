@@ -1,50 +1,117 @@
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
-export default function ImageForm({ onSubmit, spaces = [] }) {
+
+export default function ImageForm() {
+  const [spaces, setSpaces] = useState([]);
+  const [selectedSpaceId, setSelectedSpaceId] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
-  const [spaceId, setSpaceId] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const token = localStorage.getItem("session");
+
+  // Fetch all the spaces from the backend
+  useEffect(() => {
+    const fetchSpaces = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/spaces");
+        if (!response.ok) {
+          throw new Error("Failed to fetch spaces");
+        }
+        const data = await response.json();
+        setSpaces(data);
+      } catch (error) {
+        console.error("Error fetching spaces:", error);
+        toast.error("Failed to load spaces");
+      }
+    };
+
+    fetchSpaces();
+  }, []);
+
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+    setImageUrl("");
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!imageUrl || !spaceId) {
-      alert("Please provide both an image URL and a space ID.");
+
+    if (!selectedSpaceId) {
+      toast.error("Please select a space and an image file or URL");
+      return;
+    }
+    if (!imageFile && !imageUrl) {
+      toast.error("Please provide either an image file or an image URL");
       return;
     }
 
-    const data = { imageUrl, spaceId };
+    setLoading(true);
 
-    if (onSubmit) {
-      onSubmit(data);
+    try {
+      let response;
+
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("space_id", selectedSpaceId);
+        formData.append("image", imageFile);
+
+        response = await fetch("http://localhost:5000/api/images", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        });
+      } else {
+        response = await fetch("http://localhost:5000/api/images", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            space_id: selectedSpaceId,
+            image_url: imageUrl,
+          }),
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      toast.success("Image uploaded successfully");
+      setImageFile(null);
+      setImageUrl("");
+      setSelectedSpaceId("");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Failed to upload image");
+    } finally {
+      setLoading(false);
     }
-
-    alert("Form submitted!");
   };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white shadow-lg rounded-lg p-6 max-w-md mx-auto space-y-4"
-    >
-      <h2 className="text-2xl font-semibold text-center text-teal-700">Add Image via URL</h2>
+    <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-xl mx-auto">
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">
+        Upload or Link Image to Space
+      </h2>
 
-      {/* Space ID Field and Dropdown */}
-      <div className="flex flex-col gap-2">
-        <label className="block text-sm font-medium text-gray-700">Space ID</label>
-        <div className="flex gap-2 items-center">
-          <input
-            type="text"
-            value={spaceId}
-            onChange={(e) => setSpaceId(e.target.value)}
-            placeholder="Enter space ID"
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-          />
-
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Select dropdown for spaces */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Select Space
+          </label>
           <select
-            onChange={(e) => setSpaceId(e.target.value)}
-            value={spaceId}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+            value={selectedSpaceId}
+            onChange={(e) => setSelectedSpaceId(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            required
           >
-            <option value="">Select Space</option>
+            <option value="">-- Select a space --</option>
             {spaces.map((space) => (
               <option key={space.id} value={space.id}>
                 {space.name}
@@ -52,41 +119,61 @@ export default function ImageForm({ onSubmit, spaces = [] }) {
             ))}
           </select>
         </div>
-      </div>
 
-      {/* Image URL Input */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-        <input
-          type="text"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="https://example.com/image.jpg"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-        />
-      </div>
-
-      {/* Image Preview */}
-      {imageUrl && (
-        <div className="mt-4 space-y-2">
-          <img
-            src={imageUrl}
-            alt="Preview"
-            className="w-full h-64 object-cover rounded border"
+        {/* Image upload */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Upload Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full"
+            required= {!imageUrl}
           />
-          <p className="text-sm text-gray-600 break-words">
-            <strong>Image URL:</strong> {imageUrl}
-          </p>
         </div>
-      )}
 
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md transition"
-      >
-        Submit
-      </button>
-    </form>
+        {/* Url */}
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Or Provide Image URL
+          </label>
+          <input
+            type="text"
+            value={imageUrl}
+            onChange={(e) => {
+              setImageUrl(e.target.value);
+              setImageFile(null);
+            }}
+            placeholder="https://example.com/image.jpg"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            required= {!imageFile}
+          />
+        </div>
+
+        {/* Preview */}
+        {(imageFile || imageUrl) && (
+          <div className="mt-4">
+            <p className="text-sm font-medium text-gray-600 mb-2">Preview:</p>
+            <img
+              src={imageFile ? URL.createObjectURL(imageFile) : imageUrl}
+              alt="Preview"
+              className="w-full h-64 object-cover rounded-md border"
+            />
+          </div>
+        )}
+
+        {/* Submit button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md disabled:opacity-50"
+        >
+          {loading ? "Submitting..." : "Add Image"}
+        </button>
+      </form>
+    </div>
   );
 }

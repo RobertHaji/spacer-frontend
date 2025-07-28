@@ -7,82 +7,90 @@ import {
   FormItem,
 } from "@/components/ui/form";
 import { Input } from "./ui/input";
-// import { Textarea } from "./ui/textarea";
-// import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
-
-// Validation schema using Zod
+// Existing validation schema
 const categorySchema = z.object({
   name: z.string().min(2, "Category name is required"),
   image_url: z.string().url("Image URL must be a valid URL"),
-  user_id: z
-    .union([z.string(), z.number()])
-    .transform((val) => Number(val))
-    .refine((val) => val > 0, {
-      message: "User ID must be a positive number",
-    }),
 });
 
-function CartegoryForm() {
-  //  UseForm with zod
+
+function CategoryForm() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const editingCategory = location.state?.category ?? null;
+
   const form = useForm({
     resolver: zodResolver(categorySchema),
-    defaultValues: {
-      name: "",
-      image_url: "",
-      user_id: 1,
-    },
+    defaultValues: editingCategory || { name: "", image_url: "" },
   });
-  // confirms role of the user 
+
   const token = localStorage.getItem("session");
   const userRole = localStorage.getItem("role");
 
-  if (!token || userRole !== "admin") {
+  if (!token || userRole !== "admin") {            // filters only to be seen by admin
     return (
       <p className="text-white text-center mt-10">
-        You are not authorized to add a category.
+        You are not authorized to manage categories.git 
       </p>
     );
   }
+
+  useEffect(() => {
+    if (editingCategory) {
+      form.reset(editingCategory);
+    }
+  }, [editingCategory, form]);
+
   const onSubmit = async (values) => {
+    const url = editingCategory
+      ? `http://localhost:5000/categories/${editingCategory.id}`    
+      : "http://localhost:5000/categories";
+    const method = editingCategory ? "PATCH" : "POST";
+
     try {
-      const response = await fetch("http://localhost:5000/categories", {
-        method: "POST",
-        headers: {
+      const response = await fetch(url, {
+        method,
+        headers: {                                 
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       });
-
       if (!response.ok) {
-        throw new Error("Failed to create category");
+        throw new Error("Submit failed");
       }
-
       const data = await response.json();
-      toast.success("Category created successfully");
-      console.log("Created category:", data);
+      toast.success(
+        editingCategory
+          ? "Category updated successfully"
+          : "Category created successfully"
+      );
       form.reset();
-      // After succesful post navigate the categories page
       navigate("/category", { state: { refresh: true } });
     } catch (error) {
-      console.error("Error submitting category:", error);
-      toast.error("Failed to create category");
+      console.error("Error:", error);
+      toast.error(
+        "Failed to " + (editingCategory ? "update" : "create") + " category"
+      );
     }
   };
-
+  
   return (
+    
     <Card className="max-w-md mx-auto mt-10 p-6">
       <CardContent>
-        <h2 className="text-xl font-bold mb-4">Add a New category</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {editingCategory ? "Edit Category" : "Add a New Category"}
+        </h2>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             {/* Name */}
@@ -99,7 +107,7 @@ function CartegoryForm() {
                 </FormItem>
               )}
             />
-            {/* Image */}
+            {/* Image URL */}
             <FormField
               control={form.control}
               name="image_url"
@@ -107,37 +115,21 @@ function CartegoryForm() {
                 <FormItem>
                   <FormLabel>Image URL</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="https://example.com/image.jpg"
-                      {...field}
-                    />
+                    <Input placeholder="https://..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {/* user */}
-            <FormField
-              control={form.control}
-              name="user_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User ID</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="User ID" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full">
-              Submit
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+            <Button type="submit" className="w-full bg-black hover:bg-gray-900">
+                {editingCategory ? "Update" : "Submit"}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    
   );
 }
 
-export default CartegoryForm;
+export default CategoryForm;

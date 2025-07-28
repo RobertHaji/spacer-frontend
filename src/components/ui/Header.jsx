@@ -4,8 +4,11 @@ import { User } from "lucide-react";
 export default function Header() {
   return (
     <header className="bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white flex items-center justify-between p-4">
-      <Link to="/" className="text-xl font-bold hover:text-yellow-300 transition duration-300">
-        Spacer
+      <Link
+        to="/"
+        className="text-3xl font-bold hover:text-yellow-300 transition duration-300"
+      >
+        SPACER
       </Link>
 
       <div className="flex items-center space-x-6">
@@ -28,7 +31,10 @@ export default function Header() {
           ))}
         </nav>
 
-        <Link to="/profile" className="ml-2 hover:scale-110 transition-transform duration-300">
+        <Link
+          to="/profile"
+          className="ml-2 hover:scale-110 transition-transform duration-300"
+        >
           <User className="w-6 h-6 text-white hover:text-yellow-300 transition-colors duration-300" />
         </Link>
       </div>
