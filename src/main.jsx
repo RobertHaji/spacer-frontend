@@ -15,12 +15,14 @@ import HomePage from "./pages/Home";
 import BookingsPage from "./pages/BookingPage";
 import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
-import PaymentForm from "./pages/paymentFormPage";
+import Payment from "./pages/Payment";
 import SpaceDetails from "./pages/SpaceDetails";
-
+import AboutUs from "./pages/AboutUs";
+import Help from "./pages/Help";
 import ResultPage from "./pages/ResultPage";
-
+import Privacy from "./pages/Privacy";
 import ImageForm from "./components/ImageForm";
+import ContactUs from "./pages/ContactUs";
 
 const routes = createBrowserRouter([
   {
@@ -58,8 +60,8 @@ const routes = createBrowserRouter([
     element: <CategoryPage />,
   },
   {
-    path: "/payment/:bookingId",
-    element: <PaymentForm />,
+    path: "/Payment/:bookingId",
+    element: <Payment />,
   },
   {
     path: "/adminPage",
@@ -80,7 +82,26 @@ const routes = createBrowserRouter([
   {
     path: "/ImageForm",
     element: <ImageForm/>
+  },
+  {
+    path: "/AboutUs",
+    element: <AboutUs />
+  },
+   {
+    path: "/ContactUs",
+    element: <ContactUs />
+  },
+   {
+    path: "/Help",
+    element: <Help />
+  },{
+    path: "/Privacy",
+    element: <Privacy />
+  },{
+    path: "/Payment",
+    element: <Payment />
   }
+   
 ]);
 
 createRoot(document.getElementById("root")).render(
