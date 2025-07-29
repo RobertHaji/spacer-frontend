@@ -5,18 +5,43 @@ import equityImg from './icons/equity.png';
 import mpesaImg from './icons/mpesa.png';
 import airtelImg from './icons/airtel.png';
 import pesalinkImg from './icons/pesalink.png';
+import toast from 'react-hot-toast';
 
 const PaymentSelection = () => {
   const [selectedOption, setSelectedOption] = useState('M-Pesa');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const handlePayment = () => {
+    let toastId = null;
+    let intervalId = null;
+    
+    const handleInitiatePayment = () => {
+        const accessToken = localStorage.getItem("session");
+        toastId = toast.loading("Initiating stk push")
+
+        fetch(`http://127.0.0.1:5000/payments`, {
+            method: "POST",
+            body: JSON.stringify({
+                phone: "",
+            }),
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            }
+        }).then((res) => res.json())
+            .then((data) => {
+                toast.loading("Confirming payment", { id: toastId });
+
+                intervalId = setInterval(
+                    () => handleCheckPayment(data.data.checkoutRequestID),
+                    10_000
+                );
+            });
     alert(`Initiating STK Push to ${phoneNumber}`);
   };
+    
+    
 
-  const handleCheckPayment = () => {
-    alert('Checking payment status...');
-  };
 
   const paymentOptions = [
     { label: 'M-Pesa', img: mpesaImg },
@@ -25,6 +50,30 @@ const PaymentSelection = () => {
     { label: 'Pesalink', img: pesalinkImg },
     { label: 'Bank Deposit', img: bankImg },
   ];
+    
+    const handleCheckPayment = (id) => {
+        fetch(`http://127.0.0.1:5000/payments/check/${id}`), {
+            method: "GET",
+            headers: {
+                "content-Type": "application/json",
+                Accept: "application/json",
+            },
+        
+        }.then((res) => res.json())
+            .then((data) => {
+              
+                clearInterval(intervalId);
+
+                if (data.data.ResultCode == "0") {
+                    toast.success("Payment successfull", { id: toastId });
+                } else {
+                    toast.error("Payment not successfull", { id: toastId });
+                }
+            }
+          );
+            
+        }
+    
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10 bg-white shadow-xl rounded-xl">
@@ -69,7 +118,7 @@ const PaymentSelection = () => {
               <FaPhoneAlt className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
             </div>
             <button
-              onClick={handlePayment}
+              onClick={() => handleInitiatePayment()}
               className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-md transition flex items-center justify-center gap-2"
             >
               <FaCheckCircle />
