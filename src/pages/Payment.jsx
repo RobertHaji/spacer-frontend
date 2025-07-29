@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { Phone, CheckCircle, CreditCard } from 'lucide-react';
+import { FaPhoneAlt, FaCheckCircle } from 'react-icons/fa';
+import bankImg from './icons/bank.png';
+import equityImg from './icons/equity.png';
+import mpesaImg from './icons/mpesa.png';
+import airtelImg from './icons/airtel.png';
+import pesalinkImg from './icons/pesalink.png';
 
 const PaymentSelection = () => {
   const [selectedOption, setSelectedOption] = useState('M-Pesa');
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const handlePayment = () => {
-    alert(`Initiating STK Push to ${phoneNumber} for Ksh. 2,860.00`);
+    alert(`Initiating STK Push to ${phoneNumber}`);
   };
 
   const handleCheckPayment = () => {
@@ -14,11 +19,11 @@ const PaymentSelection = () => {
   };
 
   const paymentOptions = [
-    { name: 'M-Pesa', icon: <CreditCard className="w-4 h-4 mr-2" /> },
-    { name: 'Airtel Money', icon: <CreditCard className="w-4 h-4 mr-2" /> },
-    { name: 'Pay with Equity', icon: <CreditCard className="w-4 h-4 mr-2" /> },
-    { name: 'Pesalink', icon: <CreditCard className="w-4 h-4 mr-2" /> },
-    { name: 'Bank Deposit', icon: <CreditCard className="w-4 h-4 mr-2" /> },
+    { label: 'M-Pesa', img: mpesaImg },
+    { label: 'Airtel Money', img: airtelImg },
+    { label: 'Pay with Equity', img: equityImg },
+    { label: 'Pesalink', img: pesalinkImg },
+    { label: 'Bank Deposit', img: bankImg },
   ];
 
   return (
@@ -30,23 +35,24 @@ const PaymentSelection = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
         {paymentOptions.map((option) => (
           <div
-            key={option.name}
-            onClick={() => setSelectedOption(option.name)}
-            className={`flex items-center justify-center cursor-pointer px-4 py-3 rounded-lg border transition shadow-sm ${
-              selectedOption === option.name
-                ? 'border-green-600 bg-green-50 text-green-700 font-medium'
+            key={option.label}
+            onClick={() => setSelectedOption(option.label)}
+            className={`flex items-center gap-2 justify-center cursor-pointer px-4 py-3 rounded-lg border transition shadow-sm ${
+              selectedOption === option.label
+                ? 'border-green-600 bg-green-50 text-green-700 font-semibold'
                 : 'border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-700'
             }`}
           >
-            {option.icon}
-            {option.name}
+            <img src={option.img} alt={option.label} className="h-18 w-17" />
+            {option.label}
           </div>
         ))}
       </div>
 
+      {/* M-Pesa Section */}
       {selectedOption === 'M-Pesa' && (
         <div className="grid md:grid-cols-2 gap-6">
-          {/* STK Push Section */}
+          {/* STK Push */}
           <div className="border rounded-lg p-6 bg-white shadow-sm">
             <h3 className="text-xl font-semibold mb-3 text-gray-800">STK Push</h3>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -60,25 +66,32 @@ const PaymentSelection = () => {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
-              <Phone className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
+              <FaPhoneAlt className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
             </div>
             <button
               onClick={handlePayment}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-md transition"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-md transition flex items-center justify-center gap-2"
             >
+              <FaCheckCircle />
               Pay 
             </button>
           </div>
 
-          {/* Manual Paybill Section */}
+          {/* Manual Paybill */}
           <div className="border rounded-lg p-6 bg-white shadow-sm">
             <h3 className="text-xl font-semibold mb-3 text-gray-800">Pay using M-Pesa Paybill</h3>
             <ol className="list-decimal list-inside text-gray-700 space-y-1 text-sm mb-4">
               <li>Go to M-PESA on your phone</li>
               <li>Select Pay Bill option</li>
-              <li>Enter Business no. <strong>6060047</strong></li>
-              <li>Enter Account no. <strong>BL-HR-789955</strong></li>
-              <li>Enter the Amount. <strong>KES 2,860.00</strong></li>
+              <li>
+                Enter Business no. <strong></strong>
+              </li>
+              <li>
+                Enter Account no. <strong></strong>
+              </li>
+              <li>
+                Enter the Amount. <strong></strong>
+              </li>
               <li>Enter your M-PESA PIN and Send</li>
               <li>You will receive a confirmation SMS from MPESA</li>
             </ol>
@@ -86,12 +99,18 @@ const PaymentSelection = () => {
               onClick={handleCheckPayment}
               className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-md transition"
             >
-              <CheckCircle className="w-5 h-5" />
+              <FaCheckCircle className="w-5 h-5" />
               Check Payment
             </button>
           </div>
         </div>
       )}
+
+      {/* Powered by */}
+      <div className="mt-8 text-right">
+        <span className="text-gray-500 text-sm">Powered by:</span>
+        <img src="/src/components/spacers-logo.png" alt="Spacers" className="inline h-12 ml-8" />
+      </div>
     </div>
   );
 };
