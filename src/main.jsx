@@ -15,7 +15,7 @@ import HomePage from "./pages/Home";
 import BookingsPage from "./pages/BookingPage";
 import AdminPage from "./pages/AdminPage";
 import { Toaster } from "react-hot-toast";
-import PaymentForm from "./pages/paymentFormPage";
+import Payment from "./pages/Payment";
 import SpaceDetails from "./pages/SpaceDetails";
 import AboutUs from "./pages/AboutUs";
 import Help from "./pages/Help";
@@ -60,8 +60,8 @@ const routes = createBrowserRouter([
     element: <CategoryPage />,
   },
   {
-    path: "/payment/:bookingId",
-    element: <PaymentForm />,
+    path: "/Payment/:bookingId",
+    element: <Payment />,
   },
   {
     path: "/adminPage",
@@ -97,6 +97,9 @@ const routes = createBrowserRouter([
   },{
     path: "/Privacy",
     element: <Privacy />
+  },{
+    path: "/Payment",
+    element: <Payment />
   }
    
 ]);
