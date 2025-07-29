@@ -74,7 +74,7 @@ function BookingForm({ space ,onClose}) {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/bookings", {
+      const response = await fetch("http://localhost:5000/bookings/validate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,8 +86,8 @@ function BookingForm({ space ,onClose}) {
       const data = await response.json();
 
       if (response.ok) {
-        toast.success("Booking successful!");
-        console.log("Created booking:", data);
+        toast.success("Booking okay!");
+        console.log(" Directed to payment:", data);
         form.reset();
         navigate("/payment", { state: { booking: data } });
       } else if (!accessToken) {
