@@ -25,6 +25,7 @@ const PaymentSelection = () => {
   const pendingBooking = JSON.parse(localStorage.getItem("pendingBooking"));
   const [amount, setAmount] = useState(pendingBooking?.amount);
 
+
   useEffect(() => {
     const bookingData = JSON.parse(localStorage.getItem("pendingBooking"));
     if (bookingData && bookingData.amount) {
@@ -130,6 +131,7 @@ const PaymentSelection = () => {
             .then((bookingData) => {
               console.log("Booking confirmed:", bookingData);
               localStorage.removeItem("pendingBooking");
+              navigate("/bookingPage")
             })
             .catch((err) => {
               console.error("Error confirming booking:", err);

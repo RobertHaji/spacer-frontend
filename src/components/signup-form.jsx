@@ -73,7 +73,7 @@ export function SignUpForm({ className, ...props }) {
           localStorage.setItem("userid", result.user.id)
 
           navigate(
-            result.user.role === "admin" ? "/BookingPage" : "/SpacesPage"
+            result.user.role === "admin" ? "/adminPage" : "/"
           );
         } else {
           const message =

@@ -12,6 +12,8 @@ export default function Header() {
   ];
 
   return (
+    <header className="bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white flex items-center justify-between p-4">
+      <Link to="/" className="flex items-center">
     <header className="bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white p-4">
       <div className="flex items-center justify-between">
         {/* Logo */}
