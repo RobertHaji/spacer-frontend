@@ -108,7 +108,7 @@ const PaymentSelection = () => {
         if (status === "paid") {
           clearInterval(intervalRef.current);
           clearTimeout(timeoutRef.current);
-          toast.success("Payment successful!", { id: toastId });
+          toast.success("Payment successful!", { id: toastId })
         }
         else if (status !== "pending") {
           clearInterval(intervalRef.current);
@@ -120,6 +120,7 @@ const PaymentSelection = () => {
         console.error("Error checking payment:", err);
       });
   };
+  
 
   const paymentOptions = [
     { label: "M-Pesa", img: mpesaImg },
