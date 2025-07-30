@@ -105,6 +105,29 @@ const PaymentSelection = () => {
           clearInterval(intervalRef.current);
           clearTimeout(timeoutRef.current);
           toast.success("Payment successful!", { id: toastId });
+
+            fetch("http://localhost:5000/bookings", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+              body: JSON.stringify({
+                space_name: pendingBooking.space_name,
+                date_of_booking: pendingBooking.date,
+                number_of_hours: pendingBooking.number_of_hours,
+                number_of_guests: pendingBooking.number_of_guests,
+                amount: pendingBooking.amount,
+              }),
+            })
+              .then((res) => res.json())
+              .then((bookingData) => {
+                console.log("Booking confirmed:", bookingData);
+                localStorage.removeItem("pendingBooking");
+              })
+              .catch((err) => {
+                console.error("Error confirming booking:", err);
+              });
         } else if (resultCode && resultCode !== "0") {
           clearInterval(intervalRef.current);
           clearTimeout(timeoutRef.current);
