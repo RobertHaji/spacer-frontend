@@ -52,7 +52,7 @@ function CategoryForm() {
 
   const onSubmit = async (values) => {
     const url = editingCategory
-      ? `http://localhost:5000/categories/${editingCategory.id}`    
+      ? `http://localhost:5000/categories/${editingCategory.id}`    // edits by use of id
       : "http://localhost:5000/categories";
     const method = editingCategory ? "PATCH" : "POST";
 
