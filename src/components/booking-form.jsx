@@ -96,7 +96,7 @@ function BookingForm({ space, onClose }) {
             date: payload.date_of_booking,
             number_of_hours: values.numberOfHours,
             number_of_guests: values.numberOfGuests,
-            amount: data.total_amount
+            amount: data.total_amount,
           })
         );
 
