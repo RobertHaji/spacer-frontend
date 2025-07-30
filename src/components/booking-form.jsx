@@ -86,7 +86,7 @@ function BookingForm({ space, onClose }) {
       const data = await response.json();
 
       if (response.ok) {
-        toast.success("Booking okay!");
+        toast.success("Proceed to payment!");
         console.log("Directed to payment:", data);
 
         localStorage.setItem(
