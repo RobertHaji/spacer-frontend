@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 function CategoryPage() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
+  const userRole = localStorage.getItem("role");
+
 
   useEffect(() => {
     fetch("http://localhost:5000/categories")  // fetches data from backend
@@ -74,7 +76,7 @@ function CategoryPage() {
                   </p>
                 </Link>
 
-                {localStorage.getItem("role") === "admin" && (
+                {userRole === "admin" && (
                   <div className="flex justify-center gap-2 mt-2 mb-3">
                     <button
                       onClick={() => handleEdit(cat)}

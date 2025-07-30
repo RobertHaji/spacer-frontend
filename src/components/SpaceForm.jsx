@@ -237,7 +237,7 @@ function SpaceForm() {
                 </FormItem>
               )}
             />
-            {/* Category */}
+            {/* Category
             <FormField
               control={form.control}
               name="category_id"
@@ -250,7 +250,7 @@ function SpaceForm() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             {/* Category Dropdown */}
             <FormField
               control={form.control}
