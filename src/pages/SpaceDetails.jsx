@@ -139,7 +139,7 @@ export default function SpaceDetails() {
                       alt={`Gallery ${index + 1}`}
                       className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
                       />
-                      {/* Restricts deleting add images to admins only */}
+                      {/* Restricts deleting added images to admins only */}
                     {userRole === "admin" && (
                       <button
                         onClick={() => handleDeleteImage(img.id)}
