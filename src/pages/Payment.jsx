@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaPhoneAlt, FaCheckCircle } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -21,11 +21,88 @@ const PaymentSelection = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // useEffect(() => {
+  //   if (!booking) {
+  //     alert("No booking data found. Redirecting to home...");
+  //     navigate("/");
+  //   }
+  // }, [booking, navigate]);
+
+  // const handleInitiatePayment = () => {
+  //   if (!phoneNumber) {
+  //     toast.error("Please enter your phone number");
+  //     return;
+  //   }
+
+  //   const formattedPhone = phoneNumber.startsWith("0")
+  //     ? "254" + phoneNumber.slice(1)
+  //     : phoneNumber;
+
+  //   toastId = toast.loading("Initiating STK push...");
+
+  //   fetch(`http://127.0.0.1:5000/payments`, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       paying_phone: formattedPhone,
+  //       amount: booking.amount,
+  //       description: `Payment for ${booking.space_name}`,
+  //       mpesa_code: `TEMP-${Date.now()}`,
+  //       booking_id: booking.id,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       toast.loading("Confirming payment...", { id: toastId });
+  //       intervalId = setInterval(
+  //         () => handleCheckPayment(data.data?.CheckoutRequestID ),
+  //         10000
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       toast.error("STK Push failed", { id: toastId });
+  //     });
+  // };
+
+  // const handleCheckPayment = (id) => {
+  //   fetch(`http://127.0.0.1:5000/payments/${id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       clearInterval(intervalId);
+  //       if (data?.data?.ResultCode === "0") {
+  //         toast.success("Payment successful", { id: toastId });
+  //       } else {
+  //         toast.error("Payment not successful", { id: toastId });
+  //       }
+  //     });
+  // };
+  const intervalRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const pendingBooking = JSON.parse(localStorage.getItem("pendingBooking"));
+  const [amount, setAmount] = useState(pendingBooking?.amount);
+
   useEffect(() => {
-    if (!booking) {
-      alert("No booking data found. Redirecting to home...");
+    const bookingData = JSON.parse(localStorage.getItem("pendingBooking"));
+    if (bookingData && bookingData.amount) {
+      setAmount(bookingData.amount);
+    } else {
+      console.warn("No booking data found in localStorage.");
       navigate("/");
     }
+
+    return () => {
+      clearInterval(intervalRef.current);
+      clearTimeout(timeoutRef.current);
+    };
   }, [booking, navigate]);
 
   const handleInitiatePayment = () => {
@@ -44,10 +121,9 @@ const PaymentSelection = () => {
       method: "POST",
       body: JSON.stringify({
         paying_phone: formattedPhone,
-        amount: booking.amount,
-        description: `Payment for ${booking.space_name}`,
+        amount: pendingBooking.amount,
+        description: `Payment for ${pendingBooking.space_name}`,
         mpesa_code: `TEMP-${Date.now()}`,
-        booking_id: booking.id,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -56,10 +132,21 @@ const PaymentSelection = () => {
       .then((res) => res.json())
       .then((data) => {
         toast.loading("Confirming payment...", { id: toastId });
-        intervalId = setInterval(
-          () => handleCheckPayment(data.data?.checkoutRequestID || booking.id),
-          10000
-        );
+
+        const checkoutID = data.data?.CheckoutRequestID;
+        if (!checkoutID) {
+          toast.error("Invalid response from server", { id: toastId });
+          return;
+        }
+
+        intervalRef.current = setInterval(() => {
+          handleCheckPayment(checkoutID);
+        }, 10000);
+
+        timeoutRef.current = setTimeout(() => {
+          clearInterval(intervalRef.current);
+          toast("Still waiting for payment confirmation...");
+        }, 180000);
       })
       .catch((err) => {
         console.error(err);
@@ -67,8 +154,8 @@ const PaymentSelection = () => {
       });
   };
 
-  const handleCheckPayment = (id) => {
-    fetch(`http://127.0.0.1:5000/payments/${id}`, {
+  const handleCheckPayment = (checkoutID) => {
+    fetch(`http://127.0.0.1:5000/payments/${checkoutID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -77,12 +164,20 @@ const PaymentSelection = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        clearInterval(intervalId);
-        if (data?.data?.ResultCode === "0") {
-          toast.success("Payment successful", { id: toastId });
-        } else {
+        const resultCode = data?.data?.ResultCode;
+
+        if (resultCode === "0") {
+          clearInterval(intervalRef.current);
+          clearTimeout(timeoutRef.current);
+          toast.success("Payment successful!", { id: toastId });
+        } else if (resultCode && resultCode !== "0") {
+          clearInterval(intervalRef.current);
+          clearTimeout(timeoutRef.current);
           toast.error("Payment not successful", { id: toastId });
         }
+      })
+      .catch((err) => {
+        console.error("Error checking payment:", err);
       });
   };
 
@@ -104,14 +199,14 @@ const PaymentSelection = () => {
       </p>
 
       <div className="mb-6 text-sm text-gray-700">
+        {/* <p>
+          <strong>Booking ID:</strong> {pendingBooking?.id}
+        </p> */}
         <p>
-          <strong>Booking ID:</strong> {booking?.id}
+          <strong>Space Name:</strong> {pendingBooking?.space_name}
         </p>
         <p>
-          <strong>Space Name:</strong> {booking?.space_name}
-        </p>
-        <p>
-          <strong>Amount:</strong> KES {booking?.amount}
+          <strong>Amount:</strong> KES {pendingBooking?.amount}
         </p>
       </div>
 
@@ -171,10 +266,10 @@ const PaymentSelection = () => {
                 Enter Business no. <strong>6060047</strong>
               </li>
               <li>
-                Enter Account no. <strong>BL-HR-{booking?.id}</strong>
+                Enter Account no. <strong>BL-HR-{pendingBooking?.id}</strong>
               </li>
               <li>
-                Enter the Amount. <strong>{booking?.amount}</strong>
+                Enter the Amount. <strong>{pendingBooking?.amount}</strong>
               </li>
               <li>Enter your M-PESA PIN and Send</li>
               <li>You will receive a confirmation SMS from MPESA</li>
