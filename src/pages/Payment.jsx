@@ -41,8 +41,7 @@ const PaymentSelection = () => {
   }, [booking, navigate]);
 
   const handleInitiatePayment = () => {
-
-    const token = localStorage.getItem("session")
+    const token = localStorage.getItem("session");
     if (!phoneNumber) {
       toast.error("Please enter your phone number");
       return;
@@ -95,6 +94,7 @@ const PaymentSelection = () => {
 
   const handleCheckPayment = (checkoutID) => {
     const pendingBooking = JSON.parse(localStorage.getItem("pendingBooking"));
+    const token = localStorage.getItem("session");
 
     fetch(`http://127.0.0.1:5000/payments/${checkoutID}`, {
       method: "GET",
@@ -116,14 +116,14 @@ const PaymentSelection = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
               space_name: pendingBooking.space_name,
               date_of_booking: pendingBooking.date,
               number_of_hours: pendingBooking.number_of_hours,
               number_of_guests: pendingBooking.number_of_guests,
-              amount: pendingBooking.amount,
+              total_amount: pendingBooking.amount
             }),
           })
             .then((res) => res.json())
@@ -144,8 +144,6 @@ const PaymentSelection = () => {
         console.error("Error checking payment:", err);
       });
   };
-
-  
 
   const paymentOptions = [
     { label: "M-Pesa", img: mpesaImg },
