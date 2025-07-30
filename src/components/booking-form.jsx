@@ -116,8 +116,8 @@ function BookingForm({ space, onClose }) {
 
   return (
     <Card
-      className="w-full max-w-lg mx-auto p-8 text-white rounded-lg shadow-lg flex flex-col justify-center min-h-[20vh]"
-      style={{ background: "linear-gradient(to bottom, #20B4C2, #0F555C)" }}
+      className="w-full max-w-lg mx-auto p-8 text-black rounded-lg shadow-lg flex flex-col justify-center min-h-[20vh]"
+      style={{ background: "linear-gradient(to bottom, #ffffff, #ffffff)" }}
     >
       <CardContent className="flex flex-col justify-center space-y-6">
         <h2 className="text-2xl font-bold text-center">Book This Space</h2>
@@ -132,7 +132,7 @@ function BookingForm({ space, onClose }) {
                   <FormControl>
                     <Input
                       readOnly
-                      className="w-full bg-transparent text-white placeholder-white border-white"
+                      className="w-full bg-transparent text-black placeholder-white border-black"
                       {...field}
                     />
                   </FormControl>
@@ -150,7 +150,7 @@ function BookingForm({ space, onClose }) {
                     <Input
                       type="number"
                       min="1"
-                      className="w-full bg-transparent text-white placeholder-white border-white"
+                      className="w-full bg-transparent text-black placeholder-white border-black"
                       {...field}
                     />
                   </FormControl>
@@ -169,7 +169,7 @@ function BookingForm({ space, onClose }) {
                       type="date"
                       value={field.value.toISOString().slice(0, 10)}
                       onChange={(e) => field.onChange(new Date(e.target.value))}
-                      className="w-full bg-transparent text-white placeholder-white border-white"
+                      className="w-full bg-transparent text-black placeholder-white border-black"
                     />
                   </FormControl>
                   <FormMessage />
@@ -187,7 +187,7 @@ function BookingForm({ space, onClose }) {
                       type="number"
                       min="1"
                       max="24"
-                      className="w-full bg-transparent text-white placeholder-white border-white"
+                      className="w-full bg-transparent text-black placeholder-white border-black"
                       {...field}
                     />
                   </FormControl>
@@ -198,13 +198,13 @@ function BookingForm({ space, onClose }) {
             <div className="space-y-4">
               <Button
                 type="submit"
-                className="w-full bg-transparent border-2 border-green-600 text-white hover:bg-green-600/100 transition duration-300"
+                className="w-full bg-green-600 text-white hover:bg-green-700 hover:text-white border-2 border-green-600 transition duration-300"
               >
                 Confirm Booking
               </Button>
               <Button
                 type="button"
-                className="w-full bg-transparent border-2 border-red-600 text-white hover:bg-red-700/100 transition duration-300"
+                className="w-full bg-red-600 text-white hover:bg-red-700 hover:text-white border-2 border-red-600 transition duration-300"
                 onClick={onClose}
               >
                 Cancel
