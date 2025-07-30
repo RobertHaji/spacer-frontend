@@ -41,6 +41,8 @@ const PaymentSelection = () => {
   }, [booking, navigate]);
 
   const handleInitiatePayment = () => {
+
+    const token = localStorage.getItem("session")
     if (!phoneNumber) {
       toast.error("Please enter your phone number");
       return;
@@ -61,7 +63,9 @@ const PaymentSelection = () => {
         mpesa_code: `TEMP-${Date.now()}`,
       }),
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
     })
       .then((res) => res.json())
@@ -76,12 +80,12 @@ const PaymentSelection = () => {
 
         intervalRef.current = setInterval(() => {
           handleCheckPayment(checkoutID);
-        }, 10000);
+        }, 10_000);
 
         timeoutRef.current = setTimeout(() => {
           clearInterval(intervalRef.current);
           toast("Still waiting for payment confirmation...");
-        }, 180000);
+        }, 180_000);
       })
       .catch((err) => {
         console.error(err);
@@ -99,13 +103,14 @@ const PaymentSelection = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const resultCode = data?.data?.ResultCode;
+        const status = data?.payment_status;
 
-        if (resultCode === "0") {
+        if (status === "paid") {
           clearInterval(intervalRef.current);
           clearTimeout(timeoutRef.current);
           toast.success("Payment successful!", { id: toastId });
-        } else if (resultCode && resultCode !== "0") {
+        }
+        else if (status !== "pending") {
           clearInterval(intervalRef.current);
           clearTimeout(timeoutRef.current);
           toast.error("Payment not successful", { id: toastId });
@@ -198,10 +203,10 @@ const PaymentSelection = () => {
               <li>Go to M-PESA on your phone</li>
               <li>Select Pay Bill option</li>
               <li>
-                Enter Business no. <strong>6060047</strong>
+                Enter Business no. <strong>Coming soon...</strong>
               </li>
               <li>
-                Enter Account no. <strong>BL-HR-{pendingBooking?.id}</strong>
+                Enter Account no. <strong>-{pendingBooking?.id}</strong>
               </li>
               <li>
                 Enter the Amount. <strong>{pendingBooking?.amount}</strong>
@@ -209,13 +214,6 @@ const PaymentSelection = () => {
               <li>Enter your M-PESA PIN and Send</li>
               <li>You will receive a confirmation SMS from MPESA</li>
             </ol>
-            <button
-              onClick={() => handleCheckPayment(booking?.id)}
-              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-md transition"
-            >
-              <FaCheckCircle className="w-5 h-5" />
-              Check Payment
-            </button>
           </div>
         </div>
       )}
