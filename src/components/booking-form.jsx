@@ -32,7 +32,7 @@ const bookingSchema = z.object({
     .max(24, "Cannot exceed 24"),
 });
 
-function BookingForm({ space ,onClose}) {
+function BookingForm({ space, onClose }) {
   const accessToken = localStorage.getItem("session");
   const [showForm, setShowForm] = useState(true);
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ function BookingForm({ space ,onClose}) {
     }
   }, [space]);
 
-  if (!showForm) return null; 
+  if (!showForm) return null;
 
   const onTheSubmit = async (values) => {
     const formattedDate = new Date(values.dateOfBooking)
@@ -87,7 +87,19 @@ function BookingForm({ space ,onClose}) {
 
       if (response.ok) {
         toast.success("Booking okay!");
-        console.log(" Directed to payment:", data);
+        console.log("Directed to payment:", data);
+
+        localStorage.setItem(
+          "pendingBooking",
+          JSON.stringify({
+            space_name: space.name,
+            date: payload.date_of_booking,
+            number_of_hours: values.numberOfHours,
+            number_of_guests: values.numberOfGuests,
+            amount: data.total_amount
+          })
+        );
+
         form.reset();
         navigate("/payment", { state: { booking: data } });
       } else if (!accessToken) {
@@ -102,111 +114,105 @@ function BookingForm({ space ,onClose}) {
     }
   };
 
-
   return (
-      <Card
-        className="w-full max-w-lg mx-auto p-8 text-white rounded-lg shadow-lg flex flex-col justify-center min-h-[20vh]"
-        style={{ background: "linear-gradient(to bottom, #20B4C2, #0F555C)" }}
-      >
-        <CardContent className="flex flex-col justify-center space-y-6">
-          <h2 className="text-2xl font-bold text-center">Book This Space</h2>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onTheSubmit)}
-              className="space-y-6"
-            >
-              <FormField
-                control={form.control}
-                name="spaceName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Space name</FormLabel>
-                    <FormControl>
-                      <Input
-                        readOnly
-                        className="w-full bg-transparent text-white placeholder-white border-white"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="numberOfGuests"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Number of Guests</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        min="1"
-                        className="w-full bg-transparent text-white placeholder-white border-white"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="dateOfBooking"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Date of Booking</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        value={field.value.toISOString().slice(0, 10)}
-                        onChange={(e) =>
-                          field.onChange(new Date(e.target.value))
-                        }
-                        className="w-full bg-transparent text-white placeholder-white border-white"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="numberOfHours"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Number of Hours</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        min="1"
-                        max="24"
-                        className="w-full bg-transparent text-white placeholder-white border-white"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="space-y-4">
-                <Button
-                  type="submit"
-                  className="w-full bg-transparent border-2 border-green-600 text-white hover:bg-green-600/100 transition duration-300"
-                >
-                  Confirm Booking
-                </Button>
-                <Button
-                  type="button"
-                  className="w-full bg-transparent border-2 border-red-600 text-white hover:bg-red-700/100 transition duration-300"
-                  onClick={onClose}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </CardContent>
+    <Card
+      className="w-full max-w-lg mx-auto p-8 text-white rounded-lg shadow-lg flex flex-col justify-center min-h-[20vh]"
+      style={{ background: "linear-gradient(to bottom, #20B4C2, #0F555C)" }}
+    >
+      <CardContent className="flex flex-col justify-center space-y-6">
+        <h2 className="text-2xl font-bold text-center">Book This Space</h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onTheSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="spaceName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Space name</FormLabel>
+                  <FormControl>
+                    <Input
+                      readOnly
+                      className="w-full bg-transparent text-white placeholder-white border-white"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="numberOfGuests"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Number of Guests</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min="1"
+                      className="w-full bg-transparent text-white placeholder-white border-white"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="dateOfBooking"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date of Booking</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      value={field.value.toISOString().slice(0, 10)}
+                      onChange={(e) => field.onChange(new Date(e.target.value))}
+                      className="w-full bg-transparent text-white placeholder-white border-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="numberOfHours"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Number of Hours</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min="1"
+                      max="24"
+                      className="w-full bg-transparent text-white placeholder-white border-white"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="space-y-4">
+              <Button
+                type="submit"
+                className="w-full bg-transparent border-2 border-green-600 text-white hover:bg-green-600/100 transition duration-300"
+              >
+                Confirm Booking
+              </Button>
+              <Button
+                type="button"
+                className="w-full bg-transparent border-2 border-red-600 text-white hover:bg-red-700/100 transition duration-300"
+                onClick={onClose}
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
     </Card>
   );
 }
