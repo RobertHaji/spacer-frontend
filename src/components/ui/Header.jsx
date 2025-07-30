@@ -4,7 +4,7 @@ import { User } from "lucide-react";
 export default function Header() {
   return (
     <header className="bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white flex items-center justify-between p-4">
-      <Link to="/spacesPage" className="flex items-center">
+      <Link to="/" className="flex items-center">
           <img
             src="src/components/spacers-logo.png"
             alt="Spacer Logo"
