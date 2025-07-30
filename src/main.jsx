@@ -106,7 +106,7 @@ const routes = createBrowserRouter([
   {
     path: "/forgot-password",
     element:< ForgotPasswordForm/>
-   }
+  }
    
 ]);
 
