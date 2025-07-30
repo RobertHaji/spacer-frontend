@@ -23,6 +23,8 @@ import ResultPage from "./pages/ResultPage";
 import Privacy from "./pages/Privacy";
 import ImageForm from "./components/ImageForm";
 import ContactUs from "./pages/ContactUs";
+import { ForgotPasswordForm } from "./pages/ForgotPassword";
+
 
 const routes = createBrowserRouter([
   {
@@ -100,7 +102,11 @@ const routes = createBrowserRouter([
   },{
     path: "/Payment",
     element: <Payment />
-  }
+  },
+  {
+    path: "/forgot-password",
+    element:< ForgotPasswordForm/>
+   }
    
 ]);
 
