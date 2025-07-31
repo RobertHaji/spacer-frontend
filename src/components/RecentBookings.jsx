@@ -15,11 +15,14 @@ function RecentBookings() {
       return;
     }
 
-    fetch(`http://localhost:5000/users/${userId}/bookings`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
+    fetch(
+      `http://spacer-backend-production.up.railway.app/users/${userId}/bookings`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.sort(

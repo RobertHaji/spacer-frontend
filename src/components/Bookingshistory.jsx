@@ -16,7 +16,7 @@ function BookingsHistory() {
       return;
     }
 
-    fetch(`http://localhost:5000/users/${userId}/bookings`, {
+    fetch(`http://spacer-backend-production.up.railway.app/users/${userId}/bookings`, {
       headers: {
             Authorization: `Bearer ${accessToken}`,
       },
@@ -39,7 +39,7 @@ function BookingsHistory() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/bookings/${id}`, {
+      const response = await fetch(`http://spacer-backend-production.up.railway.app/bookings/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${accessToken}`,

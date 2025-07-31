@@ -44,7 +44,7 @@ export function ForgotPasswordForm() {
 
   const checkEmail = async (values) => {
     try {
-      const res = await fetch("http://localhost:5000/check-email", {
+      const res = await fetch("http://spacer-backend-production.up.railway.app/check-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export function ForgotPasswordForm() {
 
   const resetPassword = async (values) => {
     try {
-      const res = await fetch("http://localhost:5000/reset-password", {
+      const res = await fetch("http://spacer-backend-production.up.railway.app/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

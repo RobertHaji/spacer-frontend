@@ -27,13 +27,16 @@ export default function AdminPage() {
 
       if (userid && session) {
         try {
-          const response = await fetch(`http://localhost:5000/users/${userid}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${session}`,
-            },
-          });
+          const response = await fetch(
+            `http://spacer-backend-production.up.railway.app/users/${userid}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session}`,
+              },
+            }
+          );
           const result = await response.json();
           setAdminName(result.name || "Admin");
         } catch {

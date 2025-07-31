@@ -17,7 +17,7 @@ export default function SearchBar() {
       if (selectedDate) query.append("date", selectedDate.toISOString());
 
       const res = await fetch(
-        `http://localhost:5000/spaces?${query.toString()}`
+        `http://spacer-backend-production.up.railway.app/spaces?${query.toString()}`
       );
       const data = await res.json();
 

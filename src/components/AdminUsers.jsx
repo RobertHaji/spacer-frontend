@@ -4,7 +4,7 @@ export default function AdminUsers() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/users", {
+    fetch("http:/spacer-backend-production.up.railway.app/users", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("session")}`,
       },

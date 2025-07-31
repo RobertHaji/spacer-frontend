@@ -9,7 +9,7 @@ function DashboardStats() {
   const accessToken = localStorage.getItem("session");
 
   useEffect(() => {
-    fetch("http://localhost:5000/stats", {
+    fetch("http://spacer-backend-production.up.railway.app/stats", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
