@@ -15,7 +15,7 @@ export default function ImageForm() {
   useEffect(() => {
     const fetchSpaces = async () => {
       try {
-        const response = await fetch("http://localhost:5000/spaces");
+        const response = await fetch("http://spacer-backend-production.up.railway.app/spaces");
         if (!response.ok) {
           throw new Error("Failed to fetch spaces");
         }
@@ -57,7 +57,7 @@ export default function ImageForm() {
         formData.append("space_id", selectedSpaceId);
         formData.append("image", imageFile);
 
-        response = await fetch("http://localhost:5000/api/images", {
+        response = await fetch("http://spacer-backend-production.up.railway.app/api/images", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export default function ImageForm() {
           body: formData,
         });
       } else {
-        response = await fetch("http://localhost:5000/api/images", {
+        response = await fetch("http://spacer-backend-production.up.railway.app/api/images", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

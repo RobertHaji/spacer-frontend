@@ -12,7 +12,7 @@ function CategoryPage() {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/categories")  // fetches data from backend
+    fetch("http://spacer-backend-production.up.railway.app/categories")  // fetches data from backend
       .then((res) => res.json())
       .then((data) => setCategories(data))
       .catch((err) => console.error("Error fetching categories:", err));
@@ -27,7 +27,7 @@ function CategoryPage() {
    }
 
    if (window.confirm("Are you sure you want to delete this category?")) {
-     fetch(`http://localhost:5000/categories/${id}`, {                                    // deletes category by id
+     fetch(`http://spacer-backend-production.up.railway.app/categories/${id}`, {                                    // deletes category by id
        method: "DELETE",
        headers: {
          Authorization: `Bearer ${token}`,

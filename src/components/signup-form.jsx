@@ -60,7 +60,10 @@ export function SignUpForm({ className, ...props }) {
       body: raw,
     };
 
-    await fetch("http://localhost:5000/signup", requestOptions)
+    await fetch(
+      "http://spacer-backend-production.up.railway.app/signup",
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
         if (result.user) {
@@ -70,11 +73,9 @@ export function SignUpForm({ className, ...props }) {
           form.reset();
 
           localStorage.setItem("session", result.access_token);
-          localStorage.setItem("userid", result.user.id)
+          localStorage.setItem("userid", result.user.id);
 
-          navigate(
-            result.user.role === "admin" ? "/adminPage" : "/"
-          );
+          navigate(result.user.role === "admin" ? "/adminPage" : "/");
         } else {
           const message =
             typeof result.message === "object"

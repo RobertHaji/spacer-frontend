@@ -79,7 +79,7 @@ function SpaceForm() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:5000/categories");
+        const response = await fetch("http://spacer-backend-production.up.railway.app/categories");
         if (!response.ok) throw new Error("Failed to fetch categories");
         const data = await response.json();
         setCategories(data);
@@ -95,8 +95,8 @@ function SpaceForm() {
   const onSubmit = async (values) => {
 
     const url = editingSpace
-      ? `http://localhost:5000/spaces/${editingSpace.id}`
-      : "http://localhost:5000/spaces";
+      ? `http://spacer-backend-production.up.railway.app/spaces/${editingSpace.id}`
+      : "http://spacer-backend-production.up.railway.app/spaces";
     const method = editingSpace ? "PATCH" : "POST";
 
     try {

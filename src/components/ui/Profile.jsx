@@ -37,7 +37,7 @@ function ProfileModal({ isOpen, onClose }) {
       },
     };
 
-    fetch(`http://localhost:5000/users/${userId}`, requestOptions)
+    fetch(`http://spacer-backend-production.up.railway.app/users/${userId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.id) {
@@ -97,7 +97,7 @@ function ProfileModal({ isOpen, onClose }) {
       body: JSON.stringify({ name, email }),
     };
 
-    fetch(`http://localhost:5000/users/${userId}`, requestOptions)
+    fetch(`http://spacer-backend-production.up.railway.app/users/${userId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         if (result.id) {

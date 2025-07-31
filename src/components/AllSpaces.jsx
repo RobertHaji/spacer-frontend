@@ -22,7 +22,7 @@ export function AllSpaces() {
   const categoryFilter = location.state?.category || "";
 
   useEffect(() => {
-    fetch("http://localhost:5000/spaces")
+    fetch("http://spacer-backend-production.up.railway.app/spaces")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch spaces");
@@ -67,7 +67,7 @@ export function AllSpaces() {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/spaces/${id}`, {
+      const response = await fetch(`http://spacer-backend-production.up.railway.app/spaces/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("session")}`,

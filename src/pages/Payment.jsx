@@ -54,7 +54,7 @@ const PaymentSelection = () => {
 
     toastId = toast.loading("Initiating STK push...");
 
-    fetch(`http://127.0.0.1:5000/payments`, {
+    fetch(`http://spacer-backend-production.up.railway.app/payments`, {
       method: "POST",
       body: JSON.stringify({
         paying_phone: formattedPhone,
@@ -97,7 +97,7 @@ const PaymentSelection = () => {
     const pendingBooking = JSON.parse(localStorage.getItem("pendingBooking"));
     const token = localStorage.getItem("session");
 
-    fetch(`http://127.0.0.1:5000/payments/${checkoutID}`, {
+    fetch(`http://spacer-backend-production.up.railway.app/payments/${checkoutID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const PaymentSelection = () => {
           clearTimeout(timeoutRef.current);
           toast.success("Payment successful!", { id: toastId });
 
-          fetch("http://localhost:5000/bookings", {
+          fetch("http://spacer-backend-production.up.railway.app/bookings", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -124,14 +124,14 @@ const PaymentSelection = () => {
               date_of_booking: pendingBooking.date,
               number_of_hours: pendingBooking.number_of_hours,
               number_of_guests: pendingBooking.number_of_guests,
-              total_amount: pendingBooking.amount
+              total_amount: pendingBooking.amount,
             }),
           })
             .then((res) => res.json())
             .then((bookingData) => {
               console.log("Booking confirmed:", bookingData);
               localStorage.removeItem("pendingBooking");
-              navigate("/bookingPage")
+              navigate("/bookingPage");
             })
             .catch((err) => {
               console.error("Error confirming booking:", err);

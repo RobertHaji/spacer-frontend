@@ -11,15 +11,16 @@ export default function ResultsPage() {
     const activity = params.get("activity");
     const location = params.get("location");
 
-    axios.get("http://localhost:5000/spaces", {
-      params: { activity, location }
-    })
-    .then((res) => {
-      setSpaces(res.data);
-    })
-    .catch((err) => {
-      console.error("Error fetching search results:", err);
-    });
+    axios
+      .get("http://spacer-backend-production.up.railway.app/spaces", {
+        params: { activity, location },
+      })
+      .then((res) => {
+        setSpaces(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching search results:", err);
+      });
   }, [search]);
 
   return (

@@ -74,14 +74,17 @@ function BookingForm({ space, onClose }) {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/bookings/validate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        "http://spacer-backend-production.up.railway.app/bookings/validate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await response.json();
 
