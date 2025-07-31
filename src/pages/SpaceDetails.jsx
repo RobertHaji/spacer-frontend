@@ -118,47 +118,39 @@ export default function SpaceDetails() {
           <div className="grid grid-cols-2 gap-4">
             {extraImages
               .slice(0, showAllImages ? extraImages.length : 3)
-              .map((img, index, arr) => {
-                const isLastImage = showAllImages && index === arr.length - 1;
+              .map((img) => (
+                <div
+                  key={img.id}
+                  className="relative overflow-hidden rounded-xl shadow-sm"
+                >
+                  <img
+                    src={img.url}
+                    alt="Gallery"
+                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                  {userRole === "admin" && (
+                    <button
+                      onClick={() => handleDeleteImage(img.id)}
+                      className="absolute top-2 right-2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  )}
+                </div>
+              ))}
 
-                return isLastImage ? (
-                  <button
-                    key="show-less"
-                    onClick={() => setShowAllImages(false)}
-                    className="w-full h-48 flex items-center justify-center bg-black/50 text-white text-lg font-bold rounded-xl hover:bg-black/70 transition"
-                  >
-                    Show Less
-                  </button>
-                ) : (
-                  <div
-                    key={img.id}
-                    className="relative overflow-hidden rounded-xl shadow-sm"
-                  >
-                    <img
-                      src={img.url}
-                      alt={`Gallery ${index + 1}`}
-                      className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                      />
-                      {/* Restricts deleting added images to admins only */}
-                    {userRole === "admin" && (
-                      <button
-                        onClick={() => handleDeleteImage(img.id)}
-                        className="absolute top-2 right-2 bg-black/50 hover:bg-black/80 text-white rounded-full p-1"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
-
-            {!showAllImages && extraImages.length > 3 && (
-              <button
-                onClick={() => setShowAllImages(true)}
-                className="w-full h-48 flex items-center justify-center bg-black/50 text-white text-xl font-bold rounded-xl hover:bg-black/70 transition"
-              >
-                +{extraImages.length - 3} More
-              </button>
+            {/* Show More / Less Button */}
+            {extraImages.length > 3 && (
+              <div className="col-span-2 text-center">
+                <button
+                  onClick={() => setShowAllImages((prev) => !prev)}
+                  className="bg-white/20 text-white px-4 py-2 rounded-md hover:bg-white/30 transition font-semibold"
+                >
+                  {showAllImages
+                    ? "Show Less"
+                    : `+${extraImages.length - 3} More`}
+                </button>
+              </div>
             )}
           </div>
         </div>
