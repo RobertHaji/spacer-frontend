@@ -76,7 +76,7 @@ function CategoryPage() {
                   </p>
                 </Link>
 
-                {userRole === "admin" && (
+                {/* {userRole === "admin" && (
                   <div className="flex justify-center gap-2 mt-2 mb-3">
                     <button
                       onClick={() => handleEdit(cat)}
@@ -91,7 +91,7 @@ function CategoryPage() {
                       Delete
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
             ))}
           </div>
