@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "@/components/ui/Header";
+import AdminHeader from "@/components/adminsHeader";
 import Footer from "@/components/ui/Footer";
 import  BookingsHistory from "@/components/Bookingshistory";
 function BookingsPage() {
   return (
     <>
-      <Header />
+      <AdminHeader/>
       <BookingsHistory />
       <Footer />
     </>
