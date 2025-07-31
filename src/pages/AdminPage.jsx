@@ -132,7 +132,7 @@ export default function AdminPage() {
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 p-6 bg-gray-100 mt-16 md:mt-0 md:ml-64">
+          <main className="flex-1 p-6 bg-gray-100 mt-16 md:mt-0 md:ml-0">
             {activeSection === "dashboard" && (
               <div className="space-y-6">
                 <h1 className="text-2xl font-bold text-gray-800">
