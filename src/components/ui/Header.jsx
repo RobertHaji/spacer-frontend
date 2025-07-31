@@ -1,33 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { User, Menu } from "lucide-react";
+import { User } from "lucide-react";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navLinks = [
-    { label: "Category", path: "/category" },
-    { label: "Sign Up", path: "/signup" },
-    { label: "Login", path: "/login" },
-  ];
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    
-      <header className="bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white p-4">
-      <div className="flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center text-xl font-bold">
-          <img
-            src="src/components/spacers-logo.png"
-            alt="Spacer Logo"
-            className="h-10 w-10 mr-2"
-          />
-          <span className="text-lg md:text-xl font-bold">Spacer</span>
-        </Link>
+    <header className="bg-gradient-to-b from-[#004c4c] to-[#0f7c7c] text-white flex items-center justify-between p-4 relative">
+      <Link to="/" className="flex items-center">
+        <img
+          src="src/components/spacers-logo.png"
+          alt="Spacer Logo"
+          className="text-3xl font-bold hover:text-yellow-300 transition duration-300 h-18 w-17"
+        />
+      </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-6 text-sm font-semibold">
-          {navLinks.map((item) => (
+      <div className="flex items-center space-x-6 relative">
+        <nav className="flex space-x-6 text-sm font-semibold">
+          {[{ label: "Category", path: "/category" }].map((item) => (
             <Link
               key={item.path}
               to={item.path}
@@ -39,45 +29,39 @@ export default function Header() {
               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-300 transition-all group-hover:w-full"></span>
             </Link>
           ))}
-          <Link
-            to="/profile"
-            className="ml-2 hover:scale-110 transition-transform duration-300"
-          >
-            <User className="w-6 h-6 text-white hover:text-yellow-300 transition-colors duration-300" />
-          </Link>
         </nav>
 
-        {/* Hamburger Icon for Mobile */}
-        <button
-          className="md:hidden focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <Menu className="w-6 h-6 text-white" />
-        </button>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      {isMenuOpen && (
-        <div className="md:hidden mt-4 space-y-3 text-sm font-semibold">
-          {navLinks.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onClick={() => setIsMenuOpen(false)}
-              className="block px-2 py-1 hover:bg-white/10 rounded"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            to="/profile"
-            onClick={() => setIsMenuOpen(false)}
-            className="flex items-center px-2 py-1 hover:bg-white/10 rounded"
+        {/* Profile Icon */}
+        <div className="relative">
+          <button
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
+            className="ml-2 hover:scale-110 transition-transform duration-300 focus:outline-none"
           >
-            <User className="w-5 h-5 mr-1" /> Profile
-          </Link>
+            <User className="w-6 h-6 text-white hover:text-yellow-300 transition-colors duration-300" />
+          </button>
+
+          {/* Dropdown Menu */}
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 bg-white text-black rounded-md shadow-lg z-50 w-40">
+              <Link
+                to="/login"
+                className="block px-4 py-2 text-sm hover:bg-gray-100"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="block px-4 py-2 text-sm hover:bg-gray-100"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </header>
   );
 }
+
