@@ -139,7 +139,7 @@ export default function AdminPage() {
                   Welcome back Admin, {adminName}
                 </h1>
                 <DashboardStats />
-                <div className="bg-white p-6 rounded-xl shadow-md">
+                {/* <div className="bg-white p-6 rounded-xl shadow-md">
                   <h2 className="text-lg font-semibold text-gray-800 mb-4">
                     Recent Activity
                   </h2>
@@ -148,7 +148,7 @@ export default function AdminPage() {
                     <li>👤 New user registered: Jane Doe - 4 hours ago</li>
                     <li>📅 Booking confirmed for "Meeting Room B" - 1 day ago</li>
                   </ul>
-                </div>
+                </div> */}
                 <div className="bg-white p-6 rounded-xl shadow-md">
                   <h2 className="text-lg font-semibold text-gray-800 mb-4">
                     Bookings Overview
