@@ -24,7 +24,7 @@ export function SpacesPage() {
   const filteredSpacesFromSearch = location.state?.filteredSpaces;
 
   useEffect(() => {
-    fetch("http://localhost:5000/spaces")
+    fetch("https://spacer-backend-production.up.railway.app/spaces")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch spaces");
