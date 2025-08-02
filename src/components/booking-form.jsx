@@ -75,7 +75,7 @@ function BookingForm({ space, onClose }) {
 
     try {
       const response = await fetch(
-        "http://spacer-backend-production.up.railway.app/bookings/validate",
+        "https://spacer-backend-production.up.railway.app/bookings/validate",
         {
           method: "POST",
           headers: {

@@ -61,7 +61,7 @@ export function SignUpForm({ className, ...props }) {
     };
 
     await fetch(
-      "http://spacer-backend-production.up.railway.app/signup",
+      "https://spacer-backend-production.up.railway.app/signup",
       requestOptions
     )
       .then((response) => response.json())

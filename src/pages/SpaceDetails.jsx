@@ -21,7 +21,7 @@ export default function SpaceDetails() {
   useEffect(() => {
     if (!space?.id) return;
 
-    fetch(`http://spacer-backend-production.up.railway.app/api/spaces/${space.id}/images`)
+    fetch(`https://spacer-backend-production.up.railway.app/api/spaces/${space.id}/images`)
       .then((res) => res.json())
       .then((data) => {
         setExtraImages(data.images || []);
@@ -45,7 +45,7 @@ export default function SpaceDetails() {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`http://spacer-backend-production.up.railway.app/spaces/${space.id}`, {
+      const response = await fetch(`https://spacer-backend-production.up.railway.app/spaces/${space.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("session")}`,
@@ -70,7 +70,7 @@ export default function SpaceDetails() {
 
     try {
       const token = localStorage.getItem("session");
-      const res = await fetch(`http://spacer-backend-production.up.railway.app/api/images/${imageId}`, {
+      const res = await fetch(`https://spacer-backend-production.up.railway.app/api/images/${imageId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

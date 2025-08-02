@@ -52,8 +52,8 @@ function CategoryForm() {
 
   const onSubmit = async (values) => {
     const url = editingCategory
-      ? "http://spacer-backend-production.up.railway.app/categories/${editingCategory.id}"    // edits by use of id
-      : "http://spacer-backend-production.up.railway.app/categories";
+      ? "https://spacer-backend-production.up.railway.app/categories/${editingCategory.id}"    // edits by use of id
+      : "https://spacer-backend-production.up.railway.app/categories";
     const method = editingCategory ? "PATCH" : "POST";
 
     try {

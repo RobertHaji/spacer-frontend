@@ -58,7 +58,7 @@ export function LoginForm({ className, ...props }) {
     };
 
     await fetch(
-      "http://spacer-backend-production.up.railway.app/signin",
+      "https://spacer-backend-production.up.railway.app/signin",
       requestOptions
     )
       .then((response) => response.json())

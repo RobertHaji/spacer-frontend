@@ -54,7 +54,7 @@ const PaymentSelection = () => {
 
     toastId = toast.loading("Initiating STK push...");
 
-    fetch(`http://spacer-backend-production.up.railway.app/payments`, {
+    fetch(`https://spacer-backend-production.up.railway.app/payments`, {
       method: "POST",
       body: JSON.stringify({
         paying_phone: formattedPhone,
@@ -97,7 +97,7 @@ const PaymentSelection = () => {
     const pendingBooking = JSON.parse(localStorage.getItem("pendingBooking"));
     const token = localStorage.getItem("session");
 
-    fetch(`http://spacer-backend-production.up.railway.app/payments/${checkoutID}`, {
+    fetch(`https://spacer-backend-production.up.railway.app/payments/${checkoutID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const PaymentSelection = () => {
           clearTimeout(timeoutRef.current);
           toast.success("Payment successful!", { id: toastId });
 
-          fetch("http://spacer-backend-production.up.railway.app/bookings", {
+          fetch("https://spacer-backend-production.up.railway.app/bookings", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
