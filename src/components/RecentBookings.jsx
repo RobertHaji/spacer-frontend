@@ -16,7 +16,7 @@ function RecentBookings() {
     }
 
     fetch(
-      `http://spacer-backend-production.up.railway.app/users/${userId}/bookings`,
+      `https://spacer-backend-production.up.railway.app/users/${userId}/bookings`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

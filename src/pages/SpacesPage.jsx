@@ -82,12 +82,15 @@ export function SpacesPage() {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/spaces/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("session")}`,
-        },
-      });
+      const response = await fetch(
+        `https://spacer-backend-production.up.railway.app/spaces/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("session")}`,
+          },
+        }
+      );
 
       if (!response.ok) throw new Error("Delete failed");
       toast.success("Space deleted");

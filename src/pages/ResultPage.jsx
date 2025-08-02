@@ -12,7 +12,7 @@ export default function ResultsPage() {
     const location = params.get("location");
 
     axios
-      .get("http://spacer-backend-production.up.railway.app/spaces", {
+      .get("https://spacer-backend-production.up.railway.app/spaces", {
         params: { activity, location },
       })
       .then((res) => {

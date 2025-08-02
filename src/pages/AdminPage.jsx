@@ -28,7 +28,7 @@ export default function AdminPage() {
       if (userid && session) {
         try {
           const response = await fetch(
-            `http://spacer-backend-production.up.railway.app/users/${userid}`,
+            `https://spacer-backend-production.up.railway.app/users/${userid}`,
             {
               method: "GET",
               headers: {
